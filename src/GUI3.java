@@ -1,6 +1,7 @@
 import java.awt.*;          // access to Container
 import java.awt.event.*;    // access to WindowAdapter, WindowEvent
 import javax.swing.*;
+import java.net.URL;
 
 public class GUI3 extends JFrame implements ActionListener
 { 
@@ -17,16 +18,10 @@ public class GUI3 extends JFrame implements ActionListener
 	public GUI3() 
 	{
 		super("Demo Graphics: Grid, Square, Red Square");
-		ImageIcon squareIcon = new ImageIcon("C:\\Users\\pt1771\\Documents\\GitHub\\GridManiaProject\\bluesquare.png");
-		ImageIcon redIcon = new ImageIcon("C:\\Users\\pt1771\\Documents\\GitHub\\GridManiaProject\\redsquare.png");
-		ImageIcon gridIcon = new ImageIcon("C:\\Users\\pt1771\\Documents\\GitHub\\GridManiaProject\\grid.png");
-		square = squareIcon.getImage();
-		grid = gridIcon.getImage();
-		red = redIcon.getImage();
-		int load = squareIcon.getImageLoadStatus();
-		int load2 = gridIcon.getImageLoadStatus();
-		int load3 = redIcon.getImageLoadStatus();
-		System.out.println("square load " + load + " grid load " + load2 + " red square load " + load3);
+		ClassLoader cldr = this.getClass().getClassLoader();
+		square = new ImageIcon(cldr.getResource("bluesquare.png")).getImage();
+		red = new ImageIcon(cldr.getResource("redsquare.png")).getImage();
+		grid = new ImageIcon(cldr.getResource("grid.png")).getImage();
 		addWindowListener(new java.awt.event.WindowAdapter() {public void windowClosing(WindowEvent evt) {System.exit(0);}});
 		sqX = 82;
 		sqY = 82;
@@ -38,7 +33,7 @@ public class GUI3 extends JFrame implements ActionListener
 		redY = 158;
 		setSize(500, 500);
 		setVisible(true);
-		Timer timer = new javax.swing.Timer(17, this);
+		Timer timer = new javax.swing.Timer(25, this);
 		size = 10;
 		size2 = 10;
 		size3 = 10;
