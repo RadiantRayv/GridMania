@@ -17,6 +17,7 @@ public class GUI3v2 extends JFrame
 	
 	private long TimeStart;
 	private long timediff;
+	private int h;
 
 	public GUI3v2() 
 	{
@@ -26,19 +27,19 @@ public class GUI3v2 extends JFrame
 		red = new ImageIcon(cldr.getResource("redsquare.png")).getImage();
 		grid = new ImageIcon(cldr.getResource("grid.png")).getImage();
 		addWindowListener(new java.awt.event.WindowAdapter() {public void windowClosing(WindowEvent evt) {System.exit(0);}});
-		sqX = 82;
-		sqY = 82;
-		sqX2 = 233;
-		sqY2 = 157;
-		sqX3 = 158;
-		sqY3 = 232;
-		redX = 157;
-		redY = 158;
+		sqX = 87;
+		sqY = 87;
+		sqX2 = 238;
+		sqY2 = 162;
+		sqX3 = 163;
+		sqY3 = 237;
+		redX = 162;
+		redY = 163;
 		setSize(500, 500);
 		setVisible(true);
-		size = 10;
-		size2 = 10;
-		size3 = 10;
+		size = 0;
+		size2 = 0;
+		size3 = 0;
 		redSize = 10;
 		
 		counter = 0;
@@ -73,33 +74,34 @@ public class GUI3v2 extends JFrame
 		// sometimes helpful to do this first to clear things:
 		g.clearRect(0, 0, 500, 500);
 		g.drawImage(grid, 50, 50, this);
-		if (counter < 42)
+		if (h < 35)
 		{
 			g.drawImage(square, sqX, sqY, size, size, this);
 		}
-		if (counter > 20 && counter < 60)
+		if (h > 15 && h < 50)
 		{
 			g.drawImage(square, sqX2, sqY2, size2, size2, this);
 		}
-		if (counter > 40 && counter < 80)
+		if (h > 30 && h < 65)
 		{
 			g.drawImage(square, sqX3, sqY3, size3, size3, this);
 		}
-		if (counter < 80)
+		if (h < 35)
 		{
 			g.drawImage(red, redX, redY, redSize, redSize, this);
 		}
 		
 	}
 	
-	public void update()
+	public void updates()
 	{
 		TimeStart = System.currentTimeMillis();
 		while(true)
 		{
 			timediff = (System.currentTimeMillis() - TimeStart);
-			if(timediff % 25 == 0)
+			if(timediff % 50 == 0)
 			{
+				h = (int)(timediff/50);
 				heck();
 				counter++;
 				System.out.println("time is " + counter);
@@ -117,30 +119,30 @@ public class GUI3v2 extends JFrame
 
 	public void heck()
 	{
-		int h = (int)(timediff/25);
 		
-		if(size < 75)
+		
+		if(h < 30)
 		{
-			sqX = 82-h;
-			sqY = 82-h;
+			sqX = 87-h;
+			sqY = 87-h;
 			size = 2*h;
 		}
-		if (size >= 50 && size2 < 75)
+		if (h > 15 && h < 45)
 		{
-			sqX2 = 233-h+25;
-			sqY2 = 157-h+25;
-			size2 = 2*h-50;
+			sqX2 = 238-h+15;
+			sqY2 = 162-h+15;
+			size2 = 2*(h-15);
 		}
-		if (size2 >= 50 && size3 < 75)
+		if (h > 30 && h < 60)
 		{
-			sqX3 = 158-h+50;
-			sqY3 = 232-h+50;
-			size3 = 2*h-100;
+			sqX3 = 163-h+30;
+			sqY3 = 237-h+30;
+			size3 = 2*(h-30);
 		}
-		if (size3 < 15)
+		if (h < 30)
 		{
-			redX = 157- (3*h);
-			redY = 158- (3*h);
+			redX = 162- (3*h);
+			redY = 163- (3*h);
 			redSize = 6*h ;
 		}
 		
@@ -152,11 +154,11 @@ public class GUI3v2 extends JFrame
 	{
 		GUI3v2 application = new GUI3v2();
 		double x=0;
-		while(x<1000000000)
+		while(x<100000000)
 		{
 			x += 0.5;
 		}
-		application.update();
+		application.updates();
 
 	}
 }
