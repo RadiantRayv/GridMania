@@ -92,62 +92,71 @@ public class GUI3v2 extends JFrame
 		
 	}
 	
-	public void update(long TimeStart)
+	public void update()
 	{
+		TimeStart = System.currentTimeMillis();
+		while(true)
+		{
 			timediff = (System.currentTimeMillis() - TimeStart);
 			if(timediff % 25 == 0)
 			{
 				heck();
+				counter++;
+				System.out.println("time is " + counter);
+				repaint();
 			}
-			while(System.currentTimeMillis() - TimeStart == timediff)
+			while((System.currentTimeMillis() - TimeStart) == timediff)
 			{
+				
 			}
+		}
+
+			
 	}
 
 
 	public void heck()
 	{
+		int h = (int)(timediff/25);
+		
 		if(size < 75)
 		{
-			sqX -= (timediff/25);
-			sqY -= (timediff/25);
-			size += 2*(timediff/25);
+			sqX = 82-h;
+			sqY = 82-h;
+			size = 2*h;
 		}
 		if (size >= 50 && size2 < 75)
 		{
-			sqX2 -= (timediff/25);
-			sqY2 -= (timediff/25);
-			size2 += 2*(timediff/25);
+			sqX2 = 233-h+25;
+			sqY2 = 157-h+25;
+			size2 = 2*h-50;
 		}
 		if (size2 >= 50 && size3 < 75)
 		{
-			sqX3 -= (timediff/25);
-			sqY3 -= (timediff/25);
-			size3 += 2*(timediff/25);
+			sqX3 = 158-h+50;
+			sqY3 = 232-h+50;
+			size3 = 2*h-100;
 		}
 		if (size3 < 15)
 		{
-			redX -= (timediff/25)*3;
-			redY -= (timediff/25)*3;
-			redSize += 6*(timediff/25);
+			redX = 157- (3*h);
+			redY = 158- (3*h);
+			redSize = 6*h ;
 		}
-//		counter++;
-//		System.out.println("time is " + counter);
-		repaint();
+		
+		//USE COUNTER INSTEAD OF SIZE IN IF STATEMENTS LIKE YOU DO IN DRAW OFFSCREEN
+
 	}
 
 	public static void main(String[] args) 
 	{
 		GUI3v2 application = new GUI3v2();
-//		double x=0;
-////		while(x<1000000000)
-////		{
-////			x += 0.5;
-////		}
-		long tTimeStart = System.currentTimeMillis();
-		while(true)
+		double x=0;
+		while(x<1000000000)
 		{
-		application.update(tTimeStart);
+			x += 0.5;
 		}
+		application.update();
+
 	}
 }
