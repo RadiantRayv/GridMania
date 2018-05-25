@@ -14,7 +14,7 @@ public class GUI3v2 extends JFrame
 	private int redX, redY;
 	private int redSize;
 	private int size, size2, size3;
-	
+
 	private long TimeStart;
 	private long timediff;
 	private int h;
@@ -41,7 +41,7 @@ public class GUI3v2 extends JFrame
 		size2 = 0;
 		size3 = 0;
 		redSize = 10;
-		
+
 		counter = 0;
 	}
 
@@ -53,20 +53,20 @@ public class GUI3v2 extends JFrame
 		g.drawImage(grid, 50, 50, this);
 
 	}
-	*/
-	
+	 */
+
 	public void paint(Graphics g)
 	{
 		Image offImage = createImage(1000, 1000);
-	// Creates an off-screen drawable image to be used for
-	// double buffering; XSIZE, YSIZE are each of type ‘int’;
-	// represents size of JFrame or JPanel, etc
+		// Creates an off-screen drawable image to be used for
+		// double buffering; XSIZE, YSIZE are each of type ‘int’;
+		// represents size of JFrame or JPanel, etc
 		Graphics buffer = offImage.getGraphics();
-	// Creates a graphics context for drawing to an 
-	// off-screen image
+		// Creates a graphics context for drawing to an 
+		// off-screen image
 		paintOffScreen(buffer);		// your own method
 		g.drawImage(offImage, 0, 0, null);	
-	// draws the image with upper left corner at 0,0
+		// draws the image with upper left corner at 0,0
 	}
 
 	public void paintOffScreen(Graphics g)
@@ -90,9 +90,9 @@ public class GUI3v2 extends JFrame
 		{
 			g.drawImage(red, redX, redY, redSize, redSize, this);
 		}
-		
+
 	}
-	
+
 	public void updates()
 	{
 		TimeStart = System.currentTimeMillis();
@@ -109,18 +109,18 @@ public class GUI3v2 extends JFrame
 			}
 			while((System.currentTimeMillis() - TimeStart) == timediff)
 			{
-				
+
 			}
 		}
 
-			
+
 	}
 
 
 	public void heck()
 	{
-		
-		
+
+
 		if(h < 30)
 		{
 			sqX = 87-h;
@@ -145,7 +145,7 @@ public class GUI3v2 extends JFrame
 			redY = 163- (3*h);
 			redSize = 6*h ;
 		}
-		
+
 		//USE COUNTER INSTEAD OF SIZE IN IF STATEMENTS LIKE YOU DO IN DRAW OFFSCREEN
 
 	}
@@ -153,10 +153,10 @@ public class GUI3v2 extends JFrame
 	public static void main(String[] args) 
 	{
 		GUI3v2 application = new GUI3v2();
-		double x=0;
-		while(x<100000000)
+		long xd = System.currentTimeMillis();
+		while (System.currentTimeMillis() - xd < 1000)
 		{
-			x += 0.5;
+
 		}
 		application.updates();
 
