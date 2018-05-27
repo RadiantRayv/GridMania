@@ -8,7 +8,7 @@ public class Test implements ActionListener  {
 	JPanel cards; //a panel that uses CardLayout
 	JPanel card1;
 	JPanel card2;
-//	JPanel card3;
+	JPanel card3;
 	final static String SONGS = "Card with song select";
 	final static String PROMPT = "Card with prompt";
 	final static String INFO = "Card with song info";
@@ -27,6 +27,7 @@ public class Test implements ActionListener  {
 		button1.addActionListener(this);
 		button2.addActionListener(this);
 
+
 		//Create the "cards".
 		card1 = new JPanel();
 		card1.add(label1); 
@@ -37,15 +38,16 @@ public class Test implements ActionListener  {
 		card2 = new JPanel();
 		comboBox1 = new JComboBox<String>(songs);
 		comboBox1.setMaximumRowCount(4);
+		comboBox1.addItemListener(new ComboBoxHandler());
 		card2.add(comboBox1);
-		
-		//card3 = new JPanel();
-		
+
+		card3 = new JPanel();
+
 		//Create the panel that contains the "cards".
 		cards = new JPanel(new CardLayout());
 		cards.add(card1, PROMPT);
 		cards.add(card2, SONGS);
-		//cards.add(card3, INFO);
+		cards.add(card3, INFO);
 
 		pane.add(comboBoxPane, BorderLayout.PAGE_START);
 		pane.add(cards, BorderLayout.CENTER);
@@ -79,27 +81,28 @@ public class Test implements ActionListener  {
 					s = new song("\\Songs\\" + itemSelected);
 					s.loadEasy("\\Songs\\" + itemSelected);
 					label2 = new JLabel(s.getInfo());
-					card2.add(label2);
-					JFXPanel f = new JFXPanel();
+					card3.add(label2);
 					Test goog = new Test();	
 					goog.setSong(s);
 					startSong();
+					CardLayout cl = (CardLayout)(cards.getLayout());
+					cl.show(cards, INFO);
 				}
 			}
 		}
 	}
-	
+
 	public void setSong(song ss)
 	{
 		s = ss;
 	}
-	
+
 	public void startSong()
 	{
 		player = new MediaPlayer(s.getSong());
 		player.play();
 	}
-	
+
 	/**
 	 * Create the GUI and show it.  For thread safety,
 	 * this method should be invoked from the
@@ -120,6 +123,7 @@ public class Test implements ActionListener  {
 	}
 
 	public static void main(String[] args) {
+		JFXPanel f = new JFXPanel();
 		/* Use an appropriate Look and Feel */
 		try {
 			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -135,13 +139,6 @@ public class Test implements ActionListener  {
 		}
 		/* Turn off metal's use of bold fonts */
 		UIManager.put("swing.boldMetal", Boolean.FALSE);
-
-		//Schedule a job for the event dispatch thread:
-		//creating and showing this application's GUI.
-		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				createAndShowGUI();
-			}
-		});
+		createAndShowGUI();
 	}
 }
