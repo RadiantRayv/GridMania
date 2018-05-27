@@ -11,7 +11,7 @@ public class runner
 		JFXPanel f = new JFXPanel(); //this is just so that JavaFX toolkit gets initialized so that the rest of the classes in this program can use it 
 		
 //		game g = new game();
-		GUI2 goog = new GUI2();		
+		GUIGameplay goog = new GUIGameplay();		
 		
 		song s = new song("\\Songs\\SPAIN POWER");
 		s.loadEasy("\\Songs\\SPAIN POWER");

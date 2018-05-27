@@ -1,9 +1,12 @@
 import java.awt.*;          // access to Container
 import java.awt.event.*;    // access to WindowAdapter, WindowEvent
 import javax.swing.*;
+
+import javafx.scene.media.MediaPlayer;
+
 import java.net.URL;
 
-public class GUI3v2 extends JFrame
+public class GUIGameplay extends JFrame
 { 
 
 	private Image square;
@@ -18,8 +21,15 @@ public class GUI3v2 extends JFrame
 	private long TimeStart;
 	private long timediff;
 	private int h;
+	
+	
+	private song s;
+	MediaPlayer player;
+	
+	private notesChart chart;
+	private int bpm;
 
-	public GUI3v2() 
+	public GUIGameplay() 
 	{
 		super("Demo Graphics: Grid, Square, Red Square");
 		ClassLoader cldr = this.getClass().getClassLoader();
@@ -43,8 +53,23 @@ public class GUI3v2 extends JFrame
 		redSize = 10;
 
 		counter = 0;
-		
-		
+	}
+	
+	public void setSong(song ss)
+	{
+		s = ss;
+		bpm = s.getBpm();
+	}
+	
+	public void startGame(int diff)
+	{
+		chart = s.getEasy();
+	}
+	
+	public void startSong()
+	{
+		player = new MediaPlayer(s.getSong());
+		player.play();
 	}
 
 	/*
@@ -67,7 +92,7 @@ public class GUI3v2 extends JFrame
 		// Creates a graphics context for drawing to an 
 		// off-screen image
 		paintOffScreen(buffer);		// your own method
-//		g.drawImage(offImage, 0, 0, null);	
+		g.drawImage(offImage, 0, 0, null);	
 		// draws the image with upper left corner at 0,0
 	}
 
@@ -152,15 +177,4 @@ public class GUI3v2 extends JFrame
 
 	}
 
-	public static void main(String[] args) 
-	{
-		GUI3v2 application = new GUI3v2();
-		long xd = System.currentTimeMillis();
-		while (System.currentTimeMillis() - xd < 1000)
-		{
-
-		}
-		application.updates();
-
-	}
 }
