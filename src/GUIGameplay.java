@@ -9,7 +9,7 @@ import java.net.URL;
 public class GUIGameplay extends JFrame
 { 
 
-	private Image square;
+	private ImageIcon square;
 	private Image red;
 	private Image grid;
 	private int counter;         // counts seconds
@@ -29,14 +29,45 @@ public class GUIGameplay extends JFrame
 	private notesChart chart;
 	private int bpm;
 
+	private JPanel cont;
+	private JLayeredPane one;
+	private JLayeredPane two;
+	private JLayeredPane three;
+	private JLayeredPane four;
+	private JLayeredPane five;
+	private JLayeredPane six;
+	private JLayeredPane seven;
+	private JLayeredPane eight;
+	private JLayeredPane nine;
+	private JLabel big;
+	
+	//in the method that adds a panel with a square and displays it to the jlayeredpane, store the created layer to a arraylist. Iterate over entire arraylist to resize everything at once in the paint method. After a square is hidden, delete it from the arraylist.
+
+	//BRO LOOK AT GRIDWORLD GUI AND SEE IF THAT HELPS AT ALLr
+	
 	public GUIGameplay() 
 	{
-		super("Demo Graphics: Grid, Square, Red Square");
+		super("Gameplay test");
+		
+		cont = new JPanel(new GridLayout(3,3));
+		cont.add(one = new JLayeredPane());
+//		cont.add(two);
+//		cont.add(three);
+//		cont.add(four);
+//		cont.add(five);
+//		cont.add(six);
+//		cont.add(seven);
+//		cont.add(eight);
+//		cont.add(nine);
+		
 		ClassLoader cldr = this.getClass().getClassLoader();
-		square = new ImageIcon(cldr.getResource("bluesquare.png")).getImage();
+		square = new ImageIcon(cldr.getResource("bluesquare.png"));
 		red = new ImageIcon(cldr.getResource("redsquare.png")).getImage();
 		grid = new ImageIcon(cldr.getResource("grid.png")).getImage();
 		addWindowListener(new java.awt.event.WindowAdapter() {public void windowClosing(WindowEvent evt) {System.exit(0);}});
+		
+		one.add(new JLabel(square));
+		
 		sqX = 87;
 		sqY = 87;
 		sqX2 = 238;
@@ -72,53 +103,44 @@ public class GUIGameplay extends JFrame
 		player.play();
 	}
 
-	/*
-	public void paint (Graphics g )
-	{
-		super.paint(g);
-		g.drawImage(square, sqX, sqY, size, size, this);
-		g.drawImage(grid, 50, 50, this);
 
-	}
-	 */
+//	public void paint(Graphics g)
+//	{
+//		Image offImage = createImage(1000, 1000);
+//		// Creates an off-screen drawable image to be used for
+//		// double buffering; XSIZE, YSIZE are each of type ‘int’;
+//		// represents size of JFrame or JPanel, etc
+//		Graphics buffer = offImage.getGraphics();
+//		// Creates a graphics context for drawing to an 
+//		// off-screen image
+////		paintOffScreen(buffer);		// your own method
+//		g.drawImage(offImage, 0, 0, null);	
+//		// draws the image with upper left corner at 0,0
+//	}
 
-	public void paint(Graphics g)
-	{
-		Image offImage = createImage(1000, 1000);
-		// Creates an off-screen drawable image to be used for
-		// double buffering; XSIZE, YSIZE are each of type ‘int’;
-		// represents size of JFrame or JPanel, etc
-		Graphics buffer = offImage.getGraphics();
-		// Creates a graphics context for drawing to an 
-		// off-screen image
-		paintOffScreen(buffer);		// your own method
-		g.drawImage(offImage, 0, 0, null);	
-		// draws the image with upper left corner at 0,0
-	}
-
-	public void paintOffScreen(Graphics g)
-	{
-		// sometimes helpful to do this first to clear things:
-		g.clearRect(0, 0, 500, 500);
-		g.drawImage(grid, 50, 50, this);
-		if (h < 35)
-		{
-			g.drawImage(square, sqX, sqY, size, size, this);
-		}
-		if (h > 15 && h < 50)
-		{
-			g.drawImage(square, sqX2, sqY2, size2, size2, this);
-		}
-		if (h > 30 && h < 65)
-		{
-			g.drawImage(square, sqX3, sqY3, size3, size3, this);
-		}
-		if (h < 35)
-		{
-			g.drawImage(red, redX, redY, redSize, redSize, this);
-		}
-
-	}
+//	public void paintOffScreen(Graphics g)
+//	{
+//		// sometimes helpful to do this first to clear things:
+//		g.clearRect(0, 0, 500, 500);
+//		g.drawImage(grid, 50, 50, this);
+//		if (h < 35)
+//		{
+//			g.drawImage(square, sqX, sqY, size, size, this);
+//		}
+//		if (h > 15 && h < 50)
+//		{
+//			g.drawImage(square, sqX2, sqY2, size2, size2, this);
+//		}
+//		if (h > 30 && h < 65)
+//		{
+//			g.drawImage(square, sqX3, sqY3, size3, size3, this);
+//		}
+//		if (h < 35)
+//		{
+//			g.drawImage(red, redX, redY, redSize, redSize, this);
+//		}
+//
+//	}
 
 	public void updates()
 	{
