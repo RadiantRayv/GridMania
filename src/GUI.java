@@ -17,7 +17,7 @@ import javax.swing.SwingUtilities;
 public class GUI extends JFrame
 {
 	private JLabel test;
-	private game g;
+//	private game g;
 	private song s;
 	
 	MediaPlayer player;
@@ -120,8 +120,8 @@ public class GUI extends JFrame
     Group g = new Group();
 //	g.getChildren().add(new MediaView(player));
     Scene scene = new Scene(g);
-    fxPanel.setScene(scene);
-    container.add(fxPanel);
+//    fxPanel.setScene(scene);
+//    container.add(fxPanel);
 //    Platform.runLater(new Runnable() {
 //        @Override
 //        public void run() {
