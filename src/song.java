@@ -75,4 +75,9 @@ public class song
 	{
 		return song;
 	}
+	
+	public String getInfo()
+	{
+		return (name + " " + bpm + "bpm " + lengthString);
+	}
 }
