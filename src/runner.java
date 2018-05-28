@@ -17,6 +17,18 @@ public class runner
 		s.loadEasy("\\Songs\\SPAIN POWER");
 		
 		goog.setSong(s);
+		goog.startSong();
+		
+		goog.draw1();
+		
+		long TimeStart = System.currentTimeMillis();
+		long timediff = 0;
+		while(timediff<5)
+		{
+			timediff = (System.currentTimeMillis() - TimeStart);
+		}
+		
+		goog.draw1();
 //		g.updateNoteField(0);
 
 //		goog.playMusic();
