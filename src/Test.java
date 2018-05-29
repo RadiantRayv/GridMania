@@ -6,6 +6,9 @@ import javafx.scene.media.MediaPlayer;
 
 public class Test implements ActionListener  {
 	JPanel cards; //a panel that uses CardLayout
+	JPanel menu;
+	JPanel how;
+	JPanel cred;
 	JPanel card1;
 	JPanel card2;
 	JPanel card3;
@@ -14,16 +17,24 @@ public class Test implements ActionListener  {
 	final static String PROMPT = "Card with prompt";
 	final static String INFO = "Card with song info and difficulty";
 	final static String GAME = "Card with the game";
-	private JButton buttonD = new JButton("I DO have a numpad");
-	private JButton buttonN = new JButton("I DO NOT have a numpad");
-	private JButton buttonE = new JButton("Easy");
-	private JButton buttonM = new JButton("Medium");
-	private JButton buttonH = new JButton("Hard");
+	final static String MENU = "Card with menu";
+	final static String HOW = "Card with how to play";
+	final static String CRED = "Card with credits";
+	private JButton bDo = new JButton("I DO have a numpad");
+	private JButton bNot = new JButton("I DO NOT have a numpad");
+	private JButton bEasy = new JButton("Easy");
+	private JButton bMedium = new JButton("Medium");
+	private JButton bHard = new JButton("Hard");
+	private JButton bPlay = new JButton("Play");
+	private JButton bHowToPlay = new JButton("How To Play");
+	private JButton bCredits = new JButton("Credits");
 	private JLabel numpad = new JLabel("Do you have a numpad?");
 	private JLabel songInfo = new JLabel("Song Info:");
 	private JLabel info;
 	private JLabel diff = new JLabel("Choose a difficulty");
 	private JLabel game;
+	private JLabel howto = new JLabel("Get gud");
+	private JLabel credits = new JLabel("Game created by: Rayden Wang and Euan Cousar. External Resources used: https://docs.oracle.com/javase/tutorial/index.html, https://youtu.be/TdEo002K2GQ");
 	private String[] songs = {"song select", "Rob Gasser - Supersonic"};
 	private JComboBox<String> comboBox1;
 	private song s;
@@ -31,19 +42,27 @@ public class Test implements ActionListener  {
 
 	public void addComponentToPane(Container pane) {
 		JPanel comboBoxPane = new JPanel(); //use FlowLayout
-		buttonD.addActionListener(this);
-		buttonN.addActionListener(this);
-		buttonE.addActionListener(this);
-		buttonM.addActionListener(this);
-		buttonH.addActionListener(this);
-
+		bDo.addActionListener(this);
+		bNot.addActionListener(this);
+		bEasy.addActionListener(this);
+		bMedium.addActionListener(this);
+		bHard.addActionListener(this);
+		bPlay.addActionListener(this);
+		bHowToPlay.addActionListener(this);
+		bCredits.addActionListener(this);
+		
 
 		//Create the "cards".
 		card1 = new JPanel();
 		card1.add(numpad); 
-		card1.add(buttonD);
-		card1.add(buttonN);
+		card1.add(bDo);
+		card1.add(bNot);
 
+		menu = new JPanel();
+		menu.setBackground(Color.PINK);
+		menu.add(bPlay);
+		menu.add(bHowToPlay);
+		menu.add(bCredits);
 
 		card2 = new JPanel();
 		comboBox1 = new JComboBox<String>(songs);
@@ -53,12 +72,18 @@ public class Test implements ActionListener  {
 
 		card3 = new JPanel();
 		card3.add(diff);
-		card3.add(buttonE);
-		card3.add(buttonM);
-		card3.add(buttonH);
+		card3.add(bEasy);
+		card3.add(bMedium);
+		card3.add(bHard);
 		card3.add(songInfo);
 		
 		card4 = new JPanel();
+		
+		how = new JPanel(); 
+		how.add(howto);
+		
+		cred = new JPanel();
+		cred.add(credits);
 
 		//Create the panel that contains the "cards".
 		cards = new JPanel(new CardLayout());
@@ -66,39 +91,57 @@ public class Test implements ActionListener  {
 		cards.add(card2, SONGS);
 		cards.add(card3, INFO);
 		cards.add(card4, GAME);
+		cards.add(menu, MENU);
+		cards.add(how, HOW);
+		cards.add(cred, CRED);
 
 		pane.add(comboBoxPane, BorderLayout.PAGE_START);
 		pane.add(cards, BorderLayout.CENTER);
 	}
 
 	public void actionPerformed(ActionEvent evt) {
-		if(evt.getSource() == buttonD)
+		if(evt.getSource() == bDo)
+		{
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, MENU);
+		}
+		if(evt.getSource() == bNot)
+		{
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, MENU);
+		}
+		if(evt.getSource() == bPlay)
 		{
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, SONGS);
 		}
-		if(evt.getSource() == buttonN)
+		if(evt.getSource() == bHowToPlay)
 		{
 			CardLayout cl = (CardLayout)(cards.getLayout());
-			cl.show(cards, SONGS);
+			cl.show(cards, HOW);
 		}
-		if(evt.getSource() == buttonE)
+		if(evt.getSource() == bCredits)
 		{
-			game = new JLabel(buttonE.getText());
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, CRED);
+		}
+		if(evt.getSource() == bEasy)
+		{
+			game = new JLabel(bEasy.getText());
 			card4.add(game);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 		}
-		if(evt.getSource() == buttonM)
+		if(evt.getSource() == bMedium)
 		{
-			game = new JLabel(buttonM.getText());
+			game = new JLabel(bMedium.getText());
 			card4.add(game);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 		}
-		if(evt.getSource() == buttonH)
+		if(evt.getSource() == bHard)
 		{
-			game = new JLabel(buttonH.getText());
+			game = new JLabel(bHard.getText());
 			card4.add(game);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
