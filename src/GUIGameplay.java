@@ -10,6 +10,7 @@ public class GUIGameplay extends JFrame
 { 
 
 	private ImageIcon square;
+	private ImageIcon blank;
 	private Image red;
 	private Image grid;
 	private int counter;         // counts seconds
@@ -64,6 +65,7 @@ public class GUIGameplay extends JFrame
 
 		ClassLoader cldr = this.getClass().getClassLoader();
 		square = new ImageIcon(cldr.getResource("bluesquare.png"));
+		blank = new ImageIcon(cldr.getResource("blank.png"));
 		red = new ImageIcon(cldr.getResource("redsquare.png")).getImage();
 		grid = new ImageIcon(cldr.getResource("grid.png")).getImage();
 		addWindowListener(new java.awt.event.WindowAdapter() {public void windowClosing(WindowEvent evt) {System.exit(0);}});
@@ -111,12 +113,16 @@ public class GUIGameplay extends JFrame
 	private class note implements Runnable
 	{
 		
-		private int xcoord;
-		private int ycoord;
-		note(int x, int y)
+		private int xfirst;
+		private int yfirst;
+		private int xsecond;
+		private int ysecond;
+		note(int x1, int y1, int x2, int y2)
 		{
-			xcoord = x;
-			ycoord = y;
+			xfirst = x1;
+			yfirst = y1;
+			xsecond = x2;
+			ysecond = y2;
 		}
 		
 		public void run() 
@@ -124,20 +130,22 @@ public class GUIGameplay extends JFrame
 			long TimeStart = System.currentTimeMillis();
 			long timediff = 0;
 			int size = 2;
-			while(timediff<1000)
+			JLabel sq1  = new JLabel();
+			while(size<225)
 			{
 				timediff = (System.currentTimeMillis() - TimeStart);
 				if(timediff % 50 == 0)
 				{
-					JLabel sq1 = new JLabel();
 					sq1.setHorizontalAlignment(JLabel.CENTER);
-					sq1.setBounds(0,0,xcoord,ycoord);
+					sq1.setBounds(xfirst, yfirst, xsecond, ysecond);
 					one.add(sq1, 0);
 					
 					int h = (int)(timediff/50);
 					size += h;
 					ImageIcon scaled = new ImageIcon(square.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
 					sq1.setIcon(scaled);
+					
+
 					//				counter++;
 					//				System.out.println("time is " + counter);
 					//				repaint();
@@ -147,14 +155,41 @@ public class GUIGameplay extends JFrame
 
 				}
 			}
+			while(timediff < 1250)
+			{
+				timediff = (System.currentTimeMillis() - TimeStart);
+			}
+			sq1.setIcon(blank);
+
 		}
 	}
 
-	public void draw1()
+	public void draw(int index)
 	{
-		note noteThread = new note(255, 255);
-		Thread t = new Thread(noteThread);
-		t.start();
+		note noteThread;
+		Thread t;
+		switch(index)
+		{
+		case 1:
+			noteThread = new note(0,0,225,225);
+			t = new Thread(noteThread);
+			t.start();
+			break;
+			
+		case 2:
+			noteThread = new note(225,0,225,225);
+			t = new Thread(noteThread);
+			t.start();
+			break;
+			
+		case 3:
+			noteThread = new note(450,0,225,225);
+			t = new Thread(noteThread);
+			t.start();
+			break;
+			
+		}
+
 	}
 
 

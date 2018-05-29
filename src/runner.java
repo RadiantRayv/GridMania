@@ -19,7 +19,7 @@ public class runner
 		goog.setSong(s);
 		goog.startSong();
 		
-		goog.draw1();
+		goog.draw(1);
 		
 		long TimeStart = System.currentTimeMillis();
 		long timediff = 0;
@@ -28,7 +28,23 @@ public class runner
 			timediff = (System.currentTimeMillis() - TimeStart);
 		}
 		
-		goog.draw1();
+		goog.draw(2);
+		
+		TimeStart = System.currentTimeMillis();
+		timediff = 0;
+		while(timediff<500)
+		{
+			timediff = (System.currentTimeMillis() - TimeStart);
+		}
+		
+		goog.draw(3);
+		
+		TimeStart = System.currentTimeMillis();
+		timediff = 0;
+		while(timediff<500)
+		{
+			timediff = (System.currentTimeMillis() - TimeStart);
+		}
 //		g.updateNoteField(0);
 
 //		goog.playMusic();
