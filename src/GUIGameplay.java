@@ -107,34 +107,54 @@ public class GUIGameplay extends JFrame
 		player = new MediaPlayer(s.getSong());
 		player.play();
 	}
+	
+	private class note implements Runnable
+	{
+		
+		private int xcoord;
+		private int ycoord;
+		note(int x, int y)
+		{
+			xcoord = x;
+			ycoord = y;
+		}
+		
+		public void run() 
+		{
+			long TimeStart = System.currentTimeMillis();
+			long timediff = 0;
+			int size = 2;
+			while(timediff<1000)
+			{
+				timediff = (System.currentTimeMillis() - TimeStart);
+				if(timediff % 50 == 0)
+				{
+					JLabel sq1 = new JLabel();
+					sq1.setHorizontalAlignment(JLabel.CENTER);
+					sq1.setBounds(0,0,xcoord,ycoord);
+					one.add(sq1, 0);
+					
+					int h = (int)(timediff/50);
+					size += h;
+					ImageIcon scaled = new ImageIcon(square.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
+					sq1.setIcon(scaled);
+					//				counter++;
+					//				System.out.println("time is " + counter);
+					//				repaint();
+				}
+				while((System.currentTimeMillis() - TimeStart) == timediff)
+				{
+
+				}
+			}
+		}
+	}
 
 	public void draw1()
 	{
-		long TimeStart = System.currentTimeMillis();
-		long timediff = 0;
-		int size = 2;
-		while(timediff<1000)
-		{
-			timediff = (System.currentTimeMillis() - TimeStart);
-			if(timediff % 50 == 0)
-			{
-				JLabel sq1 = new JLabel();
-				sq1.setBounds(0,0,225,225);
-				one.add(sq1, 0);
-				
-				int h = (int)(timediff/50);
-				size += h;
-				ImageIcon scaled = new ImageIcon(square.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
-				sq1.setIcon(scaled);
-				//				counter++;
-				//				System.out.println("time is " + counter);
-				//				repaint();
-			}
-			while((System.currentTimeMillis() - TimeStart) == timediff)
-			{
-
-			}
-		}
+		note noteThread = new note(255, 255);
+		Thread t = new Thread(noteThread);
+		t.start();
 	}
 
 

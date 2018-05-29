@@ -23,7 +23,7 @@ public class runner
 		
 		long TimeStart = System.currentTimeMillis();
 		long timediff = 0;
-		while(timediff<5)
+		while(timediff<500)
 		{
 			timediff = (System.currentTimeMillis() - TimeStart);
 		}
