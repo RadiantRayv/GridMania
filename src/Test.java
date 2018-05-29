@@ -9,30 +9,40 @@ public class Test implements ActionListener  {
 	JPanel card1;
 	JPanel card2;
 	JPanel card3;
+	JPanel card4;
 	final static String SONGS = "Card with song select";
 	final static String PROMPT = "Card with prompt";
-	final static String INFO = "Card with song info";
-	private JButton button1 = new JButton("I DO have a numpad");
-	private JButton button2 = new JButton("I DO NOT have a numpad");
-	private JLabel label1 = new JLabel("Do you have a numpad?");
-	private JLabel label2;
-	private String[] songs = {"song select", "SPAIN POWER", "big black", "MTC"};
+	final static String INFO = "Card with song info and difficulty";
+	final static String GAME = "Card with the game";
+	private JButton buttonD = new JButton("I DO have a numpad");
+	private JButton buttonN = new JButton("I DO NOT have a numpad");
+	private JButton buttonE = new JButton("Easy");
+	private JButton buttonM = new JButton("Medium");
+	private JButton buttonH = new JButton("Hard");
+	private JLabel numpad = new JLabel("Do you have a numpad?");
+	private JLabel songInfo = new JLabel("Song Info:");
+	private JLabel info;
+	private JLabel diff = new JLabel("Choose a difficulty");
+	private JLabel game;
+	private String[] songs = {"song select", "Rob Gasser - Supersonic"};
 	private JComboBox<String> comboBox1;
 	private song s;
 	MediaPlayer player;
 
 	public void addComponentToPane(Container pane) {
-		//Put the JComboBox in a JPanel to get a nicer look.
 		JPanel comboBoxPane = new JPanel(); //use FlowLayout
-		button1.addActionListener(this);
-		button2.addActionListener(this);
+		buttonD.addActionListener(this);
+		buttonN.addActionListener(this);
+		buttonE.addActionListener(this);
+		buttonM.addActionListener(this);
+		buttonH.addActionListener(this);
 
 
 		//Create the "cards".
 		card1 = new JPanel();
-		card1.add(label1); 
-		card1.add(button1);
-		card1.add(button2);
+		card1.add(numpad); 
+		card1.add(buttonD);
+		card1.add(buttonN);
 
 
 		card2 = new JPanel();
@@ -42,27 +52,56 @@ public class Test implements ActionListener  {
 		card2.add(comboBox1);
 
 		card3 = new JPanel();
+		card3.add(diff);
+		card3.add(buttonE);
+		card3.add(buttonM);
+		card3.add(buttonH);
+		card3.add(songInfo);
+		
+		card4 = new JPanel();
 
 		//Create the panel that contains the "cards".
 		cards = new JPanel(new CardLayout());
 		cards.add(card1, PROMPT);
 		cards.add(card2, SONGS);
 		cards.add(card3, INFO);
+		cards.add(card4, GAME);
 
 		pane.add(comboBoxPane, BorderLayout.PAGE_START);
 		pane.add(cards, BorderLayout.CENTER);
 	}
 
 	public void actionPerformed(ActionEvent evt) {
-		if(evt.getSource() == button1)
+		if(evt.getSource() == buttonD)
 		{
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, SONGS);
 		}
-		if(evt.getSource() == button2)
+		if(evt.getSource() == buttonN)
 		{
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, SONGS);
+		}
+		if(evt.getSource() == buttonE)
+		{
+			game = new JLabel(buttonE.getText());
+			card4.add(game);
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, GAME);
+		}
+		if(evt.getSource() == buttonM)
+		{
+			game = new JLabel(buttonM.getText());
+			card4.add(game);
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, GAME);
+		}
+		if(evt.getSource() == buttonH)
+		{
+			game = new JLabel(buttonH.getText());
+			card4.add(game);
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, GAME);
 		}
 	}
 
@@ -80,8 +119,8 @@ public class Test implements ActionListener  {
 					String itemSelected = songs[comboBox1.getSelectedIndex()];
 					s = new song("\\Songs\\" + itemSelected);
 					s.loadEasy("\\Songs\\" + itemSelected);
-					label2 = new JLabel(s.getInfo());
-					card3.add(label2);
+					info = new JLabel(s.getInfo());
+					card3.add(info);
 					Test goog = new Test();	
 					goog.setSong(s);
 					startSong();
