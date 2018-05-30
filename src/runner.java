@@ -11,40 +11,39 @@ public class runner
 		JFXPanel f = new JFXPanel(); //this is just so that JavaFX toolkit gets initialized so that the rest of the classes in this program can use it 
 		
 //		game g = new game();
-		GUIGameplay goog = new GUIGameplay();		
+		Test menu = new Test();
+		menu.createAndShowGUI();
 		
-		song s = new song("\\Songs\\SPAIN POWER");
-		s.loadEasy("\\Songs\\SPAIN POWER");
 		
-		goog.setSong(s);
-		goog.startSong();
-		
-		goog.draw(1);
-		
-		long TimeStart = System.currentTimeMillis();
-		long timediff = 0;
-		while(timediff<500)
-		{
-			timediff = (System.currentTimeMillis() - TimeStart);
-		}
-		
-		goog.draw(2);
-		
-		TimeStart = System.currentTimeMillis();
-		timediff = 0;
-		while(timediff<500)
-		{
-			timediff = (System.currentTimeMillis() - TimeStart);
-		}
-		
-		goog.draw(3);
-		
-		TimeStart = System.currentTimeMillis();
-		timediff = 0;
-		while(timediff<500)
-		{
-			timediff = (System.currentTimeMillis() - TimeStart);
-		}
+//		goog.setSong(s);
+//		goog.startSong();
+//		
+//		goog.draw(1);
+//		
+//		long TimeStart = System.currentTimeMillis();
+//		long timediff = 0;
+//		while(timediff<500)
+//		{
+//			timediff = (System.currentTimeMillis() - TimeStart);
+//		}
+//		
+//		goog.draw(2);
+//		
+//		TimeStart = System.currentTimeMillis();
+//		timediff = 0;
+//		while(timediff<500)
+//		{
+//			timediff = (System.currentTimeMillis() - TimeStart);
+//		}
+//		
+//		goog.draw(3);
+//		
+//		TimeStart = System.currentTimeMillis();
+//		timediff = 0;
+//		while(timediff<500)
+//		{
+//			timediff = (System.currentTimeMillis() - TimeStart);
+//		}
 //		g.updateNoteField(0);
 
 //		goog.playMusic();
