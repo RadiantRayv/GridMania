@@ -18,8 +18,9 @@ public class notesChart
 	private notesAtTime current;
 
 	private Scanner fileScanner;
-	String path;
+	private String path;
 	private boolean[] tempArray;
+	private ClassLoader cldr;
 
 	notesChart(int difflvl, int diff, int b, int off)
 	{
@@ -29,20 +30,23 @@ public class notesChart
 		difficulty = diff;
 		bpm = b;
 		offset = off;
+		
 	}
 
 	notesChart(String filepath)
 	{
+		cldr = this.getClass().getClassLoader();
+		
 		chart = new LinkedList<notesAtTime>();
 		
 		path = System.getProperty("user.dir") + filepath;
 
-		File chartFile = new File(path + "\\easy.txt");
+		InputStream chartFile = cldr.getResourceAsStream("\\Songs\\Rob Gasser - Supersonic\\easy.txt");
 
 		tempArray =  new boolean[10];
 
-		try 
-		{
+//		try 
+//		{
 			fileScanner = new Scanner(chartFile);
 
 
@@ -63,12 +67,12 @@ public class notesChart
 
 					//UHHHHHHHH DUDE SO ADD FILE first 10 int are notes, 11 is position of note
 					//when iterating back and forth, inc beat by 1 and only display ntoe if beat == the note count in the notesAtTime
-		} 
-		catch (FileNotFoundException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		} 
+//		catch (FileNotFoundException e) 
+//		{
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		//this constructor for loading from disk
 	}

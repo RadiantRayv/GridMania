@@ -6,16 +6,16 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class Test implements ActionListener  {
-	JPanel cards; //a panel that uses CardLayout
-	JPanel menu;
-	JPanel how;
-	JPanel cred;
-	JPanel card1;
-	JPanel card2;
-	JPanel card3;
-	JPanel card4;
-	GUIGameplay gamegui = new GUIGameplay();
-	JPanel cardg = gamegui.getCont();
+	private JPanel cards; //a panel that uses CardLayout
+	private JPanel menu;
+	private JPanel how;
+	private JPanel cred;
+	private JPanel card1;
+	private JPanel card2;
+	private JPanel card3;
+	private JPanel card4;
+	private GUIGameplay gamegui = new GUIGameplay();
+	private JPanel cardg = gamegui.getCont();
 	final static String SONGS = "Card with song select";
 	final static String PROMPT = "Card with prompt";
 	final static String INFO = "Card with song info and difficulty";

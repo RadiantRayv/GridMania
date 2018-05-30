@@ -26,7 +26,7 @@ public class GUIGameplay
 
 
 	private song s;
-	MediaPlayer player;
+	private MediaPlayer player;
 
 	private notesChart chart;
 	private int bpm;

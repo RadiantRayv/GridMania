@@ -3,7 +3,6 @@ import javafx.scene.media.*;
 
 public class runner 
 {
-	MediaPlayer player;
 
 	public static void main(String[] args) 
 	{
