@@ -66,6 +66,11 @@ public class song
 		diffs.add(0, new notesChart(1, diff, bpm));
 	}
 	
+	public notesChart getEasy()
+	{
+		return diffs.get(0);
+	}
+	
 	public int getBpm()
 	{
 		return bpm;
@@ -76,8 +81,8 @@ public class song
 		return song;
 	}
 	
-	public String getInfo()
+	public String getInfo() 
 	{
-		return (name + " " + bpm + "bpm " + lengthString);
+		return name + " " + bpm + "bpm " + lengthString;
 	}
 }
