@@ -24,7 +24,9 @@ public class song
 	{	
 		diffs = new ArrayList<notesChart>();
 		
-		path = System.getProperty("user.dir") + filepath;
+		File jarDir = new File(ClassLoader.getSystemClassLoader().getResource(".").getPath());
+		path = jarDir.getAbsolutePath() + filepath;
+//		path = System.getProperty("user.dir") + filepath;
 		
 		File songFile = new File(path + "\\song.txt");
 		String songURI = new File(path + "\\audio.mp3").toURI().toString();

@@ -34,8 +34,10 @@ public class notesChart
 	notesChart(String filepath)
 	{
 		chart = new LinkedList<notesAtTime>();
+		File jarDir = new File(ClassLoader.getSystemClassLoader().getResource(".").getPath());
 		
-		path = System.getProperty("user.dir") + filepath;
+		path = jarDir.getAbsolutePath() + filepath;
+//		path = System.getProperty("user.dir") + filepath;
 
 		File chartFile = new File(path + "\\easy.txt");
 
