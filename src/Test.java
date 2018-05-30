@@ -3,6 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 public class Test implements ActionListener  {
 	JPanel cards; //a panel that uses CardLayout
@@ -13,6 +14,7 @@ public class Test implements ActionListener  {
 	JPanel card2;
 	JPanel card3;
 	JPanel card4;
+	JPanel game = new GUIGameplay();
 	final static String SONGS = "Card with song select";
 	final static String PROMPT = "Card with prompt";
 	final static String INFO = "Card with song info and difficulty";
@@ -32,7 +34,7 @@ public class Test implements ActionListener  {
 	private JLabel songInfo = new JLabel("Song Info:");
 	private JLabel info;
 	private JLabel diff = new JLabel("Choose a difficulty");
-	private JLabel game;
+	private JLabel lGame;
 	private JLabel howto = new JLabel("Get gud");
 	private JLabel credits = new JLabel("Game created by: Rayden Wang and Euan Cousar. External Resources used: https://docs.oracle.com/javase/tutorial/index.html, https://youtu.be/TdEo002K2GQ");
 	private String[] songs = {"song select", "Rob Gasser - Supersonic"};
@@ -127,24 +129,29 @@ public class Test implements ActionListener  {
 		}
 		if(evt.getSource() == bEasy)
 		{
-			game = new JLabel(bEasy.getText());
+			stopSong();
 			card4.add(game);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
+			startSong();
 		}
 		if(evt.getSource() == bMedium)
 		{
-			game = new JLabel(bMedium.getText());
-			card4.add(game);
+			stopSong();
+			lGame = new JLabel(bMedium.getText());
+			card4.add(lGame);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
+			startSong();
 		}
 		if(evt.getSource() == bHard)
 		{
-			game = new JLabel(bHard.getText());
-			card4.add(game);
+			stopSong();
+			lGame = new JLabel(bHard.getText());
+			card4.add(lGame);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
+			startSong();
 		}
 	}
 
@@ -166,9 +173,9 @@ public class Test implements ActionListener  {
 					card3.add(info);
 					Test goog = new Test();	
 					goog.setSong(s);
-					startSong();
 					CardLayout cl = (CardLayout)(cards.getLayout());
 					cl.show(cards, INFO);
+					startMid(45000.0);
 				}
 			}
 		}
@@ -184,13 +191,51 @@ public class Test implements ActionListener  {
 		player = new MediaPlayer(s.getSong());
 		player.play();
 	}
+	
+	public void stopSong()
+	{
+		player.stop();
+	}
+	
+	public void startMid(double time)
+	{
+		player = new MediaPlayer(s.getSong());
+		player.play();
+		new SeekThread(time).run();
+	}
+	
+	private class SeekThread implements Runnable
+	{
+		private double time;
+		
+		SeekThread(double t)
+		{
+			time = t;
+		}
+		public void run()
+		{
+			player.seek(new Duration(time));
+		}
+	}
 
 	/**
 	 * Create the GUI and show it.  For thread safety,
 	 * this method should be invoked from the
 	 * event dispatch thread.
 	 */
-	private static void createAndShowGUI() {
+	public static void createAndShowGUI() {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+//			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+		} catch (UnsupportedLookAndFeelException ex) {
+			ex.printStackTrace();
+		} catch (IllegalAccessException ex) {
+			ex.printStackTrace();
+		} catch (InstantiationException ex) {
+			ex.printStackTrace();
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		}
 		//Create and set up the window.
 		JFrame frame = new JFrame("Grid Beats");
 		frame.setResizable(false);
@@ -205,23 +250,23 @@ public class Test implements ActionListener  {
 		frame.setVisible(true);
 	}
 
-	public static void main(String[] args) {
-		JFXPanel f = new JFXPanel();
-		/* Use an appropriate Look and Feel */
-		try {
-			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-		} catch (UnsupportedLookAndFeelException ex) {
-			ex.printStackTrace();
-		} catch (IllegalAccessException ex) {
-			ex.printStackTrace();
-		} catch (InstantiationException ex) {
-			ex.printStackTrace();
-		} catch (ClassNotFoundException ex) {
-			ex.printStackTrace();
-		}
-		/* Turn off metal's use of bold fonts */
-		UIManager.put("swing.boldMetal", Boolean.FALSE);
-		createAndShowGUI();
-	}
+//	public static void main(String[] args) {
+//		JFXPanel f = new JFXPanel();
+//		/* Use an appropriate Look and Feel */
+//		try {
+//			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+//			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+//		} catch (UnsupportedLookAndFeelException ex) {
+//			ex.printStackTrace();
+//		} catch (IllegalAccessException ex) {
+//			ex.printStackTrace();
+//		} catch (InstantiationException ex) {
+//			ex.printStackTrace();
+//		} catch (ClassNotFoundException ex) {
+//			ex.printStackTrace();
+//		}
+//		/* Turn off metal's use of bold fonts */
+//		UIManager.put("swing.boldMetal", Boolean.FALSE);
+//		createAndShowGUI();
+//	}
 }
