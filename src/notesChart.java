@@ -14,19 +14,21 @@ public class notesChart
 	private int difficulty;
 	private ListIterator<notesAtTime> iter;
 	private int bpm;
+	private int offset;
 	private notesAtTime current;
 
 	private Scanner fileScanner;
 	String path;
 	private boolean[] tempArray;
 
-	notesChart(int difflvl, int diff, int bpm)
+	notesChart(int difflvl, int diff, int b, int off)
 	{
 		chart = new LinkedList<notesAtTime>();
 		iter = chart.listIterator();
 		difficultyLevel = difflvl;
 		difficulty = diff;
-		this.bpm = bpm;
+		bpm = b;
+		offset = off;
 	}
 
 	notesChart(String filepath)

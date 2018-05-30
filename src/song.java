@@ -15,6 +15,7 @@ public class song
 	String name;
 	int bpm;
 	int length;
+	int offset;
 	String lengthString;
 	
 	Media song;
@@ -36,6 +37,7 @@ public class song
 			name = fileScanner.nextLine();
 			bpm = fileScanner.nextInt();
 			length = fileScanner.nextInt();
+			offset = fileScanner.nextInt();
 			lengthString = String.valueOf(length/60) + ":" + String.valueOf(length%60);
 			song = new Media(songURI);
 			
@@ -48,10 +50,11 @@ public class song
 		
 	}
 
-	song(String songname, int bpm, String filepath)
+	song(String songname, int b, int off, String filepath)
 	{
-		this.bpm = bpm;
+		bpm = b;
 		name = songname;
+		offset = off;
 		diffs = new ArrayList<notesChart>();
 	}
 	
@@ -63,7 +66,7 @@ public class song
 
 	public void newEasy(int diff)
 	{
-		diffs.add(0, new notesChart(1, diff, bpm));
+		diffs.add(0, new notesChart(1, diff, bpm, offset));
 	}
 	
 	public notesChart getEasy()
@@ -84,5 +87,10 @@ public class song
 	public String getInfo() 
 	{
 		return name + " " + bpm + "bpm " + lengthString;
+	}
+	
+	public int getOffset()
+	{
+		return offset;
 	}
 }

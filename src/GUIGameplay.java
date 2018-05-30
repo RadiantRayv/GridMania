@@ -11,7 +11,7 @@ public class GUIGameplay extends JPanel
 
 	private ImageIcon square;
 	private ImageIcon blank;
-	private Image red;
+	private ImageIcon red;
 	private Image grid;
 	private int counter;         // counts seconds
 	private int sqX, sqY, sqX2, sqY2, sqX3, sqY3;
@@ -30,9 +30,9 @@ public class GUIGameplay extends JPanel
 	private notesChart chart;
 	private int bpm;
 
-//	private JPanel cont;
+	//	private JPanel cont;
 	private JLayeredPane one;
-//	private JLabel sq1;
+	//	private JLabel sq1;
 	//	private JLayeredPane two;
 	//	private JLayeredPane three;
 	//	private JLayeredPane four;
@@ -63,13 +63,13 @@ public class GUIGameplay extends JPanel
 		ClassLoader cldr = this.getClass().getClassLoader();
 		square = new ImageIcon(cldr.getResource("bluesquare.png"));
 		blank = new ImageIcon(cldr.getResource("blank.png"));
-		red = new ImageIcon(cldr.getResource("redsquare.png")).getImage();
+		red = new ImageIcon(cldr.getResource("redsquare.png"));
 		grid = new ImageIcon(cldr.getResource("grid.png")).getImage();
 
 
 
-//
-//		add(cont);
+		//
+		//		add(cont);
 
 		sqX = 87;
 		sqY = 87;
@@ -105,22 +105,25 @@ public class GUIGameplay extends JPanel
 		player = new MediaPlayer(s.getSong());
 		player.play();
 	}
-	
+
 	private class note implements Runnable
 	{
-		
+
 		private int xfirst;
 		private int yfirst;
 		private int xsecond;
 		private int ysecond;
-		note(int x1, int y1, int x2, int y2)
+		private boolean isSpecial;
+
+		note(int x1, int y1, int x2, int y2, boolean special)
 		{
 			xfirst = x1;
 			yfirst = y1;
 			xsecond = x2;
 			ysecond = y2;
+			isSpecial = special;
 		}
-		
+
 		public void run() 
 		{
 			long TimeStart = System.currentTimeMillis();
@@ -135,12 +138,20 @@ public class GUIGameplay extends JPanel
 					sq1.setHorizontalAlignment(JLabel.CENTER);
 					sq1.setBounds(xfirst, yfirst, xsecond, ysecond);
 					one.add(sq1, 0);
-					
+
 					int h = (int)(timediff/50);
 					size += h;
-					ImageIcon scaled = new ImageIcon(square.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
+					ImageIcon scaled;
+					if(isSpecial)
+					{
+						scaled = new ImageIcon(red.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
+					}
+					else
+					{
+						scaled = new ImageIcon(square.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
+					}
 					sq1.setIcon(scaled);
-					
+
 
 					//				counter++;
 					//				System.out.println("time is " + counter);
@@ -167,23 +178,65 @@ public class GUIGameplay extends JPanel
 		switch(index)
 		{
 		case 1:
-			noteThread = new note(0,0,225,225);
+			noteThread = new note(0,0,225,225,false);
 			t = new Thread(noteThread);
 			t.start();
 			break;
-			
+
 		case 2:
-			noteThread = new note(225,0,225,225);
+			noteThread = new note(225,0,225,225,false);
 			t = new Thread(noteThread);
 			t.start();
 			break;
-			
+
 		case 3:
-			noteThread = new note(450,0,225,225);
+			noteThread = new note(450,0,225,225,false);
 			t = new Thread(noteThread);
 			t.start();
 			break;
-			
+
+		case 4:
+			noteThread = new note(0,225,225,225,false);
+			t = new Thread(noteThread);
+			t.start();
+			break;
+
+		case 5:
+			noteThread = new note(225,225,225,225,false);
+			t = new Thread(noteThread);
+			t.start();
+			break;
+
+		case 6:
+			noteThread = new note(450,225,225,225,false);
+			t = new Thread(noteThread);
+			t.start();
+			break;
+
+		case 7:
+			noteThread = new note(0,450,225,225,false);
+			t = new Thread(noteThread);
+			t.start();
+			break;
+
+		case 8:
+			noteThread = new note(225,450,225,225,false);
+			t = new Thread(noteThread);
+			t.start();
+			break;
+
+		case 9:
+			noteThread = new note(450,450,225,225,false);
+			t = new Thread(noteThread);
+			t.start();
+			break;
+
+		case 10:
+			noteThread = new note(225,225,225,225,true);
+			t = new Thread(noteThread);
+			t.start();
+			break;
+
 		}
 
 	}
