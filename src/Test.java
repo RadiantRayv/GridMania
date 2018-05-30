@@ -193,7 +193,8 @@ public class Test implements ActionListener  {
 	private static void createAndShowGUI() {
 		//Create and set up the window.
 		JFrame frame = new JFrame("Grid Beats");
-		frame.setSize(555, 555);
+		frame.setResizable(false);
+		frame.setSize(500, 500);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Create and set up the content pane.
@@ -201,7 +202,6 @@ public class Test implements ActionListener  {
 		demo.addComponentToPane(frame.getContentPane());
 
 		//Display the window.
-		frame.pack();
 		frame.setVisible(true);
 	}
 
