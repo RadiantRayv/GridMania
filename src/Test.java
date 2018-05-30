@@ -201,9 +201,21 @@ public class Test implements ActionListener  {
 	{
 		player = new MediaPlayer(s.getSong());
 		player.play();
-		player.seek(new Duration(time));
+		new SeekThread(time).run();
+	}
+	
+	private class SeekThread implements Runnable
+	{
+		private double time;
 		
-		
+		SeekThread(double t)
+		{
+			time = t;
+		}
+		public void run()
+		{
+			player.seek(new Duration(time));
+		}
 	}
 
 	/**
