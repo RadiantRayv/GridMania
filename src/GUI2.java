@@ -14,7 +14,7 @@ public class GUI2 extends JFrame{
 	private JButton button1;
 	private JButton button2;
 	private JComboBox<String> comboBox1;
-	private String[] names = {"easy", "meduim", "hard"};// list for comboBox1
+	private String[] songs = {"SPAIN POWER", "big black", "MTC"};// list for comboBox1
 	private JMenuItem startItem, exitItem;
 	private song s;
 	MediaPlayer player;
@@ -29,7 +29,7 @@ public class GUI2 extends JFrame{
 		label1 = new JLabel("Do you have a numpad?");
 		button1 = new JButton("I DO have a numpad");
 		button2 = new JButton("I DO NOT have a numpad");
-		comboBox1 = new JComboBox<String>(names);
+		comboBox1 = new JComboBox<String>(songs);
 		comboBox1.setMaximumRowCount(3);
 		JMenu fileMenu = new JMenu("File");
 		startItem = new JMenuItem("Start");
@@ -104,7 +104,7 @@ public class GUI2 extends JFrame{
 				if ( event.getStateChange() == ItemEvent.SELECTED)
 				{
 					// a particular item in list was selected
-					String itemSelected = names[comboBox1.getSelectedIndex()];
+					String itemSelected = songs[comboBox1.getSelectedIndex()];
 					System.out.println("Item selected: " + itemSelected);
 				}
 			}
