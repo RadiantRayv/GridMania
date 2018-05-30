@@ -48,7 +48,7 @@ public class notesChart
 
 			while(fileScanner.hasNext())
 			{
-				for(int i = 0; i < 10; i++)
+				for(int i = 0; i <= 9; i++)
 				{
 					if(fileScanner.nextInt() == 1)
 						tempArray[i] = true;
@@ -58,6 +58,8 @@ public class notesChart
 				
 				chart.add(new notesAtTime(Arrays.copyOf(tempArray, 10), fileScanner.nextInt()));
 			}
+			
+			iter = chart.listIterator();
 
 					//UHHHHHHHH DUDE SO ADD FILE first 10 int are notes, 11 is position of note
 					//when iterating back and forth, inc beat by 1 and only display ntoe if beat == the note count in the notesAtTime

@@ -14,7 +14,8 @@ public class Test implements ActionListener  {
 	JPanel card2;
 	JPanel card3;
 	JPanel card4;
-	JPanel game = new GUIGameplay();
+	GUIGameplay gamegui = new GUIGameplay();
+	JPanel cardg = gamegui.getCont();
 	final static String SONGS = "Card with song select";
 	final static String PROMPT = "Card with prompt";
 	final static String INFO = "Card with song info and difficulty";
@@ -92,7 +93,7 @@ public class Test implements ActionListener  {
 		cards.add(card1, PROMPT);
 		cards.add(card2, SONGS);
 		cards.add(card3, INFO);
-		cards.add(card4, GAME);
+		cards.add(cardg, GAME);
 		cards.add(menu, MENU);
 		cards.add(how, HOW);
 		cards.add(cred, CRED);
@@ -130,10 +131,21 @@ public class Test implements ActionListener  {
 		if(evt.getSource() == bEasy)
 		{
 			stopSong();
-			card4.add(game);
+			game ggg = new game(s.getEasy(), gamegui);
+			gamegui.addGame(ggg);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
+			long TimeStart = System.currentTimeMillis();
+//			while (System.currentTimeMillis() < TimeStart + s.getOffset() + 2000)
+//			{
+//			}
 			startSong();
+
+//			while (System.currentTimeMillis() < TimeStart + s.getOffset())
+//			{
+//			}
+			Thread t = new Thread(ggg);
+			t.start();
 		}
 		if(evt.getSource() == bMedium)
 		{
@@ -175,7 +187,7 @@ public class Test implements ActionListener  {
 					goog.setSong(s);
 					CardLayout cl = (CardLayout)(cards.getLayout());
 					cl.show(cards, INFO);
-					startMid(45000.0);
+					startSong();
 				}
 			}
 		}
@@ -223,7 +235,7 @@ public class Test implements ActionListener  {
 	 * this method should be invoked from the
 	 * event dispatch thread.
 	 */
-	public static void createAndShowGUI() {
+	public void createAndShowGUI() {
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 //			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
@@ -239,7 +251,7 @@ public class Test implements ActionListener  {
 		//Create and set up the window.
 		JFrame frame = new JFrame("Grid Beats");
 		frame.setResizable(false);
-		frame.setSize(500, 500);
+		frame.setSize(675, 675);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Create and set up the content pane.

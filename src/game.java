@@ -1,5 +1,5 @@
 
-public class game 
+public class game implements Runnable
 {
 	notesChart chart;
 	long approachRate = 1000;
@@ -7,39 +7,66 @@ public class game
 	notesAtTime current;
 	int bpm;
 	long TimeStart;
-	GUIGameplay g;
+	GUIGameplay gui;
 
-	game(notesChart chart, GUIGameplay gg)
+	game(notesChart chart, GUIGameplay g)
 	{
 		this.chart = chart;
 //		current = chart.getNext();
 		bpm = chart.getSong().getBpm();
-		g=gg;
+		gui = g;
 	}
 
-	public void runGame()
+	public void run()
 	{
 		TimeStart = System.currentTimeMillis();
 		
 		while(chart.hasNext())
 		{
-			updateNoteField();
+			current = chart.getNext();
+			while (System.currentTimeMillis() - TimeStart < current.getPosition()*((bpm*4)))
+			{
+			}
+			for(int i = 0; i <= 9; i++)
+			{
+				if(current.getSingleNote(i))
+				{
+					gui.draw(i);
+				}
+			}
 		}
 	}
 	
 	public void updateNoteField()
 	{
-		current = chart.getNext();
-		while (System.currentTimeMillis() < current.getPosition()*(((bpm/60)*1000)/4))
-		{
-		}
-		for(int i = 1; i <= 10; i++)
-		{
-			if(current.getSingleNote(i))
-			{
-				g.draw(i);
-			}
-		}
+		
+		
+//		gui.draw(1);
+//		
+//		long TimeStart = System.currentTimeMillis();
+//		long timediff = 0;
+//		while(timediff<500)
+//		{
+//			timediff = (System.currentTimeMillis() - TimeStart);
+//		}
+//		
+//		gui.draw(2);
+//		
+//		TimeStart = System.currentTimeMillis();
+//		timediff = 0;
+//		while(timediff<500)
+//		{
+//			timediff = (System.currentTimeMillis() - TimeStart);
+//		}
+//		
+//		gui.draw(3);
+//		
+//		TimeStart = System.currentTimeMillis();
+//		timediff = 0;
+//		while(timediff<500)
+//		{
+//			timediff = (System.currentTimeMillis() - TimeStart);
+//		}
 		
 //		int notePrevious = current.getPosition();
 //		current = chart.getNext();

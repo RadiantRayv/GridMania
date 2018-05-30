@@ -6,8 +6,9 @@ import javafx.scene.media.MediaPlayer;
 
 import java.net.URL;
 
-public class GUIGameplay extends JPanel
+public class GUIGameplay
 { 
+	private game g;
 
 	private ImageIcon square;
 	private ImageIcon blank;
@@ -30,7 +31,7 @@ public class GUIGameplay extends JPanel
 	private notesChart chart;
 	private int bpm;
 
-	//	private JPanel cont;
+	private JPanel cont;
 	private JLayeredPane one;
 	//	private JLabel sq1;
 	//	private JLayeredPane two;
@@ -49,7 +50,8 @@ public class GUIGameplay extends JPanel
 
 	public GUIGameplay() 
 	{
-		add(one = new JLayeredPane());
+		cont = new JPanel(null);
+		cont.add(one = new JLayeredPane());
 		one.setBounds(0, 0, 675, 675);
 		//		cont.add(two);
 		//		cont.add(three);
@@ -79,14 +81,24 @@ public class GUIGameplay extends JPanel
 		sqY3 = 237;
 		redX = 162;
 		redY = 163;
-		setSize(675, 675);
-		setVisible(true);
+//		setSize(675, 675);
+//		setVisible(true);
 		size = 0;
 		size2 = 0;
 		size3 = 0;
 		redSize = 10;
 
 		counter = 0;
+	}
+	
+	public JPanel getCont()
+	{
+		return cont;
+	}
+	
+	public void addGame(game gg)
+	{
+		g = gg;
 	}
 
 	public void setSong(song ss)
@@ -177,61 +189,61 @@ public class GUIGameplay extends JPanel
 		Thread t;
 		switch(index)
 		{
-		case 1:
+		case 0:
 			noteThread = new note(0,0,225,225,false);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
-		case 2:
+		case 1:
 			noteThread = new note(225,0,225,225,false);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
-		case 3:
+		case 2:
 			noteThread = new note(450,0,225,225,false);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
-		case 4:
+		case 3:
 			noteThread = new note(0,225,225,225,false);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
-		case 5:
+		case 4:
 			noteThread = new note(225,225,225,225,false);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
-		case 6:
+		case 5:
 			noteThread = new note(450,225,225,225,false);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
-		case 7:
+		case 6:
 			noteThread = new note(0,450,225,225,false);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
-		case 8:
+		case 7:
 			noteThread = new note(225,450,225,225,false);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
-		case 9:
+		case 8:
 			noteThread = new note(450,450,225,225,false);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
-		case 10:
+		case 9:
 			noteThread = new note(225,225,225,225,true);
 			t = new Thread(noteThread);
 			t.start();
