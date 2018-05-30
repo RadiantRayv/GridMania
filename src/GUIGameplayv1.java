@@ -6,7 +6,7 @@ import javafx.scene.media.MediaPlayer;
 
 import java.net.URL;
 
-public class GUIGameplay extends JPanel
+public class GUIGameplayv1 extends JFrame
 { 
 
 	private ImageIcon square;
@@ -30,7 +30,7 @@ public class GUIGameplay extends JPanel
 	private notesChart chart;
 	private int bpm;
 
-//	private JPanel cont;
+	private JPanel cont;
 	private JLayeredPane one;
 //	private JLabel sq1;
 	//	private JLayeredPane two;
@@ -47,9 +47,12 @@ public class GUIGameplay extends JPanel
 
 	//BRO LOOK AT GRIDWORLD GUI AND SEE IF THAT HELPS AT ALLr
 
-	public GUIGameplay() 
+	public GUIGameplayv1() 
 	{
-		add(one = new JLayeredPane());
+		super("Gameplay test");
+
+		cont = new JPanel(null);
+		cont.add(one = new JLayeredPane());
 		one.setBounds(0, 0, 675, 675);
 		//		cont.add(two);
 		//		cont.add(three);
@@ -65,11 +68,12 @@ public class GUIGameplay extends JPanel
 		blank = new ImageIcon(cldr.getResource("blank.png"));
 		red = new ImageIcon(cldr.getResource("redsquare.png")).getImage();
 		grid = new ImageIcon(cldr.getResource("grid.png")).getImage();
+		addWindowListener(new java.awt.event.WindowAdapter() {public void windowClosing(WindowEvent evt) {System.exit(0);}});
 
 
 
-//
-//		add(cont);
+
+		add(cont);
 
 		sqX = 87;
 		sqY = 87;
@@ -187,6 +191,101 @@ public class GUIGameplay extends JPanel
 		}
 
 	}
+
+
+	//	public void paint(Graphics g)
+	//	{
+	//		Image offImage = createImage(1000, 1000);
+	//		// Creates an off-screen drawable image to be used for
+	//		// double buffering; XSIZE, YSIZE are each of type ‘int’;
+	//		// represents size of JFrame or JPanel, etc
+	//		Graphics buffer = offImage.getGraphics();
+	//		// Creates a graphics context for drawing to an 
+	//		// off-screen image
+	////		paintOffScreen(buffer);		// your own method
+	//		g.drawImage(offImage, 0, 0, null);	
+	//		// draws the image with upper left corner at 0,0
+	//	}
+
+	//	public void paintOffScreen(Graphics g)
+	//	{
+	//		// sometimes helpful to do this first to clear things:
+	//		g.clearRect(0, 0, 500, 500);
+	//		g.drawImage(grid, 50, 50, this);
+	//		if (h < 35)
+	//		{
+	//			g.drawImage(square, sqX, sqY, size, size, this);
+	//		}
+	//		if (h > 15 && h < 50)
+	//		{
+	//			g.drawImage(square, sqX2, sqY2, size2, size2, this);
+	//		}
+	//		if (h > 30 && h < 65)
+	//		{
+	//			g.drawImage(square, sqX3, sqY3, size3, size3, this);
+	//		}
+	//		if (h < 35)
+	//		{
+	//			g.drawImage(red, redX, redY, redSize, redSize, this);
+	//		}
+	//
+	//	}
+
+	//	public void updates()
+	//	{
+	//		TimeStart = System.currentTimeMillis();
+	//		while(true)
+	//		{
+	//			timediff = (System.currentTimeMillis() - TimeStart);
+	//			if(timediff % 50 == 0)
+	//			{
+	//				h = (int)(timediff/50);
+	//				heck();
+	//				counter++;
+	//				System.out.println("time is " + counter);
+	//				repaint();
+	//			}
+	//			while((System.currentTimeMillis() - TimeStart) == timediff)
+	//			{
+	//
+	//			}
+	//		}
+	//
+	//
+	//	}
+	//
+	//
+	//	public void heck()
+	//	{
+	//
+	//
+	//		if(h < 30)
+	//		{
+	//			sqX = 87-h;
+	//			sqY = 87-h;
+	//			size = 2*h;
+	//		}
+	//		if (h > 15 && h < 45)
+	//		{
+	//			sqX2 = 238-h+15;
+	//			sqY2 = 162-h+15;
+	//			size2 = 2*(h-15);
+	//		}
+	//		if (h > 30 && h < 60)
+	//		{
+	//			sqX3 = 163-h+30;
+	//			sqY3 = 237-h+30;
+	//			size3 = 2*(h-30);
+	//		}
+	//		if (h < 30)
+	//		{
+	//			redX = 162- (3*h);
+	//			redY = 163- (3*h);
+	//			redSize = 6*h ;
+	//		}
+	//  }
+
+//USE COUNTER INSTEAD OF SIZE IN IF STATEMENTS LIKE YOU DO IN DRAW OFFSCREEN
 
 }
 

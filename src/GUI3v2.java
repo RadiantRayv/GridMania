@@ -18,10 +18,17 @@ public class GUI3v2 extends JFrame
 	private long TimeStart;
 	private long timediff;
 	private int h;
+	
+	
+	//in the method that adds a panel with a square and displays it to the jlayeredpane, store the created layer to a arraylist. Iterate over entire arraylist to resize everything at once in the paint method. After a square is hidden, delete it from the arraylist.
 
+	//BRO LOOK AT GRIDWORLD GUI AND SEE IF THAT HELPS AT ALLr
+	
 	public GUI3v2() 
 	{
 		super("Demo Graphics: Grid, Square, Red Square");
+		
+		
 		ClassLoader cldr = this.getClass().getClassLoader();
 		square = new ImageIcon(cldr.getResource("bluesquare.png")).getImage();
 		red = new ImageIcon(cldr.getResource("redsquare.png")).getImage();
@@ -67,7 +74,7 @@ public class GUI3v2 extends JFrame
 		// Creates a graphics context for drawing to an 
 		// off-screen image
 		paintOffScreen(buffer);		// your own method
-//		g.drawImage(offImage, 0, 0, null);	
+		g.drawImage(offImage, 0, 0, null);	
 		// draws the image with upper left corner at 0,0
 	}
 
