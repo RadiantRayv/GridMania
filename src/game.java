@@ -6,16 +6,21 @@ public class game
 	long nextHitTime;
 	notesAtTime current;
 	int bpm;
+	long TimeStart;
+	GUIGameplay g;
 
-	game(notesChart chart)
+	game(notesChart chart, GUIGameplay gg)
 	{
 		this.chart = chart;
-		current = chart.getNext();
+//		current = chart.getNext();
 		bpm = chart.getSong().getBpm();
+		g=gg;
 	}
 
 	public void runGame()
 	{
+		TimeStart = System.currentTimeMillis();
+		
 		while(chart.hasNext())
 		{
 			updateNoteField();
@@ -24,10 +29,22 @@ public class game
 	
 	public void updateNoteField()
 	{
-		int notePrevious = current.getPosition();
 		current = chart.getNext();
-		int noteNow = current.getPosition();
-		nextHitTime = System.currentTimeMillis() + approachRate + (bpm * (noteNow - notePrevious));
+		while (System.currentTimeMillis() < current.getPosition()*(((bpm/60)*1000)/4))
+		{
+		}
+		for(int i = 1; i <= 10; i++)
+		{
+			if(current.getSingleNote(i))
+			{
+				g.draw(i);
+			}
+		}
+		
+//		int notePrevious = current.getPosition();
+//		current = chart.getNext();
+//		int noteNow = current.getPosition();
+//		nextHitTime = System.currentTimeMillis() + approachRate + (bpm * (noteNow - notePrevious));
 		//nextHitTime = System.currentTimeMillis() + timeToNext;
 	}
 
