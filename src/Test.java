@@ -5,7 +5,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-public class Test implements ActionListener  {
+public class Test implements ActionListener, KeyListener  {
 	JPanel cards; //a panel that uses CardLayout
 	JPanel menu;
 	JPanel how;
@@ -30,20 +30,24 @@ public class Test implements ActionListener  {
 	private JButton bPlay = new JButton("Play");
 	private JButton bHowToPlay = new JButton("How To Play");
 	private JButton bCredits = new JButton("Credits");
+	private JButton bBack = new JButton("Back (esc)");
+	private JButton bBack2 = new JButton("Back (esc)");
+	private JButton bBack3 = new JButton("Back (esc)");
 	private JLabel numpad = new JLabel("Do you have a numpad?");
 	private JLabel songInfo = new JLabel("Song Info:");
 	private JLabel info;
 	private JLabel diff = new JLabel("Choose a difficulty");
 	private JLabel lGame;
 	private JLabel howto = new JLabel("Get gud");
-	private JLabel credits = new JLabel("Game created by: Rayden Wang and Euan Cousar. External Resources used: https://docs.oracle.com/javase/tutorial/index.html, https://youtu.be/TdEo002K2GQ");
+	private JLabel credits = new JLabel("Game created by: Rayden Wang and Euan Cousar. ");
+	private JLabel credits2 = new JLabel("External Resources used: ");
+	private JLabel credits3 = new JLabel ("https://docs.oracle.com/javase/tutorial/index.html, https://youtu.be/TdEo002K2GQ");
 	private String[] songs = {"song select", "Rob Gasser - Supersonic"};
 	private JComboBox<String> comboBox1;
 	private song s;
 	MediaPlayer player;
 
 	public void addComponentToPane(Container pane) {
-		JPanel comboBoxPane = new JPanel(); //use FlowLayout
 		bDo.addActionListener(this);
 		bNot.addActionListener(this);
 		bEasy.addActionListener(this);
@@ -52,8 +56,10 @@ public class Test implements ActionListener  {
 		bPlay.addActionListener(this);
 		bHowToPlay.addActionListener(this);
 		bCredits.addActionListener(this);
+		bBack.addActionListener(this);
+		bBack2.addActionListener(this);
+		bBack3.addActionListener(this);
 		
-
 		//Create the "cards".
 		card1 = new JPanel();
 		card1.add(numpad); 
@@ -65,6 +71,7 @@ public class Test implements ActionListener  {
 		menu.add(bPlay);
 		menu.add(bHowToPlay);
 		menu.add(bCredits);
+		menu.add(bBack2, BorderLayout.SOUTH);
 
 		card2 = new JPanel();
 		comboBox1 = new JComboBox<String>(songs);
@@ -77,15 +84,19 @@ public class Test implements ActionListener  {
 		card3.add(bEasy);
 		card3.add(bMedium);
 		card3.add(bHard);
+		card3.add(bBack3, BorderLayout.SOUTH);
 		card3.add(songInfo);
-		
+
+
 		card4 = new JPanel();
-		
+
 		how = new JPanel(); 
 		how.add(howto);
-		
+
 		cred = new JPanel();
 		cred.add(credits);
+		cred.add(credits2);
+		cred.add(credits3);
 
 		//Create the panel that contains the "cards".
 		cards = new JPanel(new CardLayout());
@@ -97,7 +108,6 @@ public class Test implements ActionListener  {
 		cards.add(how, HOW);
 		cards.add(cred, CRED);
 
-		pane.add(comboBoxPane, BorderLayout.PAGE_START);
 		pane.add(cards, BorderLayout.CENTER);
 	}
 
@@ -116,16 +126,19 @@ public class Test implements ActionListener  {
 		{
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, SONGS);
+			card2.add(bBack, BorderLayout.SOUTH);
 		}
 		if(evt.getSource() == bHowToPlay)
 		{
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, HOW);
+			how.add(bBack, BorderLayout.SOUTH);
 		}
 		if(evt.getSource() == bCredits)
 		{
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, CRED);
+			cred.add(bBack, BorderLayout.SOUTH);
 		}
 		if(evt.getSource() == bEasy)
 		{
@@ -152,6 +165,22 @@ public class Test implements ActionListener  {
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 			startSong();
+		}
+		if(evt.getSource() == bBack)
+		{
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, MENU);
+		}
+		if(evt.getSource() == bBack2)
+		{
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, PROMPT);
+		}
+		if(evt.getSource() == bBack3)
+		{
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, SONGS);
+			stopSong();
 		}
 	}
 
@@ -181,6 +210,34 @@ public class Test implements ActionListener  {
 		}
 	}
 
+	public void keyPressed(KeyEvent arg0)
+	{
+		if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE)
+		{
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, MENU);
+		}
+	}
+
+	public void keyReleased(KeyEvent arg0) 
+	{
+		if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE)
+		{
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, MENU);
+		}
+	}
+
+	public void keyTyped(KeyEvent arg0) 
+	{
+		if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE)
+		{
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, MENU);
+		}
+	}
+
+
 	public void setSong(song ss)
 	{
 		s = ss;
@@ -191,23 +248,23 @@ public class Test implements ActionListener  {
 		player = new MediaPlayer(s.getSong());
 		player.play();
 	}
-	
+
 	public void stopSong()
 	{
 		player.stop();
 	}
-	
+
 	public void startMid(double time)
 	{
 		player = new MediaPlayer(s.getSong());
 		player.play();
 		new SeekThread(time).run();
 	}
-	
+
 	private class SeekThread implements Runnable
 	{
 		private double time;
-		
+
 		SeekThread(double t)
 		{
 			time = t;
@@ -226,7 +283,7 @@ public class Test implements ActionListener  {
 	public static void createAndShowGUI() {
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-//			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			//			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		} catch (UnsupportedLookAndFeelException ex) {
 			ex.printStackTrace();
 		} catch (IllegalAccessException ex) {
@@ -250,23 +307,23 @@ public class Test implements ActionListener  {
 		frame.setVisible(true);
 	}
 
-//	public static void main(String[] args) {
-//		JFXPanel f = new JFXPanel();
-//		/* Use an appropriate Look and Feel */
-//		try {
-//			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-//			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
-//		} catch (UnsupportedLookAndFeelException ex) {
-//			ex.printStackTrace();
-//		} catch (IllegalAccessException ex) {
-//			ex.printStackTrace();
-//		} catch (InstantiationException ex) {
-//			ex.printStackTrace();
-//		} catch (ClassNotFoundException ex) {
-//			ex.printStackTrace();
-//		}
-//		/* Turn off metal's use of bold fonts */
-//		UIManager.put("swing.boldMetal", Boolean.FALSE);
-//		createAndShowGUI();
-//	}
+	//	public static void main(String[] args) {
+	//		JFXPanel f = new JFXPanel();
+	//		/* Use an appropriate Look and Feel */
+	//		try {
+	//			//UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+	//			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+	//		} catch (UnsupportedLookAndFeelException ex) {
+	//			ex.printStackTrace();
+	//		} catch (IllegalAccessException ex) {
+	//			ex.printStackTrace();
+	//		} catch (InstantiationException ex) {
+	//			ex.printStackTrace();
+	//		} catch (ClassNotFoundException ex) {
+	//			ex.printStackTrace();
+	//		}
+	//		/* Turn off metal's use of bold fonts */
+	//		UIManager.put("swing.boldMetal", Boolean.FALSE);
+	//		createAndShowGUI();
+	//	}
 }
