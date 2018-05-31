@@ -5,7 +5,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-public class Test implements ActionListener, KeyListener  {
+public class Test implements ActionListener {
 	JPanel cards; //a panel that uses CardLayout
 	JPanel menu;
 	JPanel how;
@@ -30,9 +30,13 @@ public class Test implements ActionListener, KeyListener  {
 	private JButton bPlay = new JButton("Play");
 	private JButton bHowToPlay = new JButton("How To Play");
 	private JButton bCredits = new JButton("Credits");
-	private JButton bBack = new JButton("Back (esc)");
-	private JButton bBack2 = new JButton("Back (esc)");
-	private JButton bBack3 = new JButton("Back (esc)");
+	private JButton bBack = new JButton("Back");
+	private JButton bBack2 = new JButton("Back");
+	private JButton bBack3 = new JButton("Back");
+	private JButton song1 = new JButton("Rob Gasser - Supersonic");
+	private JButton song2 = new JButton("other song (Not coded yet)");
+	private JButton song3 = new JButton("third song (Not coded either)");
+	private JLabel select = new JLabel("select a song");
 	private JLabel numpad = new JLabel("Do you have a numpad?");
 	private JLabel songInfo = new JLabel("Song Info:");
 	private JLabel info;
@@ -42,8 +46,6 @@ public class Test implements ActionListener, KeyListener  {
 	private JLabel credits = new JLabel("Game created by: Rayden Wang and Euan Cousar. ");
 	private JLabel credits2 = new JLabel("External Resources used: ");
 	private JLabel credits3 = new JLabel ("https://docs.oracle.com/javase/tutorial/index.html, https://youtu.be/TdEo002K2GQ");
-	private String[] songs = {"song select", "Rob Gasser - Supersonic"};
-	private JComboBox<String> comboBox1;
 	private song s;
 	MediaPlayer player;
 
@@ -59,7 +61,9 @@ public class Test implements ActionListener, KeyListener  {
 		bBack.addActionListener(this);
 		bBack2.addActionListener(this);
 		bBack3.addActionListener(this);
-		
+		song1.addActionListener(this);
+
+
 		//Create the "cards".
 		card1 = new JPanel();
 		card1.add(numpad); 
@@ -74,10 +78,10 @@ public class Test implements ActionListener, KeyListener  {
 		menu.add(bBack2, BorderLayout.SOUTH);
 
 		card2 = new JPanel();
-		comboBox1 = new JComboBox<String>(songs);
-		comboBox1.setMaximumRowCount(4);
-		comboBox1.addItemListener(new ComboBoxHandler());
-		card2.add(comboBox1);
+		card2.add(select);
+		card2.add(song1);
+		card2.add(song2);
+		card2.add(song3);
 
 		card3 = new JPanel();
 		card3.add(diff);
@@ -86,7 +90,6 @@ public class Test implements ActionListener, KeyListener  {
 		card3.add(bHard);
 		card3.add(bBack3, BorderLayout.SOUTH);
 		card3.add(songInfo);
-
 
 		card4 = new JPanel();
 
@@ -180,60 +183,21 @@ public class Test implements ActionListener, KeyListener  {
 		{
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, SONGS);
+			info.setText("");
 			stopSong();
 		}
-	}
-
-	private class ComboBoxHandler implements ItemListener 
-	{
-		public void itemStateChanged (ItemEvent event) 
+		if(evt.getSource() == song1)
 		{
-			// replace with appropriate reaction to list choice
-			// sample code
-			if (event.getSource() == comboBox1) 
-			{
-				if (event.getStateChange() == ItemEvent.SELECTED)
-				{
-					// a particular item in list was selected
-					String itemSelected = songs[comboBox1.getSelectedIndex()];
-					s = new song("\\Songs\\" + itemSelected);
-					s.loadEasy("\\Songs\\" + itemSelected);
-					info = new JLabel(s.getInfo());
-					card3.add(info);
-					Test goog = new Test();	
-					goog.setSong(s);
-					CardLayout cl = (CardLayout)(cards.getLayout());
-					cl.show(cards, INFO);
-					startMid(45000.0);
-				}
-			}
-		}
-	}
-
-	public void keyPressed(KeyEvent arg0)
-	{
-		if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE)
-		{
+			String selected = song1.getText();
+			s = new song("\\Songs\\" + selected);
+			s.loadEasy("\\Songs\\" + selected);
+			info = new JLabel(s.getInfo());
+			card3.add(info);
+			Test goog = new Test();	
+			goog.setSong(s);
 			CardLayout cl = (CardLayout)(cards.getLayout());
-			cl.show(cards, MENU);
-		}
-	}
-
-	public void keyReleased(KeyEvent arg0) 
-	{
-		if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE)
-		{
-			CardLayout cl = (CardLayout)(cards.getLayout());
-			cl.show(cards, MENU);
-		}
-	}
-
-	public void keyTyped(KeyEvent arg0) 
-	{
-		if (arg0.getKeyCode() == KeyEvent.VK_ESCAPE)
-		{
-			CardLayout cl = (CardLayout)(cards.getLayout());
-			cl.show(cards, MENU);
+			cl.show(cards, INFO);
+			startMid(45000.0);
 		}
 	}
 
