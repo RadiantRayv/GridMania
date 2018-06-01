@@ -41,7 +41,7 @@ public class notesChart
 		
 		path = System.getProperty("user.dir") + filepath;
 
-		InputStream chartFile = cldr.getResourceAsStream("\\Songs\\Rob Gasser - Supersonic\\easy.txt");
+		InputStream chartFile = cldr.getResourceAsStream("Songs/Rob Gasser - Supersonic/easy.txt");
 
 		tempArray =  new boolean[10];
 
