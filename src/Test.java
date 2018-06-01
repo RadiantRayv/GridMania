@@ -6,7 +6,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class Test implements ActionListener {
-	JPanel cards; //a panel that uses CardLayout
+	private JPanel cards; //a panel that uses CardLayout
 	JPanel menu;
 	JPanel how;
 	JPanel cred;
@@ -15,6 +15,7 @@ public class Test implements ActionListener {
 	JPanel card3;
 	JPanel card4;
 	JPanel game = new GUIGameplay();
+	private GridBagConstraints c = new GridBagConstraints();
 	final static String SONGS = "Card with song select";
 	final static String PROMPT = "Card with prompt";
 	final static String INFO = "Card with song info and difficulty";
@@ -78,19 +79,35 @@ public class Test implements ActionListener {
 		menu.add(bBack2, BorderLayout.SOUTH);
 
 		card2 = new JPanel();
-		card2.add(select);
-		card2.add(song1);
-		card2.add(song2);
-		card2.add(song3);
-
+		card2.setLayout(new GridBagLayout());
+		c.gridy = 1;
+		card2.add(select, c);
+		c.gridy = 2;
+		card2.add(song1, c);
+		c.gridy = 3;
+		card2.add(song2, c);
+		c.gridy = 4;
+		card2.add(song3, c);
+		c.gridy = 5;
+		card2.add(diff, c);
+		c.ipady = 0;       //reset to default
+		c.weighty = 1.0; 
+		c.weightx = 0.5; 
+		c.anchor = GridBagConstraints.PAGE_END; //bottom of space
+		c.insets = new Insets(20,20,20,20);  //top padding
+		c.gridx = 1;      
+		c.gridy = 6;  
+		card2.add(bEasy, c);
+		c.gridx = 2;
+		card2.add(bMedium, c);
+		c.gridx = 3;
+		card2.add(bHard, c);
+		c.gridx = 0;       
+		card2.add(bBack, c);
+		card2.add(songInfo);
+	
 		card3 = new JPanel();
-		card3.add(diff);
-		card3.add(bEasy);
-		card3.add(bMedium);
-		card3.add(bHard);
-		card3.add(bBack3, BorderLayout.SOUTH);
-		card3.add(songInfo);
-
+		
 		card4 = new JPanel();
 
 		how = new JPanel(); 
@@ -129,7 +146,6 @@ public class Test implements ActionListener {
 		{
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, SONGS);
-			card2.add(bBack, BorderLayout.SOUTH);
 		}
 		if(evt.getSource() == bHowToPlay)
 		{
@@ -192,11 +208,14 @@ public class Test implements ActionListener {
 			s = new song("\\Songs\\" + selected);
 			s.loadEasy("\\Songs\\" + selected);
 			info = new JLabel(s.getInfo());
-			card3.add(info);
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridy = 0;
+			card2.add(info, c);
+			info.repaint();
 			Test goog = new Test();	
 			goog.setSong(s);
-			CardLayout cl = (CardLayout)(cards.getLayout());
-			cl.show(cards, INFO);
+//			CardLayout cl = (CardLayout)(cards.getLayout());
+//			cl.show(cards, INFO);
 			startMid(45000.0);
 		}
 	}
@@ -260,7 +279,7 @@ public class Test implements ActionListener {
 		//Create and set up the window.
 		JFrame frame = new JFrame("Grid Beats");
 		frame.setResizable(false);
-		frame.setSize(500, 500);
+		frame.setSize(600, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Create and set up the content pane.
