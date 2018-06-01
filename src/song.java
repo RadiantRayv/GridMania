@@ -1,36 +1,50 @@
 import java.util.*;
 
+import javax.swing.ImageIcon;
+
 import javafx.scene.media.*;
 import javafx.embed.swing.JFXPanel;
 
 import java.io.*;
+import java.net.JarURLConnection;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 
 public class song 
 {
-	ArrayList<notesChart> diffs;
+	private ArrayList<notesChart> diffs;
 	
-	String path;
-	String name;
-	int bpm;
-	int length;
-	int offset;
-	String lengthString;
+	private String path;
+	private String name;
+	private int bpm;
+	private int length;
+	private int offset;
+	private String lengthString;
 	
-	Media song;
+	private Media song;
+	
+	private ClassLoader cldr;
 	
 	song(String filepath)
-	{	
+	{
+		cldr = this.getClass().getClassLoader();
+		
 		diffs = new ArrayList<notesChart>();
 		
 		path = System.getProperty("user.dir") + filepath;
 		
-		File songFile = new File(path + "\\song.txt");
-		String songURI = new File(path + "\\audio.mp3").toURI().toString();
+//		File songFile = new File(path + "\\song.txt");
+		InputStream songFile = cldr.getResourceAsStream("Songs/Rob Gasser - Supersonic/song.txt");
+
+//		String songURI = new File(path + "\\audio.mp3").toURI().toString();
 		
-		try 
-		{
+		String songURI = cldr.getResource("Songs/Rob Gasser - Supersonic/audio.mp3").toString();
+		
+	
+//		try 
+//		{
 			Scanner fileScanner = new Scanner(songFile);
 			
 			
@@ -42,11 +56,11 @@ public class song
 			song = new Media(songURI);
 			
 			System.out.println(name + " " + bpm + "bpm " + lengthString);
-		} 
-		catch (FileNotFoundException e) 
-		{
-			System.out.print(e.getMessage());
-		}
+//		} 
+//		catch (FileNotFoundException e) 
+//		{
+//			System.out.print(e.getMessage());
+//		}
 		
 	}
 

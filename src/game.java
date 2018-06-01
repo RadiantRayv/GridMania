@@ -1,13 +1,13 @@
 
 public class game implements Runnable
 {
-	notesChart chart;
-	long approachRate = 1000;
-	long nextHitTime;
-	notesAtTime current;
-	int bpm;
-	long TimeStart;
-	GUIGameplay gui;
+	private notesChart chart;
+	private long approachRate = 1000;
+	private long nextHitTime;
+	private notesAtTime current;
+	private int bpm;
+	private long TimeStart;
+	private GUIGameplay gui;
 
 	game(notesChart chart, GUIGameplay g)
 	{
