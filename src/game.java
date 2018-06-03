@@ -8,6 +8,7 @@ public class game implements Runnable
 	private int bpm;
 	private long TimeStart;
 	private GUIGameplay gui;
+	private double timeOfNote;
 
 	game(notesChart chart, GUIGameplay g)
 	{
@@ -24,7 +25,9 @@ public class game implements Runnable
 		while(chart.hasNext())
 		{
 			current = chart.getNext();
-			while (System.currentTimeMillis() - TimeStart < current.getPosition()*(60000.0/bpm) + 1981 - 917)
+			timeOfNote = current.getPosition()*(15000.0/bpm) + 1981;
+			gui.setCurrentNotes(current.getNotes(), timeOfNote);
+			while (System.currentTimeMillis() - TimeStart < timeOfNote - 917)
 			{
 			}
 			for(int i = 0; i <= 9; i++)

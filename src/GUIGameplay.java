@@ -31,7 +31,11 @@ public class GUIGameplay
 //	private MediaPlayer hits;
 
 	private notesChart chart;
+	private boolean[] currentNotes;
+	private double currentTime;
 	private int bpm;
+	
+	private long TimeStart;
 
 	private JPanel cont;
 	private JLayeredPane one;
@@ -97,6 +101,8 @@ public class GUIGameplay
 		redSize = 10;
 
 		counter = 0;
+		
+		TimeStart = System.currentTimeMillis();
 	}
 
 	public JPanel getCont()
@@ -165,14 +171,15 @@ public class GUIGameplay
 
 
 					int h = (int)(timediff/25)*6 + 5;
-					size = h;
 					ImageIcon scaled;
 					if(isSpecial)
 					{
+						size = h*3;
 						scaled = new ImageIcon(red.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
 					}
 					else
 					{
+						size = h;
 						scaled = new ImageIcon(square.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
 					}
 					sq1.setIcon(scaled);
@@ -265,6 +272,12 @@ public class GUIGameplay
 		}
 
 	}
+	
+	public void setCurrentNotes(boolean[] n, double time)
+	{
+		currentNotes = n;
+		currentTime = time;
+	}
 
 	public void setKeysNo()
 	{
@@ -285,10 +298,15 @@ public class GUIGameplay
 		{
 //			Thread t = new Thread(new Runnable() {
 //				public void run() {
-					System.out.println("xd");
 					MediaPlayer hits = new MediaPlayer(new Media(hitsound));
 					hits.play();
-					System.out.println(hits.getStatus().toString());
+					long hitTimeDiff = System.currentTimeMillis() - TimeStart;
+					if(hitTimeDiff < 500 && hitTimeDiff > -500)
+					{
+						System.out.println("hit");
+					}
+					
+					
 //				}
 //			});
 //
