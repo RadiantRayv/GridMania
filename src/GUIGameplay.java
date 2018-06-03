@@ -2,7 +2,7 @@ import java.awt.*;          // access to Container
 import java.awt.event.*;    // access to WindowAdapter, WindowEvent
 import javax.swing.*;
 
-import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.*;
 
 import java.net.URL;
 
@@ -27,6 +27,8 @@ public class GUIGameplay
 
 	private song s;
 	private MediaPlayer player;
+	String hitsound;
+//	private MediaPlayer hits;
 
 	private notesChart chart;
 	private int bpm;
@@ -48,11 +50,17 @@ public class GUIGameplay
 
 	//BRO LOOK AT GRIDWORLD GUI AND SEE IF THAT HELPS AT ALLr
 
+	InputMap inm;
+
 	public GUIGameplay() 
 	{
 		cont = new JPanel(null);
 		cont.add(one = new JLayeredPane());
 		one.setBounds(0, 0, 675, 675);
+
+		inm = cont.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+		setKeysNo();
+
 		//		cont.add(two);
 		//		cont.add(three);
 		//		cont.add(four);
@@ -67,7 +75,7 @@ public class GUIGameplay
 		blank = new ImageIcon(cldr.getResource("blank.png"));
 		red = new ImageIcon(cldr.getResource("redsquare.png"));
 		grid = new ImageIcon(cldr.getResource("grid.png")).getImage();
-
+		hitsound = cldr.getResource("hit.wav").toString();
 
 
 		//
@@ -81,8 +89,8 @@ public class GUIGameplay
 		sqY3 = 237;
 		redX = 162;
 		redY = 163;
-//		setSize(675, 675);
-//		setVisible(true);
+		//		setSize(675, 675);
+		//		setVisible(true);
 		size = 0;
 		size2 = 0;
 		size3 = 0;
@@ -90,12 +98,12 @@ public class GUIGameplay
 
 		counter = 0;
 	}
-	
+
 	public JPanel getCont()
 	{
 		return cont;
 	}
-	
+
 	public void addGame(game gg)
 	{
 		g = gg;
@@ -145,14 +153,19 @@ public class GUIGameplay
 			while(size<225)
 			{
 				timediff = (System.currentTimeMillis() - TimeStart);
-				if(timediff % 50 == 0)
+				if(timediff % 25 == 0)
 				{
 					sq1.setHorizontalAlignment(JLabel.CENTER);
 					sq1.setBounds(xfirst, yfirst, xsecond, ysecond);
-					one.add(sq1, 0);
+					SwingUtilities.invokeLater(new Runnable() {
+						public void run() {
+							one.add(sq1, 0);
+						}
+					});
 
-					int h = (int)(timediff/50);
-					size += h;
+
+					int h = (int)(timediff/25)*6 + 5;
+					size = h;
 					ImageIcon scaled;
 					if(isSpecial)
 					{
@@ -251,6 +264,36 @@ public class GUIGameplay
 
 		}
 
+	}
+
+	public void setKeysNo()
+	{
+		inm.put(KeyStroke.getKeyStroke("1"), "tap");
+		cont.getActionMap().put("tap", new tapAction(1));
+	}
+
+	private class tapAction extends AbstractAction
+	{
+		int note;
+
+		tapAction(int n)
+		{
+			note = n;
+		}
+
+		public void actionPerformed(ActionEvent e) 
+		{
+//			Thread t = new Thread(new Runnable() {
+//				public void run() {
+					System.out.println("xd");
+					MediaPlayer hits = new MediaPlayer(new Media(hitsound));
+					hits.play();
+					System.out.println(hits.getStatus().toString());
+//				}
+//			});
+//
+//			t.start();
+		}
 	}
 
 }

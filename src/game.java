@@ -24,7 +24,7 @@ public class game implements Runnable
 		while(chart.hasNext())
 		{
 			current = chart.getNext();
-			while (System.currentTimeMillis() - TimeStart < current.getPosition()*((bpm*4)))
+			while (System.currentTimeMillis() - TimeStart < current.getPosition()*(60000.0/bpm) + 1981 - 917)
 			{
 			}
 			for(int i = 0; i <= 9; i++)
