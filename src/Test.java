@@ -289,7 +289,6 @@ public class Test implements ActionListener {
 		
 		player.setStartTime(Duration.millis(time));
 		player.play();
-		
 	}
 
 
