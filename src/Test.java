@@ -33,15 +33,16 @@ public class Test implements ActionListener {
 	private JButton bCredits = new JButton("Credits");
 	private JButton bBack = new JButton("Back");
 	private JButton bBack2 = new JButton("Back");
-	private JButton bBack3 = new JButton("Back");
 	private JButton song1 = new JButton("Rob Gasser - Supersonic");
 	private JButton song2 = new JButton("other song (Not coded yet)");
 	private JButton song3 = new JButton("third song (Not coded either)");
-	private JLabel select = new JLabel("select a song");
-	private JLabel numpad = new JLabel("Do you have a numpad?");
-	private JLabel songInfo = new JLabel("Song Info:");
-	private JLabel info;
-	private JLabel diff = new JLabel("Choose a difficulty");
+	private JLabel select = new JLabel("select a song", SwingConstants.CENTER);
+	private JLabel numpad = new JLabel("Do you have a numpad?", SwingConstants.CENTER);
+	private JLabel blank = new JLabel("");
+	private JLabel logo = new JLabel("Grid Beats", SwingConstants.CENTER);
+	private JLabel songInfo = new JLabel("Song Info:", SwingConstants.CENTER);
+	private JLabel info = new JLabel(" ", SwingConstants.CENTER);
+	private JLabel diff = new JLabel("Choose a difficulty", SwingConstants.CENTER);
 	private JLabel lGame;
 	private JLabel howto = new JLabel("Get gud");
 	private JLabel credits = new JLabel("Game created by: Rayden Wang and Euan Cousar. ");
@@ -61,52 +62,94 @@ public class Test implements ActionListener {
 		bCredits.addActionListener(this);
 		bBack.addActionListener(this);
 		bBack2.addActionListener(this);
-		bBack3.addActionListener(this);
 		song1.addActionListener(this);
 
-
+		bDo.setPreferredSize(new Dimension(250, 75));
+		bNot.setPreferredSize(new Dimension(250, 75));
+		
 		//Create the "cards".
 		card1 = new JPanel();
-		card1.add(numpad); 
-		card1.add(bDo);
-		card1.add(bNot);
+		card1.setLayout(new GridBagLayout());
+		c.insets = new Insets(20,20,20,20);
+		c.anchor = GridBagConstraints.CENTER;
+		c.fill = GridBagConstraints.BOTH;
+		c.gridy = 0;
+		c.gridx = 1;
+		c.gridwidth = 3;
+		card1.add(numpad, c); 
+		c.gridy = 1;
+		card1.add(bDo, c);
+		c.gridy = 2;
+		card1.add(bNot, c);
+		c.gridy = 3;
+		card1.add(blank, c);
 
+		bPlay.setPreferredSize(new Dimension(200, 50));
+		bHowToPlay.setPreferredSize(new Dimension(200, 50));
+		bCredits.setPreferredSize(new Dimension(200, 50));
+		bBack2.setPreferredSize(new Dimension(200, 50));
+		
 		menu = new JPanel();
-		menu.setBackground(Color.PINK);
-		menu.add(bPlay);
-		menu.add(bHowToPlay);
-		menu.add(bCredits);
-		menu.add(bBack2, BorderLayout.SOUTH);
+		menu.setLayout(new GridBagLayout());
+		c.insets = new Insets(10,10,10,10);
+		c.gridy = 0;
+		c.gridx = 1;
+		c.gridwidth = 3;
+		menu.add(logo, c); 
+		c.gridy = 1;
+		menu.add(bPlay, c);
+		c.gridy = 2;
+		menu.add(bHowToPlay, c);
+		c.gridy = 3;		
+		menu.add(bCredits, c);
+		c.gridy = 4;
+		menu.add(bBack2, c);
+		c.gridy = 5;
+		menu.add(blank, c);
 
+		bEasy.setPreferredSize(new Dimension(130, 75));
+		bMedium.setPreferredSize(new Dimension(130, 75));
+		bHard.setPreferredSize(new Dimension(130, 75));
+		bBack.setPreferredSize(new Dimension(75, 75));
+		
 		card2 = new JPanel();
 		card2.setLayout(new GridBagLayout());
+		c.insets = new Insets(15,15,15,15);
+		c.gridy = 0;
+		c.gridwidth = 5;
+		c.gridx = 1;
+		card2.add(songInfo, c); 
 		c.gridy = 1;
-		card2.add(select, c);
+		card2.add(info, c);
 		c.gridy = 2;
-		card2.add(song1, c);
+		c.weighty = 0.0; 	
+		card2.add(select, c);
 		c.gridy = 3;
-		card2.add(song2, c);
+		c.weighty = 0.5;
+		card2.add(song1, c);
 		c.gridy = 4;
-		card2.add(song3, c);
+		card2.add(song2, c);
 		c.gridy = 5;
-		card2.add(diff, c);
-		c.ipady = 0;       //reset to default
-		c.weighty = 1.0; 
-		c.weightx = 0.5; 
-		c.anchor = GridBagConstraints.PAGE_END; //bottom of space
-		c.insets = new Insets(20,20,20,20);  //top padding
-		c.gridx = 1;      
-		c.gridy = 6;  
-		card2.add(bEasy, c);
+		card2.add(song3, c);
+		c.gridy = 6;
 		c.gridx = 2;
-		card2.add(bMedium, c);
-		c.gridx = 3;
-		card2.add(bHard, c);
-		c.gridx = 0;       
+		c.weighty = 0;
+		card2.add(diff, c);
+		c.gridy = 7;
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.PAGE_END; //bottom of space     
+		c.weightx = 1.5; 
+		c.gridwidth = 2;
+		c.gridx = 0;
 		card2.add(bBack, c);
-		card2.add(songInfo);
-	
-		card3 = new JPanel();
+		c.weightx = 0.5;
+		c.gridwidth = 1;
+		c.gridx = 2;
+		card2.add(bEasy, c);
+		c.gridx = 3;
+		card2.add(bMedium, c);
+		c.gridx = 4;
+		card2.add(bHard, c);       
 		
 		card4 = new JPanel();
 
@@ -122,7 +165,6 @@ public class Test implements ActionListener {
 		cards = new JPanel(new CardLayout());
 		cards.add(card1, PROMPT);
 		cards.add(card2, SONGS);
-		cards.add(card3, INFO);
 		cards.add(card4, GAME);
 		cards.add(menu, MENU);
 		cards.add(how, HOW);
@@ -146,6 +188,15 @@ public class Test implements ActionListener {
 		{
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, SONGS);
+			c.insets = new Insets(15,15,15,15);
+			c.gridy = 7;
+			c.fill = GridBagConstraints.NONE;
+			c.anchor = GridBagConstraints.PAGE_END; //bottom of space     
+			c.weightx = 1.5; 
+			c.gridwidth = 2;
+			c.gridx = 0;
+			card2.add(bBack, c);
+
 		}
 		if(evt.getSource() == bHowToPlay)
 		{
@@ -189,34 +240,29 @@ public class Test implements ActionListener {
 		{
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, MENU);
+			info.setText(" ");
+			if(player != null && player.getStatus().equals(MediaPlayer.Status.PLAYING))
+			{
+				stopSong();
+			}
 		}
 		if(evt.getSource() == bBack2)
 		{
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, PROMPT);
 		}
-		if(evt.getSource() == bBack3)
-		{
-			CardLayout cl = (CardLayout)(cards.getLayout());
-			cl.show(cards, SONGS);
-			info.setText("");
-			stopSong();
-		}
 		if(evt.getSource() == song1)
 		{
 			String selected = song1.getText();
 			s = new song("\\Songs\\" + selected);
 			s.loadEasy("\\Songs\\" + selected);
-			info = new JLabel(s.getInfo());
 			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridy = 0;
-			card2.add(info, c);
-			info.repaint();
-			Test goog = new Test();	
-			goog.setSong(s);
-//			CardLayout cl = (CardLayout)(cards.getLayout());
-//			cl.show(cards, INFO);
-			startMid(45000.0);
+			info.setText(s.getInfo());
+			this.setSong(s);
+			if(player.getStatus().equals(MediaPlayer.Status.UNKNOWN) || player.getStatus().equals(MediaPlayer.Status.STOPPED))
+			{
+				startMid(45000.0);
+			}
 		}
 	}
 
@@ -224,11 +270,11 @@ public class Test implements ActionListener {
 	public void setSong(song ss)
 	{
 		s = ss;
+		player = new MediaPlayer(s.getSong());
 	}
 
 	public void startSong()
 	{
-		player = new MediaPlayer(s.getSong());
 		player.play();
 	}
 
@@ -239,7 +285,6 @@ public class Test implements ActionListener {
 
 	public void startMid(double time)
 	{
-		player = new MediaPlayer(s.getSong());
 		player.play();
 		new SeekThread(time).run();
 	}
