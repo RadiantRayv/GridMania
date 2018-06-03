@@ -275,6 +275,7 @@ public class Test implements ActionListener {
 
 	public void startSong()
 	{
+		player.setStartTime(Duration.millis(0.0));
 		player.play();
 	}
 
@@ -285,23 +286,12 @@ public class Test implements ActionListener {
 
 	public void startMid(double time)
 	{
+		
+		player.setStartTime(Duration.millis(time));
 		player.play();
-		new SeekThread(time).run();
+		
 	}
 
-	private class SeekThread implements Runnable
-	{
-		private double time;
-
-		SeekThread(double t)
-		{
-			time = t;
-		}
-		public void run()
-		{
-			player.seek(new Duration(time));
-		}
-	}
 
 	/**
 	 * Create the GUI and show it.  For thread safety,
