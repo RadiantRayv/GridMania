@@ -7,14 +7,13 @@ import javafx.util.Duration;
 
 public class Test implements ActionListener {
 	private JPanel cards; //a panel that uses CardLayout
-	JPanel menu;
-	JPanel how;
-	JPanel cred;
-	JPanel card1;
-	JPanel card2;
-	JPanel card3;
-	JPanel card4;
-	JPanel game = new GUIGameplay();
+	private JPanel menu;
+	private JPanel how;
+	private JPanel cred;
+	private JPanel card1;
+	private JPanel card2;
+	private JPanel gamegui = new GUIGameplay();
+	private JPanel cardg = gamegui.getCont();
 	private GridBagConstraints c = new GridBagConstraints();
 	final static String SONGS = "Card with song select";
 	final static String PROMPT = "Card with prompt";
@@ -49,7 +48,7 @@ public class Test implements ActionListener {
 	private JLabel credits2 = new JLabel("External Resources used: ");
 	private JLabel credits3 = new JLabel ("https://docs.oracle.com/javase/tutorial/index.html, https://youtu.be/TdEo002K2GQ");
 	private song s;
-	MediaPlayer player;
+	private MediaPlayer player;
 
 	public void addComponentToPane(Container pane) {
 		bDo.addActionListener(this);
@@ -150,8 +149,6 @@ public class Test implements ActionListener {
 		card2.add(bMedium, c);
 		c.gridx = 4;
 		card2.add(bHard, c);       
-		
-		card4 = new JPanel();
 
 		how = new JPanel(); 
 		how.add(howto);
@@ -165,7 +162,7 @@ public class Test implements ActionListener {
 		cards = new JPanel(new CardLayout());
 		cards.add(card1, PROMPT);
 		cards.add(card2, SONGS);
-		cards.add(card4, GAME);
+		cards.add(cardg, GAME);
 		cards.add(menu, MENU);
 		cards.add(how, HOW);
 		cards.add(cred, CRED);
@@ -213,16 +210,19 @@ public class Test implements ActionListener {
 		if(evt.getSource() == bEasy)
 		{
 			stopSong();
-			card4.add(game);
+			game ggg = new game(s.getEasy(), gamegui);
+			gamegui.addGame(ggg);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 			startSong();
+			Thread t = new Thread(ggg);
+			t.start();
 		}
 		if(evt.getSource() == bMedium)
 		{
 			stopSong();
 			lGame = new JLabel(bMedium.getText());
-			card4.add(lGame);
+			cardg.add(lGame);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 			startSong();
@@ -231,7 +231,7 @@ public class Test implements ActionListener {
 		{
 			stopSong();
 			lGame = new JLabel(bHard.getText());
-			card4.add(lGame);
+			cardg.add(lGame);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 			startSong();
