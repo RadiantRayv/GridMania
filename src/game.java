@@ -1,33 +1,77 @@
 
-public class game 
+public class game implements Runnable
 {
-	notesChart chart;
-	long approachRate = 1000;
-	long nextHitTime;
-	notesAtTime current;
-	int bpm;
+	private notesChart chart;
+	private long approachRate = 1000;
+	private long nextHitTime;
+	private notesAtTime current;
+	private int bpm;
+	private long TimeStart;
+	private GUIGameplay gui;
 
-	game(notesChart chart)
+	game(notesChart chart, GUIGameplay g)
 	{
 		this.chart = chart;
-		current = chart.getNext();
+//		current = chart.getNext();
 		bpm = chart.getSong().getBpm();
+		gui = g;
 	}
 
-	public void runGame()
+	public void run()
 	{
+		TimeStart = System.currentTimeMillis();
+		
 		while(chart.hasNext())
 		{
-			updateNoteField();
+			current = chart.getNext();
+			while (System.currentTimeMillis() - TimeStart < current.getPosition()*((bpm*4)))
+			{
+			}
+			for(int i = 0; i <= 9; i++)
+			{
+				if(current.getSingleNote(i))
+				{
+					gui.draw(i);
+				}
+			}
 		}
 	}
 	
 	public void updateNoteField()
 	{
-		int notePrevious = current.getPosition();
-		current = chart.getNext();
-		int noteNow = current.getPosition();
-		nextHitTime = System.currentTimeMillis() + approachRate + (bpm * (noteNow - notePrevious));
+		
+		
+//		gui.draw(1);
+//		
+//		long TimeStart = System.currentTimeMillis();
+//		long timediff = 0;
+//		while(timediff<500)
+//		{
+//			timediff = (System.currentTimeMillis() - TimeStart);
+//		}
+//		
+//		gui.draw(2);
+//		
+//		TimeStart = System.currentTimeMillis();
+//		timediff = 0;
+//		while(timediff<500)
+//		{
+//			timediff = (System.currentTimeMillis() - TimeStart);
+//		}
+//		
+//		gui.draw(3);
+//		
+//		TimeStart = System.currentTimeMillis();
+//		timediff = 0;
+//		while(timediff<500)
+//		{
+//			timediff = (System.currentTimeMillis() - TimeStart);
+//		}
+		
+//		int notePrevious = current.getPosition();
+//		current = chart.getNext();
+//		int noteNow = current.getPosition();
+//		nextHitTime = System.currentTimeMillis() + approachRate + (bpm * (noteNow - notePrevious));
 		//nextHitTime = System.currentTimeMillis() + timeToNext;
 	}
 
