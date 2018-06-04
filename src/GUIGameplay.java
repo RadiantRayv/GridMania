@@ -199,6 +199,7 @@ public class GUIGameplay
 				timediff = (System.currentTimeMillis() - TimeStart);
 			}
 			sq1.setIcon(blank);
+			g.nextNote();
 
 		}
 	}
@@ -281,8 +282,36 @@ public class GUIGameplay
 
 	public void setKeysNo()
 	{
-		inm.put(KeyStroke.getKeyStroke("1"), "tap");
-		cont.getActionMap().put("tap", new tapAction(1));
+		inm.put(KeyStroke.getKeyStroke("1"), "tap1");
+		cont.getActionMap().put("tap1", new tapAction(0));
+		
+		inm.put(KeyStroke.getKeyStroke("2"), "tap2");
+		cont.getActionMap().put("tap2", new tapAction(1));
+
+		inm.put(KeyStroke.getKeyStroke("3"), "tap3");
+		cont.getActionMap().put("tap3", new tapAction(2));
+		
+		inm.put(KeyStroke.getKeyStroke("4"), "tap4");
+		cont.getActionMap().put("tap4", new tapAction(3));
+		
+		inm.put(KeyStroke.getKeyStroke("5"), "tap5");
+		cont.getActionMap().put("tap5", new tapAction(4));
+		
+		inm.put(KeyStroke.getKeyStroke("6"), "tap6");
+		cont.getActionMap().put("tap6", new tapAction(5));
+		
+		inm.put(KeyStroke.getKeyStroke("7"), "tap7");
+		cont.getActionMap().put("tap7", new tapAction(6));
+		
+		inm.put(KeyStroke.getKeyStroke("8"), "tap8");
+		cont.getActionMap().put("tap8", new tapAction(7));
+		
+		inm.put(KeyStroke.getKeyStroke("9"), "tap9");
+		cont.getActionMap().put("tap9", new tapAction(8));
+		
+		inm.put(KeyStroke.getKeyStroke("0"), "taps");
+		cont.getActionMap().put("taps", new tapAction(9));
+		
 	}
 
 	private class tapAction extends AbstractAction
@@ -298,14 +327,19 @@ public class GUIGameplay
 		{
 //			Thread t = new Thread(new Runnable() {
 //				public void run() {
-					MediaPlayer hits = new MediaPlayer(new Media(hitsound));
-					hits.play();
-					long hitTimeDiff = System.currentTimeMillis() - TimeStart;
-					if(hitTimeDiff < 500 && hitTimeDiff > -500)
-					{
-						System.out.println("hit");
-					}
+//					MediaPlayer hits = new MediaPlayer(new Media(hitsound));
+//					counter++;
+//					System.out.println(counter);
+//					hits.play();
+//					long hitTimeDiff = System.currentTimeMillis();
+//					if(hitTimeDiff < 500 + currentTime && hitTimeDiff > -500 + currentTime)
+//					{
+//
+//						System.out.println("hit");
+//						currentTime = -500;
+//					}
 					
+			g.detectHit(note);
 					
 //				}
 //			});

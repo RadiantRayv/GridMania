@@ -86,6 +86,11 @@ public class notesChart
 	{
 		return iter.hasNext();
 	}
+	
+	public boolean hasPrev()
+	{
+		return iter.hasPrevious();
+	}
 
 	public notesAtTime getNext()
 	{
