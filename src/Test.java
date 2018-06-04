@@ -12,7 +12,7 @@ public class Test implements ActionListener {
 	private JPanel cred;
 	private JPanel card1;
 	private JPanel card2;
-	private JPanel gamegui = new GUIGameplay();
+	private GUIGameplay gamegui = new GUIGameplay();
 	private JPanel cardg = gamegui.getCont();
 	private GridBagConstraints c = new GridBagConstraints();
 	final static String SONGS = "Card with song select";
