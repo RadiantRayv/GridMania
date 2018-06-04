@@ -173,11 +173,15 @@ public class Test implements ActionListener {
 	public void actionPerformed(ActionEvent evt) {
 		if(evt.getSource() == bDo)
 		{
+			gamegui.setKeysYes();
+			gamegui.setKeysFinal();
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, MENU);
 		}
 		if(evt.getSource() == bNot)
 		{
+			gamegui.setKeysNo();
+			gamegui.setKeysFinal();
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, MENU);
 		}

@@ -63,7 +63,6 @@ public class GUIGameplay
 		one.setBounds(0, 0, 675, 675);
 
 		inm = cont.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
-		setKeysNo();
 
 		//		cont.add(two);
 		//		cont.add(three);
@@ -282,36 +281,47 @@ public class GUIGameplay
 
 	public void setKeysNo()
 	{
+		inm.clear();
+		inm.put(KeyStroke.getKeyStroke('y'), "tap1");
+		inm.put(KeyStroke.getKeyStroke('u'), "tap2");
+		inm.put(KeyStroke.getKeyStroke('i'), "tap3");
+		inm.put(KeyStroke.getKeyStroke('h'), "tap4");
+		inm.put(KeyStroke.getKeyStroke('j'), "tap5");
+		inm.put(KeyStroke.getKeyStroke('k'), "tap6");
+		inm.put(KeyStroke.getKeyStroke('n'), "tap7");
+		inm.put(KeyStroke.getKeyStroke('m'), "tap8");
+		inm.put(KeyStroke.getKeyStroke(','), "tap9");	
+		inm.put(KeyStroke.getKeyStroke(' '), "taps");
+	}
+	
+	public void setKeysYes()
+	{
+		inm.clear();
 		inm.put(KeyStroke.getKeyStroke("1"), "tap1");
-		cont.getActionMap().put("tap1", new tapAction(0));
-		
 		inm.put(KeyStroke.getKeyStroke("2"), "tap2");
-		cont.getActionMap().put("tap2", new tapAction(1));
-
 		inm.put(KeyStroke.getKeyStroke("3"), "tap3");
-		cont.getActionMap().put("tap3", new tapAction(2));
-		
 		inm.put(KeyStroke.getKeyStroke("4"), "tap4");
-		cont.getActionMap().put("tap4", new tapAction(3));
-		
 		inm.put(KeyStroke.getKeyStroke("5"), "tap5");
-		cont.getActionMap().put("tap5", new tapAction(4));
-		
 		inm.put(KeyStroke.getKeyStroke("6"), "tap6");
-		cont.getActionMap().put("tap6", new tapAction(5));
-		
 		inm.put(KeyStroke.getKeyStroke("7"), "tap7");
-		cont.getActionMap().put("tap7", new tapAction(6));
-		
 		inm.put(KeyStroke.getKeyStroke("8"), "tap8");
-		cont.getActionMap().put("tap8", new tapAction(7));
-		
 		inm.put(KeyStroke.getKeyStroke("9"), "tap9");
-		cont.getActionMap().put("tap9", new tapAction(8));
-		
 		inm.put(KeyStroke.getKeyStroke("0"), "taps");
+	}
+	
+	public void setKeysFinal()
+	{
+		cont.getActionMap().clear();
+		cont.getActionMap().put("tap1", new tapAction(0));
+		cont.getActionMap().put("tap2", new tapAction(1));
+		cont.getActionMap().put("tap3", new tapAction(2));
+		cont.getActionMap().put("tap4", new tapAction(3));
+		cont.getActionMap().put("tap5", new tapAction(4));
+		cont.getActionMap().put("tap6", new tapAction(5));
+		cont.getActionMap().put("tap7", new tapAction(6));
+		cont.getActionMap().put("tap8", new tapAction(7));
+		cont.getActionMap().put("tap9", new tapAction(8));
 		cont.getActionMap().put("taps", new tapAction(9));
-		
 	}
 
 	private class tapAction extends AbstractAction
