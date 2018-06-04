@@ -60,9 +60,10 @@ public class game implements Runnable
 
 	public void nextNote()
 	{
-		//if statement broke???
+		//this is only doing the do every other beat???
 		if(timeOfNoteTiming <= timeOfNoteRenderPrev)
 		{
+			System.out.println(next.getPosition());
 			timeOfNoteTiming = next.getPosition()*(15000.0/bpm) + 1981;
 			temparr = next.getNotes();
 		}
