@@ -47,7 +47,8 @@ public class Test implements ActionListener {
 	private JLabel credits = new JLabel("Game created by: Rayden Wang and Euan Cousar. ");
 	private JLabel credits2 = new JLabel("External Resources used: ");
 	private JLabel credits3 = new JLabel ("https://docs.oracle.com/javase/tutorial/index.html, https://youtu.be/TdEo002K2GQ");
-	private song s;
+	private song s = new song("Rob Gasser - Supersonic");
+	
 	private MediaPlayer player;
 
 	public void addComponentToPane(Container pane) {
@@ -257,10 +258,8 @@ public class Test implements ActionListener {
 		}
 		if(evt.getSource() == song1)
 		{
-			String selected = song1.getText();
-			s = new song("\\Songs\\" + selected);
-			s.loadEasy("\\Songs\\" + selected);
 			c.fill = GridBagConstraints.HORIZONTAL;
+			s.loadEasy("Rob Gasser - Supersonic");
 			info.setText(s.getInfo());
 			this.setSong(s);
 			if(player.getStatus().equals(MediaPlayer.Status.UNKNOWN) || player.getStatus().equals(MediaPlayer.Status.STOPPED))

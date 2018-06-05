@@ -36,11 +36,11 @@ public class song
 		path = System.getProperty("user.dir") + filepath;
 		
 //		File songFile = new File(path + "\\song.txt");
-		InputStream songFile = cldr.getResourceAsStream("Songs/Rob Gasser - Supersonic/song.txt");
+		InputStream songFile = cldr.getResourceAsStream("Songs/" + filepath + "/song.txt");
 
 //		String songURI = new File(path + "\\audio.mp3").toURI().toString();
 		
-		String songURI = cldr.getResource("Songs/Rob Gasser - Supersonic/audio.mp3").toString();
+		String songURI = cldr.getResource("Songs/" + filepath + "/audio.mp3").toString();
 		
 	
 //		try 
