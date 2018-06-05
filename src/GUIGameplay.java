@@ -4,15 +4,20 @@ import javax.swing.*;
 
 import javafx.scene.media.*;
 
+import java.text.DecimalFormat;
 import java.net.URL;
 
 public class GUIGameplay
 { 
+	public static final DecimalFormat accFormat = new DecimalFormat("#.##");
+	
 	private game g;
 
 	private ImageIcon square;
 	private ImageIcon blank;
 	private ImageIcon red;
+	private ImageIcon perfect;
+	private ImageIcon okay;
 	private Image grid;
 	private int counter;         // counts seconds
 	private int sqX, sqY, sqX2, sqY2, sqX3, sqY3;
@@ -23,6 +28,7 @@ public class GUIGameplay
 	//	private long TimeStart;
 	//	private long timediff;
 	//	private int h;
+	private int totalNotesSoFar;
 
 
 	private song s;
@@ -78,6 +84,8 @@ public class GUIGameplay
 		blank = new ImageIcon(cldr.getResource("blank.png"));
 		red = new ImageIcon(cldr.getResource("redsquare.png"));
 		grid = new ImageIcon(cldr.getResource("grid.png")).getImage();
+		perfect = new ImageIcon(cldr.getResource("perfect.png"));
+		okay = new ImageIcon(cldr.getResource("okay.png"));
 		hitsound = cldr.getResource("hit.wav").toString();
 
 
@@ -100,6 +108,8 @@ public class GUIGameplay
 		redSize = 10;
 
 		counter = 0;
+		
+		totalNotesSoFar = 0;
 		
 		TimeStart = System.currentTimeMillis();
 	}
@@ -156,17 +166,17 @@ public class GUIGameplay
 			long TimeStart = System.currentTimeMillis();
 			long timediff = 0;
 			int size = 2;
-			JLabel sq1  = new JLabel();
+			JLabel sq  = new JLabel();
 			while(size<225)
 			{
 				timediff = (System.currentTimeMillis() - TimeStart);
 				if(timediff % 25 == 0)
 				{
-					sq1.setHorizontalAlignment(JLabel.CENTER);
-					sq1.setBounds(xfirst, yfirst, xsecond, ysecond);
+					sq.setHorizontalAlignment(JLabel.CENTER);
+					sq.setBounds(xfirst, yfirst, xsecond, ysecond);
 					SwingUtilities.invokeLater(new Runnable() {
 						public void run() {
-							one.add(sq1, 0);
+							one.add(sq, 0);
 						}
 					});
 
@@ -183,7 +193,7 @@ public class GUIGameplay
 						size = h;
 						scaled = new ImageIcon(square.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
 					}
-					sq1.setIcon(scaled);
+					sq.setIcon(scaled);
 
 
 					//				counter++;
@@ -195,84 +205,52 @@ public class GUIGameplay
 
 				}
 			}
-			while(timediff < 1250)
+			while(timediff < 1251)
 			{
 				timediff = (System.currentTimeMillis() - TimeStart);
 			}
-			sq1.setIcon(blank);
+			sq.setIcon(blank);
 			g.nextNote(nextNote);
-
+			totalNotesSoFar++;
+			displayAccuracy(g.getTotalHitsAccuracy());
 		}
 	}
 
 	public void draw(int index, notesAtTime nextNote)
 	{
-		note noteThread;
-		Thread t;
 		switch(index)
 		{
 		case 0:
-			noteThread = new note(0,0,225,225,false,nextNote);
-			t = new Thread(noteThread);
-			t.start();
+			new Thread(new note(0,0,225,225,false,nextNote)).start();
 			break;
-
 		case 1:
-			noteThread = new note(225,0,225,225,false,nextNote);
-			t = new Thread(noteThread);
-			t.start();
+			new Thread(new note(225,0,225,225,false,nextNote)).start();
 			break;
-
 		case 2:
-			noteThread = new note(450,0,225,225,false,nextNote);
-			t = new Thread(noteThread);
-			t.start();
+			new Thread(new note(450,0,225,225,false,nextNote)).start();
 			break;
-
 		case 3:
-			noteThread = new note(0,225,225,225,false,nextNote);
-			t = new Thread(noteThread);
-			t.start();
+			new Thread(new note(0,225,225,225,false,nextNote)).start();
 			break;
-
 		case 4:
-			noteThread = new note(225,225,225,225,false,nextNote);
-			t = new Thread(noteThread);
-			t.start();
+			new Thread(new note(225,225,225,225,false,nextNote)).start();
 			break;
-
 		case 5:
-			noteThread = new note(450,225,225,225,false,nextNote);
-			t = new Thread(noteThread);
-			t.start();
+			new Thread(new note(450,225,225,225,false,nextNote)).start();
 			break;
-
 		case 6:
-			noteThread = new note(0,450,225,225,false,nextNote);
-			t = new Thread(noteThread);
-			t.start();
+			new Thread(new note(0,450,225,225,false,nextNote)).start();
 			break;
-
 		case 7:
-			noteThread = new note(225,450,225,225,false,nextNote);
-			t = new Thread(noteThread);
-			t.start();
+			new Thread(new note(225,450,225,225,false,nextNote)).start();
 			break;
-
 		case 8:
-			noteThread = new note(450,450,225,225,false,nextNote);
-			t = new Thread(noteThread);
-			t.start();
+			new Thread(new note(450,450,225,225,false,nextNote)).start();
 			break;
-
 		case 9:
-			noteThread = new note(225,225,225,225,true,nextNote);
-			t = new Thread(noteThread);
-			t.start();
+			new Thread(new note(225,225,225,225,true,nextNote)).start();
 			break;
-
 		}
-
 	}
 	
 	public void setCurrentNotes(boolean[] n, double time)
@@ -280,16 +258,105 @@ public class GUIGameplay
 		currentNotes = n;
 		currentTime = time;
 	}
+	
+	private class judgement implements Runnable
+	{
+
+		private int xfirst;
+		private int yfirst;
+		private int xsecond;
+		private int ysecond;
+		private boolean isSpecial;
+		private int judge;
+
+		judgement(int x1, int y1, int x2, int y2, boolean special, int j)
+		{
+			xfirst = x1;
+			yfirst = y1;
+			xsecond = x2;
+			ysecond = y2;
+			isSpecial = special;
+			judge = j;
+		}
+
+		public void run() 
+		{
+			long TimeStart = System.currentTimeMillis();
+			JLabel lb  = new JLabel();
+			lb.setHorizontalAlignment(JLabel.CENTER);
+			lb.setBounds(xfirst, yfirst, xsecond, ysecond);
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					one.add(lb, 0);
+				}
+			});
+			if(judge == 0)
+			{
+				lb.setIcon(perfect);
+			}
+			else
+			{
+				lb.setIcon(okay);
+			}
+			
+			while(System.currentTimeMillis() - TimeStart < 250)
+			{
+			}
+			lb.setIcon(blank);
+		}
+	}
+	
+	public void drawJudgement(int index, int judge)
+	{
+		switch(index)
+		{
+		case 0:
+			new Thread(new judgement(0,0,225,225,false,judge)).start();
+			break;
+		case 1:
+			new Thread(new judgement(225,0,225,225,false,judge)).start();
+			break;
+		case 2:
+			new Thread(new judgement(450,0,225,225,false,judge)).start();
+			break;
+		case 3:
+			new Thread(new judgement(0,225,225,225,false,judge)).start();
+			break;
+		case 4:
+			new Thread(new judgement(225,225,225,225,false,judge)).start();
+			break;
+		case 5:
+			new Thread(new judgement(450,225,225,225,false,judge)).start();
+			break;
+		case 6:
+			new Thread(new judgement(0,450,225,225,false,judge)).start();
+			break;
+		case 7:
+			new Thread(new judgement(225,450,225,225,false,judge)).start();
+			break;
+		case 8:
+			new Thread(new judgement(450,450,225,225,false,judge)).start();
+			break;
+		case 9:
+			new Thread(new judgement(225,225,225,225,true,judge)).start();
+			break;
+		}
+	}
+	
+	public void displayAccuracy(double hits)
+	{
+		System.out.println(accFormat.format((hits/totalNotesSoFar)*100) + "%");
+	}
 
 	public void setKeysNo()
 	{
 		inm.clear();
-		inm.put(KeyStroke.getKeyStroke('u'), "tap1");
-		inm.put(KeyStroke.getKeyStroke('i'), "tap2");
-		inm.put(KeyStroke.getKeyStroke('o'), "tap3");
-		inm.put(KeyStroke.getKeyStroke('j'), "tap4");
-		inm.put(KeyStroke.getKeyStroke('k'), "tap5");
-		inm.put(KeyStroke.getKeyStroke('l'), "tap6");
+		inm.put(KeyStroke.getKeyStroke('y'), "tap1");
+		inm.put(KeyStroke.getKeyStroke('u'), "tap2");
+		inm.put(KeyStroke.getKeyStroke('i'), "tap3");
+		inm.put(KeyStroke.getKeyStroke('h'), "tap4");
+		inm.put(KeyStroke.getKeyStroke('j'), "tap5");
+		inm.put(KeyStroke.getKeyStroke('k'), "tap6");
 		inm.put(KeyStroke.getKeyStroke('n'), "tap7");
 		inm.put(KeyStroke.getKeyStroke('m'), "tap8");
 		inm.put(KeyStroke.getKeyStroke(','), "tap9");	

@@ -15,6 +15,8 @@ public class game implements Runnable
 	private double timeOfNoteRenderPrev;
 	private double timeOfNoteTiming;
 	private long hitTimeDiff;
+	
+	private double totalHitsAccuracy;
 
 	game(notesChart chart, GUIGameplay g)
 	{
@@ -66,7 +68,13 @@ public class game implements Runnable
 //			System.out.println(nextNote.getPosition());
 			timeOfNoteTiming = nextNote.getPosition()*(15000.0/bpm) + 1981;
 			temparr = nextNote.getNotes();
+			
 //		}
+	}
+	
+	public double getTotalHitsAccuracy()
+	{
+		return totalHitsAccuracy;
 	}
 
 	public void detectHit(int n)
@@ -78,7 +86,16 @@ public class game implements Runnable
 			if(temparr[n] == true)
 			{
 				temparr[n] = false;
-				System.out.print("hit");
+				if(hitTimeDiff < 150 + timeOfNoteTiming + TimeStart && hitTimeDiff > -150 + timeOfNoteTiming + TimeStart)
+				{
+					gui.drawJudgement(n, 0);
+					totalHitsAccuracy += 1;
+				}
+				else
+				{
+					gui.drawJudgement(n, 1);
+					totalHitsAccuracy += 0.6;
+				}
 			}
 			for(int i = 0; i <= 9; i++)
 			{
