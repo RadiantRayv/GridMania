@@ -139,14 +139,16 @@ public class GUIGameplay
 		private int xsecond;
 		private int ysecond;
 		private boolean isSpecial;
+		private notesAtTime nextNote;
 
-		note(int x1, int y1, int x2, int y2, boolean special)
+		note(int x1, int y1, int x2, int y2, boolean special, notesAtTime next)
 		{
 			xfirst = x1;
 			yfirst = y1;
 			xsecond = x2;
 			ysecond = y2;
 			isSpecial = special;
+			nextNote = next;
 		}
 
 		public void run() 
@@ -198,73 +200,73 @@ public class GUIGameplay
 				timediff = (System.currentTimeMillis() - TimeStart);
 			}
 			sq1.setIcon(blank);
-			g.nextNote();
+			g.nextNote(nextNote);
 
 		}
 	}
 
-	public void draw(int index)
+	public void draw(int index, notesAtTime nextNote)
 	{
 		note noteThread;
 		Thread t;
 		switch(index)
 		{
 		case 0:
-			noteThread = new note(0,0,225,225,false);
+			noteThread = new note(0,0,225,225,false,nextNote);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
 		case 1:
-			noteThread = new note(225,0,225,225,false);
+			noteThread = new note(225,0,225,225,false,nextNote);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
 		case 2:
-			noteThread = new note(450,0,225,225,false);
+			noteThread = new note(450,0,225,225,false,nextNote);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
 		case 3:
-			noteThread = new note(0,225,225,225,false);
+			noteThread = new note(0,225,225,225,false,nextNote);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
 		case 4:
-			noteThread = new note(225,225,225,225,false);
+			noteThread = new note(225,225,225,225,false,nextNote);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
 		case 5:
-			noteThread = new note(450,225,225,225,false);
+			noteThread = new note(450,225,225,225,false,nextNote);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
 		case 6:
-			noteThread = new note(0,450,225,225,false);
+			noteThread = new note(0,450,225,225,false,nextNote);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
 		case 7:
-			noteThread = new note(225,450,225,225,false);
+			noteThread = new note(225,450,225,225,false,nextNote);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
 		case 8:
-			noteThread = new note(450,450,225,225,false);
+			noteThread = new note(450,450,225,225,false,nextNote);
 			t = new Thread(noteThread);
 			t.start();
 			break;
 
 		case 9:
-			noteThread = new note(225,225,225,225,true);
+			noteThread = new note(225,225,225,225,true,nextNote);
 			t = new Thread(noteThread);
 			t.start();
 			break;
@@ -282,12 +284,12 @@ public class GUIGameplay
 	public void setKeysNo()
 	{
 		inm.clear();
-		inm.put(KeyStroke.getKeyStroke('y'), "tap1");
-		inm.put(KeyStroke.getKeyStroke('u'), "tap2");
-		inm.put(KeyStroke.getKeyStroke('i'), "tap3");
-		inm.put(KeyStroke.getKeyStroke('h'), "tap4");
-		inm.put(KeyStroke.getKeyStroke('j'), "tap5");
-		inm.put(KeyStroke.getKeyStroke('k'), "tap6");
+		inm.put(KeyStroke.getKeyStroke('u'), "tap1");
+		inm.put(KeyStroke.getKeyStroke('i'), "tap2");
+		inm.put(KeyStroke.getKeyStroke('o'), "tap3");
+		inm.put(KeyStroke.getKeyStroke('j'), "tap4");
+		inm.put(KeyStroke.getKeyStroke('k'), "tap5");
+		inm.put(KeyStroke.getKeyStroke('l'), "tap6");
 		inm.put(KeyStroke.getKeyStroke('n'), "tap7");
 		inm.put(KeyStroke.getKeyStroke('m'), "tap8");
 		inm.put(KeyStroke.getKeyStroke(','), "tap9");	

@@ -51,22 +51,22 @@ public class game implements Runnable
 			{
 				if(current.getSingleNote(i))
 				{
-					gui.draw(i);
+					gui.draw(i, next);
 				}
 			}
 
 		}
 	}
 
-	public void nextNote()
+	public void nextNote(notesAtTime nextNote)
 	{
 		//this is only doing the do every other beat???
-		if(timeOfNoteTiming <= timeOfNoteRenderPrev)
-		{
-			System.out.println(next.getPosition());
-			timeOfNoteTiming = next.getPosition()*(15000.0/bpm) + 1981;
-			temparr = next.getNotes();
-		}
+//		if(timeOfNoteTiming <= timeOfNoteRenderPrev)
+//		{
+//			System.out.println(nextNote.getPosition());
+			timeOfNoteTiming = nextNote.getPosition()*(15000.0/bpm) + 1981;
+			temparr = nextNote.getNotes();
+//		}
 	}
 
 	public void detectHit(int n)
@@ -78,7 +78,7 @@ public class game implements Runnable
 			if(temparr[n] == true)
 			{
 				temparr[n] = false;
-				System.out.println("hit");
+				System.out.print("hit");
 			}
 			for(int i = 0; i <= 9; i++)
 			{
@@ -87,7 +87,7 @@ public class game implements Runnable
 			}
 			if(temparrIsEmpty)
 			{
-				nextNote();
+				nextNote(next);
 			}
 		}
 	}
