@@ -6,15 +6,9 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class Test implements ActionListener {
-	private JPanel cards; //a panel that uses CardLayout
-	private JPanel menu;
-	private JPanel how;
-	private JPanel cred;
-	private JPanel card1;
-	private JPanel card2;
-	private GUIGameplay gamegui = new GUIGameplay();
-	private JPanel cardg = gamegui.getCont();
-	private GridBagConstraints c = new GridBagConstraints();
+	private JPanel cards, menu, how, cred, card1, card2, cardg, fin; //a panel that uses CardLayout
+	private GUIGameplay gamegui;
+	private GridBagConstraints c;
 	final static String SONGS = "Card with song select";
 	final static String PROMPT = "Card with prompt";
 	final static String INFO = "Card with song info and difficulty";
@@ -22,34 +16,56 @@ public class Test implements ActionListener {
 	final static String MENU = "Card with menu";
 	final static String HOW = "Card with how to play";
 	final static String CRED = "Card with credits";
-	private JButton bDo = new JButton("I DO have a numpad");
-	private JButton bNot = new JButton("I DO NOT have a numpad");
-	private JButton bEasy = new JButton("Easy");
-	private JButton bMedium = new JButton("Medium");
-	private JButton bHard = new JButton("Hard");
-	private JButton bPlay = new JButton("Play");
-	private JButton bHowToPlay = new JButton("How To Play");
-	private JButton bCredits = new JButton("Credits");
-	private JButton bBack = new JButton("Back");
-	private JButton bBack2 = new JButton("Back");
-	private JButton song1 = new JButton("Rob Gasser - Supersonic");
-	private JButton song2 = new JButton("other song (Not coded yet)");
-	private JButton song3 = new JButton("third song (Not coded either)");
-	private JLabel select = new JLabel("select a song", SwingConstants.CENTER);
-	private JLabel numpad = new JLabel("Do you have a numpad?", SwingConstants.CENTER);
-	private JLabel blank = new JLabel("");
-	private JLabel logo = new JLabel("Grid Beats", SwingConstants.CENTER);
-	private JLabel songInfo = new JLabel("Song Info:", SwingConstants.CENTER);
-	private JLabel info = new JLabel(" ", SwingConstants.CENTER);
-	private JLabel diff = new JLabel("Choose a difficulty", SwingConstants.CENTER);
-	private JLabel lGame;
-	private JLabel howto = new JLabel("Get gud");
-	private JLabel credits = new JLabel("Game created by: Rayden Wang and Euan Cousar. ");
-	private JLabel credits2 = new JLabel("External Resources used: ");
-	private JLabel credits3 = new JLabel ("https://docs.oracle.com/javase/tutorial/index.html, https://youtu.be/TdEo002K2GQ");
-	private song s = new song("Rob Gasser - Supersonic");
-	
+	final static String FIN = "Card with score";
+	private JButton bDo, bNot, bEasy, bMedium, bHard, bPlay, bHowToPlay, bCredits, bBack, bBack2, bBack3, song1, song2, song3;
+	private JLabel select, numpad, blank, logo, songInfo, info, diff, lGame, howto, credits, credits2, credits3, score, acc, perfect, ok, miss;
+	private song s;
 	private MediaPlayer player;
+	
+	public Test()
+	{
+		cards = new JPanel(new CardLayout());
+		card1 = new JPanel(); 
+		menu = new JPanel();
+		card2 = new JPanel();
+		how = new JPanel();
+		cred = new JPanel();
+		fin = new JPanel();
+		gamegui = new GUIGameplay();
+		cardg = gamegui.getCont();
+		c = new GridBagConstraints();
+		bDo = new JButton("I DO have a numpad");
+		bNot = new JButton("I DO NOT have a numpad");
+		bEasy = new JButton("Easy");
+		bMedium = new JButton("Medium");
+		bHard = new JButton("Hard");
+		bPlay = new JButton("Play");
+		bHowToPlay = new JButton("How To Play");
+		bCredits = new JButton("Credits");
+		bBack = new JButton("Back");
+		bBack2 = new JButton("Back");
+		bBack3 = new JButton("Back");
+		song1 = new JButton("Rob Gasser - Supersonic");
+		song2 = new JButton("other song (Not coded yet)");
+		song3 = new JButton("third song (Not coded either)");
+		select = new JLabel("select a song", SwingConstants.CENTER);
+		numpad = new JLabel("Do you have a numpad?", SwingConstants.CENTER);
+		blank = new JLabel("");
+		logo = new JLabel("Grid Beats", SwingConstants.CENTER);
+		songInfo = new JLabel("Song Info:", SwingConstants.CENTER);
+		info = new JLabel(" ", SwingConstants.CENTER);
+		diff = new JLabel("Choose a difficulty", SwingConstants.CENTER);
+		howto = new JLabel("Get gud");
+		credits = new JLabel("Game created by: Rayden Wang and Euan Cousar. ");
+		credits2 = new JLabel("External Resources used: ");
+		credits3 = new JLabel ("https://docs.oracle.com/javase/tutorial/index.html, https://youtu.be/TdEo002K2GQ");
+		score = new JLabel();
+		acc = new JLabel();
+		perfect = new JLabel();
+		ok = new JLabel(); 
+		miss = new JLabel();
+		s = new song("Rob Gasser - Supersonic");
+	}
 
 	public void addComponentToPane(Container pane) {
 		bDo.addActionListener(this);
@@ -68,7 +84,6 @@ public class Test implements ActionListener {
 		bNot.setPreferredSize(new Dimension(250, 75));
 		
 		//Create the "cards".
-		card1 = new JPanel();
 		card1.setLayout(new GridBagLayout());
 		c.insets = new Insets(20,20,20,20);
 		c.anchor = GridBagConstraints.CENTER;
@@ -89,7 +104,6 @@ public class Test implements ActionListener {
 		bCredits.setPreferredSize(new Dimension(200, 50));
 		bBack2.setPreferredSize(new Dimension(200, 50));
 		
-		menu = new JPanel();
 		menu.setLayout(new GridBagLayout());
 		c.insets = new Insets(10,10,10,10);
 		c.gridy = 0;
@@ -112,7 +126,6 @@ public class Test implements ActionListener {
 		bHard.setPreferredSize(new Dimension(130, 75));
 		bBack.setPreferredSize(new Dimension(75, 75));
 		
-		card2 = new JPanel();
 		card2.setLayout(new GridBagLayout());
 		c.insets = new Insets(15,15,15,15);
 		c.gridy = 0;
@@ -150,23 +163,28 @@ public class Test implements ActionListener {
 		card2.add(bMedium, c);
 		c.gridx = 4;
 		card2.add(bHard, c);       
-
-		how = new JPanel(); 
+ 
 		how.add(howto);
 
-		cred = new JPanel();
 		cred.add(credits);
 		cred.add(credits2);
 		cred.add(credits3);
+		
+		fin.add(score);
+		fin.add(acc);
+		fin.add(perfect);
+		fin.add(ok);
+		fin.add(miss);
+		fin.add(bBack3);
 
 		//Create the panel that contains the "cards".
-		cards = new JPanel(new CardLayout());
 		cards.add(card1, PROMPT);
 		cards.add(card2, SONGS);
 		cards.add(cardg, GAME);
 		cards.add(menu, MENU);
 		cards.add(how, HOW);
 		cards.add(cred, CRED);
+		cards.add(fin, FIN);
 
 		pane.add(cards, BorderLayout.CENTER);
 	}
@@ -256,13 +274,19 @@ public class Test implements ActionListener {
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, PROMPT);
 		}
+		if(evt.getSource() == bBack3)
+		{
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, SONGS);
+		}
 		if(evt.getSource() == song1)
 		{
 			c.fill = GridBagConstraints.HORIZONTAL;
 			s.loadEasy("Rob Gasser - Supersonic");
 			info.setText(s.getInfo());
-			this.setSong(s);
-			if(player.getStatus().equals(MediaPlayer.Status.UNKNOWN) || player.getStatus().equals(MediaPlayer.Status.STOPPED))
+			if(player == null)
+				setSong(s);
+			if(!player.getStatus().equals(MediaPlayer.Status.PLAYING))
 			{
 				startMid(45000.0);
 			}
