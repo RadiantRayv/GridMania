@@ -67,7 +67,7 @@ public class GUIGameplay
 	{
 		cont = new JPanel(null);
 		cont.add(one = new JLayeredPane());
-		one.setBounds(0, 0, 675, 675);
+		one.setBounds(0, 0, 529, 529);
 
 		inm = cont.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
 
@@ -169,7 +169,7 @@ public class GUIGameplay
 			long timediff = 0;
 			int size = 2;
 			JLabel sq  = new JLabel();
-			while(size<225)
+			while(size<175)
 			{
 				timediff = (System.currentTimeMillis() - TimeStart);
 				if(timediff % 25 == 0)
@@ -192,7 +192,7 @@ public class GUIGameplay
 					}
 					else
 					{
-						size = h;
+						size = (int) (h * (175.0/255));
 						scaled = new ImageIcon(square.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
 					}
 					sq.setIcon(scaled);
@@ -223,34 +223,34 @@ public class GUIGameplay
 		switch(index)
 		{
 		case 0:
-			new Thread(new note(0,0,225,225,false,nextNote)).start();
+			new Thread(new note(1,1,175,175,false,nextNote)).start();
 			break;
 		case 1:
-			new Thread(new note(225,0,225,225,false,nextNote)).start();
+			new Thread(new note(177,1,175,175,false,nextNote)).start();
 			break;
 		case 2:
-			new Thread(new note(450,0,225,225,false,nextNote)).start();
+			new Thread(new note(353,1,175,175,false,nextNote)).start();
 			break;
 		case 3:
-			new Thread(new note(0,225,225,225,false,nextNote)).start();
+			new Thread(new note(1,177,175,175,false,nextNote)).start();
 			break;
 		case 4:
-			new Thread(new note(225,225,225,225,false,nextNote)).start();
+			new Thread(new note(177,177,175,175,false,nextNote)).start();
 			break;
 		case 5:
-			new Thread(new note(450,225,225,225,false,nextNote)).start();
+			new Thread(new note(353,177,175,175,false,nextNote)).start();
 			break;
 		case 6:
-			new Thread(new note(0,450,225,225,false,nextNote)).start();
+			new Thread(new note(1,353,175,175,false,nextNote)).start();
 			break;
 		case 7:
-			new Thread(new note(225,450,225,225,false,nextNote)).start();
+			new Thread(new note(177,353,175,175,false,nextNote)).start();
 			break;
 		case 8:
-			new Thread(new note(450,450,225,225,false,nextNote)).start();
+			new Thread(new note(353,353,175,175,false,nextNote)).start();
 			break;
 		case 9:
-			new Thread(new note(225,225,225,225,true,nextNote)).start();
+			new Thread(new note(177,177,175,175,true,nextNote)).start();
 			break;
 		}
 	}
@@ -313,34 +313,34 @@ public class GUIGameplay
 		switch(index)
 		{
 		case 0:
-			new Thread(new judgement(0,0,225,225,false,judge)).start();
+			new Thread(new judgement(1,1,175,175,false,judge)).start();
 			break;
 		case 1:
-			new Thread(new judgement(225,0,225,225,false,judge)).start();
+			new Thread(new judgement(177,1,175,175,false,judge)).start();
 			break;
 		case 2:
-			new Thread(new judgement(450,0,225,225,false,judge)).start();
+			new Thread(new judgement(353,1,175,175,false,judge)).start();
 			break;
 		case 3:
-			new Thread(new judgement(0,225,225,225,false,judge)).start();
+			new Thread(new judgement(1,177,175,175,false,judge)).start();
 			break;
 		case 4:
-			new Thread(new judgement(225,225,225,225,false,judge)).start();
+			new Thread(new judgement(177,177,175,175,false,judge)).start();
 			break;
 		case 5:
-			new Thread(new judgement(450,225,225,225,false,judge)).start();
+			new Thread(new judgement(353,177,175,175,false,judge)).start();
 			break;
 		case 6:
-			new Thread(new judgement(0,450,225,225,false,judge)).start();
+			new Thread(new judgement(1,353,175,175,false,judge)).start();
 			break;
 		case 7:
-			new Thread(new judgement(225,450,225,225,false,judge)).start();
+			new Thread(new judgement(177,353,175,175,false,judge)).start();
 			break;
 		case 8:
-			new Thread(new judgement(450,450,225,225,false,judge)).start();
+			new Thread(new judgement(353,353,175,175,false,judge)).start();
 			break;
 		case 9:
-			new Thread(new judgement(225,225,225,225,true,judge)).start();
+			new Thread(new judgement(177,177,175,175,true,judge)).start();
 			break;
 		}
 	}
