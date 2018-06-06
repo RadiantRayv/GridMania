@@ -28,7 +28,6 @@ public class GUIGameplay
 	//	private long TimeStart;
 	//	private long timediff;
 	//	private int h;
-	private int totalNotesSoFar;
 
 
 	private song s;
@@ -112,7 +111,6 @@ public class GUIGameplay
 		counter = 0;
 		acc = 100.0;
 		
-		totalNotesSoFar = 0;
 		
 		TimeStart = System.currentTimeMillis();
 	}
@@ -214,7 +212,7 @@ public class GUIGameplay
 			}
 			sq.setIcon(blank);
 			g.nextNote(nextNote);
-			totalNotesSoFar++;
+			g.incrementTotalNotes();
 			displayAccuracy(g.getTotalHitsAccuracy());
 		}
 	}
@@ -348,7 +346,7 @@ public class GUIGameplay
 	
 	public void displayAccuracy(double hits)
 	{
-		acc = (hits/totalNotesSoFar)*100;
+		acc = (hits/g.getTotalNotesSoFar())*100;
 		System.out.println(accFormat.format(acc) + "%");
 	}
 	

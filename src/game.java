@@ -17,6 +17,9 @@ public class game implements Runnable
 	private long hitTimeDiff;
 	private Test screen;
 	private boolean running;
+	private int perfect;
+	private int okay; 
+	private int totalNotesSoFar;
 	
 	private double totalHitsAccuracy;
 
@@ -33,6 +36,9 @@ public class game implements Runnable
 		chart.getPrevious();
 		screen = maingui;
 		running = true;
+		perfect = 0;
+		okay = 0;
+		totalNotesSoFar = 0;
 	}
 
 	public void run()
@@ -103,11 +109,13 @@ public class game implements Runnable
 				{
 					gui.drawJudgement(n, 0);
 					totalHitsAccuracy += 1;
+					perfect++;
 				}
 				else
 				{
 					gui.drawJudgement(n, 1);
 					totalHitsAccuracy += 0.6;
+					okay++;
 				}
 			}
 			for(int i = 0; i <= 9; i++)
@@ -122,6 +130,30 @@ public class game implements Runnable
 		}
 	}
  
+	public void incrementTotalNotes()
+	{
+		totalNotesSoFar++;
+	}
+	
+	public int getTotalNotesSoFar()
+	{
+		return totalNotesSoFar;
+	}
+	
+	public int getPerfect()
+	{
+		return perfect;
+	}
+	
+	public int getOkay()
+	{
+		return okay;
+	}
+	
+	public int getMiss()
+	{
+		return (totalNotesSoFar - (perfect + okay));
+	}
 
 	//public void updateNoteField()
 	//{
