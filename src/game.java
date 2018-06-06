@@ -16,10 +16,11 @@ public class game implements Runnable
 	private double timeOfNoteTiming;
 	private long hitTimeDiff;
 	private Test screen;
+	private boolean running;
 	
 	private double totalHitsAccuracy;
 
-	game(notesChart chart, GUIGameplay g)
+	game(notesChart chart, GUIGameplay g, Test maingui)
 	{
 		this.chart = chart;
 		//		current = chart.getNext();
@@ -30,14 +31,15 @@ public class game implements Runnable
 		current = chart.getNext();
 		temparr = current.getNotes();
 		chart.getPrevious();
-		screen = new Test();
+		screen = maingui;
+		running = true;
 	}
 
 	public void run()
 	{
 		TimeStart = System.currentTimeMillis();
 
-		while(chart.hasNext())
+		while(chart.hasNext() && running)
 		{
 			timeOfNoteRenderPrev = timeOfNoteRender;
 			current = chart.getNext();
@@ -62,7 +64,8 @@ public class game implements Runnable
 		while(System.currentTimeMillis() - TimeStart < timeOfNoteRender + 5000)
 		{
 		}
-		screen.isDone(true);
+		if(running)
+			screen.isDone(true);
 	}
 
 	public void nextNote(notesAtTime nextNote)
@@ -75,6 +78,11 @@ public class game implements Runnable
 			temparr = nextNote.getNotes();
 			
 //		}
+	}
+	
+	public void stopRunning()
+	{
+		running = false;
 	}
 	
 	public double getTotalHitsAccuracy()
