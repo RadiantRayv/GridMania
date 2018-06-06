@@ -6,7 +6,8 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class Test implements ActionListener {
-	private JPanel cards, menu, how, cred, card1, card2, cardg, fin; //a panel that uses CardLayout
+	private JPanel cards;//a panel that uses CardLayout
+	private BackgroundPanel menu, how, cred, card1, card2, cardg, fin; 
 	private GUIGameplay gamegui;
 	private GridBagConstraints c;
 	final static String SONGS = "Card with song select";
@@ -24,15 +25,23 @@ public class Test implements ActionListener {
 	private game ggg;
 	private double accuracy;
 	
+	ClassLoader cldr;
+	JLabel bg;
+	
 	public Test()
 	{
+		
+		cldr = this.getClass().getClassLoader();
+		bg = new JLabel (new ImageIcon(cldr.getResource("bg.png")));
+		
+		
 		cards = new JPanel(new CardLayout());
-		card1 = new JPanel(); 
-		menu = new JPanel();
-		card2 = new JPanel();
-		how = new JPanel();
-		cred = new JPanel();
-		fin = new JPanel();
+		card1 = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage()); 
+		menu = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage());
+		card2 = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage());
+		how = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage());
+		cred = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage());
+		fin = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage());
 		gamegui = new GUIGameplay();
 		cardg = gamegui.getCont();
 		c = new GridBagConstraints();
@@ -53,7 +62,7 @@ public class Test implements ActionListener {
 		select = new JLabel("select a song", SwingConstants.CENTER);
 		numpad = new JLabel("Do you have a numpad?", SwingConstants.CENTER);
 		blank = new JLabel("");
-		logo = new JLabel("Grid Beats", SwingConstants.CENTER);
+		logo = new JLabel(new ImageIcon(cldr.getResource("logo.png")), SwingConstants.CENTER);
 		songInfo = new JLabel("Song Info:", SwingConstants.CENTER);
 		info = new JLabel(" ", SwingConstants.CENTER);
 		diff = new JLabel("Choose a difficulty", SwingConstants.CENTER);
@@ -366,7 +375,7 @@ public class Test implements ActionListener {
 	 * this method should be invoked from the
 	 * event dispatch thread.
 	 */
-	public static void createAndShowGUI() {
+	public void createAndShowGUI() {
 		try {
 			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 			//			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
@@ -382,7 +391,7 @@ public class Test implements ActionListener {
 		//Create and set up the window.
 		JFrame frame = new JFrame("Grid Beats");
 		frame.setResizable(false);
-		frame.setSize(600, 700);
+		frame.setSize(600, 725);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Create and set up the content pane.

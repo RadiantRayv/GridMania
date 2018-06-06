@@ -44,7 +44,7 @@ public class GUIGameplay
 	
 	private long TimeStart;
 
-	private JPanel cont;
+	private BackgroundPanel cont;
 	private JLayeredPane one;
 	//	private JLabel sq1;
 	//	private JLayeredPane two;
@@ -65,7 +65,8 @@ public class GUIGameplay
 
 	public GUIGameplay() 
 	{
-		cont = new JPanel(null);
+		ClassLoader cldr = this.getClass().getClassLoader();
+		cont = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage());
 		cont.add(one = new JLayeredPane());
 		one.setBounds(0, 0, 529, 529);
 
@@ -80,7 +81,7 @@ public class GUIGameplay
 		//		cont.add(eight);
 		//		cont.add(nine);
 
-		ClassLoader cldr = this.getClass().getClassLoader();
+
 		square = new ImageIcon(cldr.getResource("bluesquare.png"));
 		blank = new ImageIcon(cldr.getResource("blank.png"));
 		red = new ImageIcon(cldr.getResource("redsquare.png"));
@@ -116,7 +117,7 @@ public class GUIGameplay
 		TimeStart = System.currentTimeMillis();
 	}
 
-	public JPanel getCont()
+	public BackgroundPanel getCont()
 	{
 		return cont;
 	}
