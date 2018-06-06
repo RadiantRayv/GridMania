@@ -17,10 +17,12 @@ public class Test implements ActionListener {
 	final static String HOW = "Card with how to play";
 	final static String CRED = "Card with credits";
 	final static String FIN = "Card with score";
-	private JButton bDo, bNot, bEasy, bMedium, bHard, bPlay, bHowToPlay, bCredits, bBack, bBack2, bBack3, song1, song2, song3;
+	private JButton bDo, bNot, bEasy, bMedium, bHard, bPlay, bHowToPlay, bCredits, bBack, bBack2, bBack3, bCont, song1, song2, song3;
 	private JLabel select, numpad, blank, logo, songInfo, info, diff, lGame, howto, credits, credits2, credits3, score, acc, perfect, ok, miss;
 	private song s;
 	private MediaPlayer player;
+	private game ggg;
+	private double accuracy;
 	
 	public Test()
 	{
@@ -45,6 +47,8 @@ public class Test implements ActionListener {
 		bBack = new JButton("Back");
 		bBack2 = new JButton("Back");
 		bBack3 = new JButton("Back");
+		bCont = new JButton("Continue to Score");
+		bCont.setVisible(false);
 		song1 = new JButton("Rob Gasser - Supersonic");
 		song2 = new JButton("other song (Not coded yet)");
 		song3 = new JButton("third song (Not coded either)");
@@ -65,6 +69,7 @@ public class Test implements ActionListener {
 		ok = new JLabel(); 
 		miss = new JLabel();
 		s = new song("Rob Gasser - Supersonic");
+		accuracy = 0.0;
 	}
 
 	public void addComponentToPane(Container pane) {
@@ -79,6 +84,8 @@ public class Test implements ActionListener {
 		bBack.addActionListener(this);
 		bBack2.addActionListener(this);
 		song1.addActionListener(this);
+		bBack3.addActionListener(this);
+		bCont.addActionListener(this);
 
 		bDo.setPreferredSize(new Dimension(250, 75));
 		bNot.setPreferredSize(new Dimension(250, 75));
@@ -176,6 +183,9 @@ public class Test implements ActionListener {
 		fin.add(ok);
 		fin.add(miss);
 		fin.add(bBack3);
+		
+		//cardg.setLayout();
+		cardg.add(bCont);
 
 		//Create the panel that contains the "cards".
 		cards.add(card1, PROMPT);
@@ -233,7 +243,7 @@ public class Test implements ActionListener {
 		if(evt.getSource() == bEasy)
 		{
 			stopSong();
-			game ggg = new game(s.getEasy(), gamegui);
+			ggg = new game(s.getEasy(), gamegui);
 			gamegui.addGame(ggg);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
@@ -279,6 +289,11 @@ public class Test implements ActionListener {
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, SONGS);
 		}
+		if(evt.getSource() == bCont)
+		{
+			CardLayout cl = (CardLayout)(cards.getLayout());
+			cl.show(cards, FIN);
+		}
 		if(evt.getSource() == song1)
 		{
 			c.fill = GridBagConstraints.HORIZONTAL;
@@ -293,7 +308,30 @@ public class Test implements ActionListener {
 		}
 	}
 
-
+	public void isDone(boolean pass)
+	{
+		accuracy = gamegui.getAcc();
+		acc.setText("Accuracy: " + accuracy);
+		if(pass)
+		{
+			if(accuracy >= 90)
+				score.setText("A");
+			else if(accuracy >= 80)
+				score.setText("B");
+			else if(accuracy >= 70)
+				score.setText("C");
+			else if(accuracy >= 60)
+				score.setText("D");
+			else
+				score.setText("F");
+		}
+		else 
+		{
+			score.setText("F");
+		}
+		bCont.setVisible(true);
+	}
+	
 	public void setSong(song ss)
 	{
 		s = ss;

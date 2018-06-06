@@ -39,6 +39,7 @@ public class GUIGameplay
 	private notesChart chart;
 	private boolean[] currentNotes;
 	private double currentTime;
+	private double acc;
 	private int bpm;
 	
 	private long TimeStart;
@@ -108,6 +109,7 @@ public class GUIGameplay
 		redSize = 10;
 
 		counter = 0;
+		acc = 100.0;
 		
 		totalNotesSoFar = 0;
 		
@@ -345,7 +347,13 @@ public class GUIGameplay
 	
 	public void displayAccuracy(double hits)
 	{
-		System.out.println(accFormat.format((hits/totalNotesSoFar)*100) + "%");
+		acc = (hits/totalNotesSoFar)*100;
+		System.out.println(accFormat.format(acc) + "%");
+	}
+	
+	public double getAcc()
+	{
+		return acc;
 	}
 
 	public void setKeysNo()
