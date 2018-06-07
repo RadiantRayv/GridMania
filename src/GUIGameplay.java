@@ -162,7 +162,7 @@ public class GUIGameplay
 			isSpecial = special;
 			nextNote = next;
 			if(special)
-				maxSize = 572;
+				maxSize = 528;
 			else
 				maxSize = 175;
 		}
@@ -254,7 +254,7 @@ public class GUIGameplay
 			new Thread(new note(353,353,175,175,false,nextNote)).start();
 			break;
 		case 9:
-			new Thread(new note(177,177,175,175,true,nextNote)).start();
+			new Thread(new note(1,1,528,528,true,nextNote)).start();
 			break;
 		}
 	}
