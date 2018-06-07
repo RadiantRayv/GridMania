@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+
 import javax.swing.*;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.MediaPlayer;
@@ -29,6 +31,8 @@ public class Test implements ActionListener {
 	ClassLoader cldr;
 	Image bg;
 	
+//	GraphicsEnvironment ge;
+	
 	public Test()
 	{
 		
@@ -36,7 +40,16 @@ public class Test implements ActionListener {
 		cldr = this.getClass().getClassLoader();
 		bg = new ImageIcon(cldr.getResource("other graphics/bg.png")).getImage();
 		
-		
+		try {
+			font = Font.createFont(Font.TRUETYPE_FONT, cldr.getResourceAsStream("Spaceport1.ttf"));
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			ge.registerFont(font);
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+				
 		cards = new JPanel(new CardLayout());
 		card1 = new BackgroundPanel(bg); 
 		menu = new BackgroundPanel(bg);
