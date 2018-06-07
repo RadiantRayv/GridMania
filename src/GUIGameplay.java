@@ -191,7 +191,7 @@ public class GUIGameplay
 					ImageIcon scaled;
 					if(isSpecial)
 					{
-						size = h*3;
+						size = (int) (h * (175.0/255)) * 3;
 						scaled = new ImageIcon(red.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
 					}
 					else
