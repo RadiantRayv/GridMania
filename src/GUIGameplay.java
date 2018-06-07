@@ -18,7 +18,7 @@ public class GUIGameplay
 	private ImageIcon red;
 	private ImageIcon perfect;
 	private ImageIcon okay;
-	private Image grid;
+	private ImageIcon grid;
 	private int counter;         // counts seconds
 	private int sqX, sqY, sqX2, sqY2, sqX3, sqY3;
 	private int redX, redY;
@@ -45,6 +45,8 @@ public class GUIGameplay
 
 	private BackgroundPanel cont;
 	private JLayeredPane one;
+	
+	private JLabel bgGrid;
 	//	private JLabel sq1;
 	//	private JLayeredPane two;
 	//	private JLayeredPane three;
@@ -84,10 +86,14 @@ public class GUIGameplay
 		square = new ImageIcon(cldr.getResource("gameplay elements/bluesquare.png"));
 		blank = new ImageIcon(cldr.getResource("other graphics/blank.png"));
 		red = new ImageIcon(cldr.getResource("gameplay elements/redsquare.png"));
-		grid = new ImageIcon(cldr.getResource("gameplay elements/grid.png")).getImage();
 		perfect = new ImageIcon(cldr.getResource("gameplay elements/perfect.png"));
 		okay = new ImageIcon(cldr.getResource("gameplay elements/okay.png"));
 		hitsound = cldr.getResource("hit.wav").toString();
+		
+		grid = new ImageIcon(cldr.getResource("gameplay elements/grid.png"));
+		bgGrid = new JLabel(grid);
+		bgGrid.setBounds(0, 0, 529, 529);
+		one.add(bgGrid, 0);
 
 
 		//
