@@ -47,14 +47,31 @@ public class Test implements ActionListener {
 		c = new GridBagConstraints();
 		bDo = new JButton("I DO have a numpad");
 		bNot = new JButton("I DO NOT have a numpad");
-		bEasy = new JButton("Easy");
-		bMedium = new JButton("Medium");
-		bHard = new JButton("Hard");
-		bPlay = new JButton("Play");
-		bHowToPlay = new JButton("How To Play");
-		bCredits = new JButton("Credits");
-		bBack = new JButton("Back");
-		bBack2 = new JButton("Back");
+		
+		bEasy = new JButton(new ImageIcon(cldr.getResource("buttons/song select/easy.png")));
+		bEasy.setFocusPainted(false);
+		
+		bMedium = new JButton(new ImageIcon(cldr.getResource("buttons/song select/med.png")));
+		bMedium.setFocusPainted(false);
+		
+		bHard = new JButton(new ImageIcon(cldr.getResource("buttons/song select/hard.png")));
+		bHard.setFocusPainted(false);
+		
+		bPlay = new JButton(new ImageIcon(cldr.getResource("buttons/main menu/play.png")));
+		bPlay.setFocusPainted(false);
+		
+		bHowToPlay = new JButton(new ImageIcon(cldr.getResource("buttons/main menu/howto.png")));
+		bHowToPlay.setFocusPainted(false);
+		
+		bCredits = new JButton(new ImageIcon(cldr.getResource("buttons/main menu/credits.png")));
+		bCredits.setFocusPainted(false);
+		
+		bBack = new JButton(new ImageIcon(cldr.getResource("buttons/squareBack.png")));
+		bBack.setFocusPainted(false);
+		
+		bBack2 = new JButton(new ImageIcon(cldr.getResource("buttons/main menu/back.png")));
+		bBack2.setFocusPainted(false);
+		
 		bBack3 = new JButton("Back");
 		song1 = new JButton("Rob Gasser - Supersonic");
 		song2 = new JButton("TARI & Yix - Bliss");
@@ -77,6 +94,8 @@ public class Test implements ActionListener {
 		miss = new JLabel();
 		name = new JLabel();
 		accuracy = 0.0;
+		
+		
 	}
 
 	public void addComponentToPane(Container pane) {
