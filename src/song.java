@@ -98,6 +98,11 @@ public class song
 		return song;
 	}
 	
+	public String getName()
+	{
+		return name;
+	}
+	
 	public String getInfo() 
 	{
 		return name + " " + bpm + "bpm " + lengthString;

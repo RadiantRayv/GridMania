@@ -19,7 +19,7 @@ public class Test implements ActionListener {
 	final static String CRED = "Card with credits";
 	final static String FIN = "Card with score";
 	private JButton bDo, bNot, bEasy, bMedium, bHard, bPlay, bHowToPlay, bCredits, bBack, bBack2, bBack3, song1, song2, song3;
-	private JLabel select, numpad, blank, logo, songInfo, info, diff, lGame, howto, credits, credits2, credits3, score, acc, perfect, ok, miss;
+	private JLabel select, numpad, blank, logo, songInfo, info, diff, lGame, howto, credits, credits2, credits3, score, acc, perfect, ok, miss, name;
 	private song s;
 	private MediaPlayer player;
 	private game ggg;
@@ -75,6 +75,7 @@ public class Test implements ActionListener {
 		perfect = new JLabel();
 		ok = new JLabel(); 
 		miss = new JLabel();
+		name = new JLabel();
 		s = new song("Rob Gasser - Supersonic");
 		accuracy = 0.0;
 	}
@@ -183,12 +184,31 @@ public class Test implements ActionListener {
 		cred.add(credits2);
 		cred.add(credits3);
 		
-		fin.add(score);
-		fin.add(acc);
-		fin.add(perfect);
-		fin.add(ok);
-		fin.add(miss);
-		fin.add(bBack3);
+		bBack3.setMaximumSize(new Dimension(550, 100));
+		bBack3.setPreferredSize(new Dimension(500,100));
+		
+		fin.setLayout(new GridBagLayout());
+		c.insets = new Insets(10,10,10,10);
+		c.anchor = GridBagConstraints.PAGE_START;
+		//c.anchor = GridBagConstraints.PAGE_START;
+		c.gridx = 0;
+		c.gridy = 0;
+		fin.add(score, c);
+		c.gridx = 1;
+		c.gridwidth = 2;
+		fin.add(name, c);
+		c.gridwidth = 1; 
+		c.gridy = 1;
+		fin.add(acc, c);
+		c.gridy = 2;
+		fin.add(perfect, c);
+		c.gridy = 3;
+		fin.add(ok, c);
+		c.gridy = 4;
+		fin.add(miss, c);
+		c.gridy = 5;
+		c.gridwidth = 3;
+		fin.add(bBack3, c);
 		
 		bBack3.setMaximumSize(new Dimension(550, 100));
 		bBack3.setPreferredSize(new Dimension(500,100));
@@ -254,6 +274,7 @@ public class Test implements ActionListener {
 			stopSong();
 			ggg = new game(s.getEasy(), gamegui, this);
 			gamegui.addGame(ggg);
+			cardg.add(bBack3);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 			startSong();
@@ -311,6 +332,7 @@ public class Test implements ActionListener {
 			c.fill = GridBagConstraints.HORIZONTAL;
 			s.loadEasy("Rob Gasser - Supersonic");
 			info.setText(s.getInfo());
+			name.setText(s.getName());
 			if(player == null)
 				setSong(s);
 			if(!player.getStatus().equals(MediaPlayer.Status.PLAYING))
@@ -324,10 +346,24 @@ public class Test implements ActionListener {
 	{
 		accuracy = gamegui.getAcc();
 		acc.setText("Accuracy: " + accuracy);
+		perfect.setText("Perfect: " + ggg.getPerfect());
+		ok.setText("Okay: " + ggg.getOkay());
+		miss.setText("Miss: " + ggg.getMiss());
 		if(pass)
 		{
-			if(accuracy >= 90)
-				score.setText("A");
+			if(accuracy == 100)
+				score.setText("S+");
+			else if(accuracy >= 90)
+			{
+				
+				if(ggg.getMiss() == 0)
+				{
+					score.setText("S");
+						
+				}
+				else 
+					score.setText("A");
+			}
 			else if(accuracy >= 80)
 				score.setText("B");
 			else if(accuracy >= 70)
@@ -341,6 +377,9 @@ public class Test implements ActionListener {
 		{
 			score.setText("F");
 		}
+		c.gridy = 5;
+		c.gridwidth = 3;
+		fin.add(bBack3, c);
 		CardLayout cl = (CardLayout)(cards.getLayout());
 		cl.show(cards, FIN);
 	}
