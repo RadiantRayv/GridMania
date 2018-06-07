@@ -73,9 +73,25 @@ public class Test implements ActionListener {
 		bBack2.setFocusPainted(false);
 		
 		bBack3 = new JButton("Back");
-		song1 = new JButton("Rob Gasser - Supersonic");
-		song2 = new JButton("TARI & Yix - Bliss");
-		song3 = new JButton("Coming soon");
+		
+		song1 = new JButton(new ImageIcon(cldr.getResource("buttons/song select/supersonic.png")));
+		song1.setFocusPainted(false);
+		
+		song2 = new JButton(new ImageIcon(cldr.getResource("buttons/song select/bliss.png")));
+		song2.setFocusPainted(false);
+		
+		song3 = new JButton(new ImageIcon(cldr.getResource("buttons/song select/comingsoon.png")));
+		song3.setFocusPainted(false);
+		
+//		song1 = new JButton("super");
+//		song1.setFocusPainted(false);
+//		
+//		song2 = new JButton("owo");
+//		song2.setFocusPainted(false);
+		
+//		song3 = new JButton("B");
+//		song3.setFocusPainted(false);
+		
 		select = new JLabel("select a song", SwingConstants.CENTER);
 		numpad = new JLabel("Do you have a numpad?", SwingConstants.CENTER);
 		blank = new JLabel("");
@@ -158,6 +174,10 @@ public class Test implements ActionListener {
 		bMedium.setPreferredSize(new Dimension(130, 75));
 		bHard.setPreferredSize(new Dimension(130, 75));
 		bBack.setPreferredSize(new Dimension(75, 75));
+		
+		song1.setPreferredSize(new Dimension(560, 106));
+		song2.setPreferredSize(new Dimension(560, 106));
+		song3.setPreferredSize(new Dimension(560, 106));
 		
 		card2.setLayout(new GridBagLayout());
 		c.insets = new Insets(15,15,15,15);
@@ -354,7 +374,7 @@ public class Test implements ActionListener {
 			}
 			player = null;
 			c.fill = GridBagConstraints.HORIZONTAL;
-			s = new song(song1.getText());
+			s = new song("Rob Gasser - Supersonic");
 			s.loadEasy("Rob Gasser - Supersonic");
 			info.setText(s.getInfo());
 			name.setText(s.getName());
@@ -373,7 +393,7 @@ public class Test implements ActionListener {
 			}
 			player = null;
 			c.fill = GridBagConstraints.HORIZONTAL;
-			s = new song(song2.getText());
+			s = new song("TARI & Yix - Bliss");
 			s.loadEasy("TARI & Yix - Bliss");
 			info.setText(s.getInfo());
 			name.setText(s.getName());

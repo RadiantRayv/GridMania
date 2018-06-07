@@ -151,6 +151,7 @@ public class GUIGameplay
 		private int ysecond;
 		private boolean isSpecial;
 		private notesAtTime nextNote;
+		private int maxSize;
 
 		note(int x1, int y1, int x2, int y2, boolean special, notesAtTime next)
 		{
@@ -160,6 +161,10 @@ public class GUIGameplay
 			ysecond = y2;
 			isSpecial = special;
 			nextNote = next;
+			if(special)
+				maxSize = 572;
+			else
+				maxSize = 175;
 		}
 
 		public void run() 
@@ -168,7 +173,7 @@ public class GUIGameplay
 			long timediff = 0;
 			int size = 2;
 			JLabel sq  = new JLabel();
-			while(size<175)
+			while(size<maxSize)
 			{
 				timediff = (System.currentTimeMillis() - TimeStart);
 				if(timediff % 25 == 0)
