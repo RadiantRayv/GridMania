@@ -9,6 +9,7 @@ public class game implements Runnable
 	private boolean[] temparr;
 	private boolean temparrIsEmpty;
 	private int bpm;
+	private int offset;
 	private long TimeStart;
 	private GUIGameplay gui;
 	private double timeOfNoteRender;
@@ -28,8 +29,9 @@ public class game implements Runnable
 		this.chart = chart;
 		//		current = chart.getNext();
 		bpm = chart.getSong().getBpm();
+		offset = chart.getSong().getOffset();
 		gui = g;
-		timeOfNoteTiming = 1981;
+		timeOfNoteTiming = offset;
 		timeOfNoteRender = -501;
 		current = chart.getNext();
 		temparr = current.getNotes();
@@ -54,7 +56,7 @@ public class game implements Runnable
 				next = chart.getNext();
 				chart.getPrevious();
 			}
-			timeOfNoteRender = current.getPosition()*(15000.0/bpm) + 1981;
+			timeOfNoteRender = current.getPosition()*(15000.0/bpm) + offset;
 			//			gui.setCurrentNotes(current.getNotes(), timeOfNote + TimeStart);
 			while (System.currentTimeMillis() - TimeStart < timeOfNoteRender - 917)
 			{
@@ -80,7 +82,7 @@ public class game implements Runnable
 //		if(timeOfNoteTiming <= timeOfNoteRenderPrev)
 //		{
 //			System.out.println(nextNote.getPosition());
-			timeOfNoteTiming = nextNote.getPosition()*(15000.0/bpm) + 1981;
+			timeOfNoteTiming = nextNote.getPosition()*(15000.0/bpm) + offset;
 			temparr = nextNote.getNotes();
 			
 //		}
