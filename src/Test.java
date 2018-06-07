@@ -26,22 +26,22 @@ public class Test implements ActionListener {
 	private double accuracy;
 	
 	ClassLoader cldr;
-	JLabel bg;
+	Image bg;
 	
 	public Test()
 	{
 		
 		cldr = this.getClass().getClassLoader();
-		bg = new JLabel (new ImageIcon(cldr.getResource("bg.png")));
+		bg = new ImageIcon(cldr.getResource("other graphics/bg.png")).getImage();
 		
 		
 		cards = new JPanel(new CardLayout());
-		card1 = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage()); 
-		menu = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage());
-		card2 = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage());
-		how = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage());
-		cred = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage());
-		fin = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage());
+		card1 = new BackgroundPanel(bg); 
+		menu = new BackgroundPanel(bg);
+		card2 = new BackgroundPanel(bg);
+		how = new BackgroundPanel(bg);
+		cred = new BackgroundPanel(bg);
+		fin = new BackgroundPanel(bg);
 		gamegui = new GUIGameplay();
 		cardg = gamegui.getCont();
 		c = new GridBagConstraints();
@@ -62,7 +62,7 @@ public class Test implements ActionListener {
 		select = new JLabel("select a song", SwingConstants.CENTER);
 		numpad = new JLabel("Do you have a numpad?", SwingConstants.CENTER);
 		blank = new JLabel("");
-		logo = new JLabel(new ImageIcon(cldr.getResource("logo.png")), SwingConstants.CENTER);
+		logo = new JLabel(new ImageIcon(cldr.getResource("other graphics/logo.png")), SwingConstants.CENTER);
 		songInfo = new JLabel("Song Info:", SwingConstants.CENTER);
 		info = new JLabel(" ", SwingConstants.CENTER);
 		diff = new JLabel("Choose a difficulty", SwingConstants.CENTER);
@@ -329,6 +329,11 @@ public class Test implements ActionListener {
 		}
 		if(evt.getSource() == song1)
 		{
+			if(player != null && player.getStatus().equals(MediaPlayer.Status.PLAYING))
+			{
+				stopSong();
+			}
+			player = null;
 			c.fill = GridBagConstraints.HORIZONTAL;
 			s = new song(song1.getText());
 			s.loadEasy("Rob Gasser - Supersonic");
@@ -343,6 +348,11 @@ public class Test implements ActionListener {
 		}
 		if(evt.getSource() == song2)
 		{
+			if(player != null && player.getStatus().equals(MediaPlayer.Status.PLAYING))
+			{
+				stopSong();
+			}
+			player = null;
 			c.fill = GridBagConstraints.HORIZONTAL;
 			s = new song(song2.getText());
 			s.loadEasy("TARI & Yix - Bliss");

@@ -65,7 +65,7 @@ public class GUIGameplay
 	public GUIGameplay() 
 	{
 		ClassLoader cldr = this.getClass().getClassLoader();
-		cont = new BackgroundPanel(new ImageIcon(cldr.getResource("bg.png")).getImage());
+		cont = new BackgroundPanel(new ImageIcon(cldr.getResource("other graphics/bg.png")).getImage());
 		cont.add(one = new JLayeredPane());
 		one.setBounds(0, 0, 529, 529);
 
@@ -81,12 +81,12 @@ public class GUIGameplay
 		//		cont.add(nine);
 
 
-		square = new ImageIcon(cldr.getResource("bluesquare.png"));
-		blank = new ImageIcon(cldr.getResource("blank.png"));
-		red = new ImageIcon(cldr.getResource("redsquare.png"));
-		grid = new ImageIcon(cldr.getResource("grid.png")).getImage();
-		perfect = new ImageIcon(cldr.getResource("perfect.png"));
-		okay = new ImageIcon(cldr.getResource("okay.png"));
+		square = new ImageIcon(cldr.getResource("gameplay elements/bluesquare.png"));
+		blank = new ImageIcon(cldr.getResource("other graphics/blank.png"));
+		red = new ImageIcon(cldr.getResource("gameplay elements/redsquare.png"));
+		grid = new ImageIcon(cldr.getResource("gameplay elements/grid.png")).getImage();
+		perfect = new ImageIcon(cldr.getResource("gameplay elements/perfect.png"));
+		okay = new ImageIcon(cldr.getResource("gameplay elements/okay.png"));
 		hitsound = cldr.getResource("hit.wav").toString();
 
 
