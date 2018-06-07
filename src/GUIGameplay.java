@@ -159,14 +159,14 @@ public class GUIGameplay
 		private notesAtTime nextNote;
 		private int maxSize;
 
-		note(int x1, int y1, int x2, int y2, boolean special, notesAtTime next)
+		note(int x1, int y1, int x2, int y2, boolean special)
 		{
 			xfirst = x1;
 			yfirst = y1;
 			xsecond = x2;
 			ysecond = y2;
 			isSpecial = special;
-			nextNote = next;
+//			nextNote = next;
 			if(special)
 				maxSize = 528;
 			else
@@ -222,7 +222,8 @@ public class GUIGameplay
 				timediff = (System.currentTimeMillis() - TimeStart);
 			}
 			sq.setIcon(blank);
-			g.nextNote(nextNote);
+//			g.nextNote(nextNote);
+			g.noteDissapeared();
 			g.incrementTotalNotes();
 			displayAccuracy(g.getTotalHitsAccuracy());
 		}
@@ -233,34 +234,34 @@ public class GUIGameplay
 		switch(index)
 		{
 		case 0:
-			new Thread(new note(1,1,175,175,false,nextNote)).start();
+			new Thread(new note(1,1,175,175,false)).start();
 			break;
 		case 1:
-			new Thread(new note(177,1,175,175,false,nextNote)).start();
+			new Thread(new note(177,1,175,175,false)).start();
 			break;
 		case 2:
-			new Thread(new note(353,1,175,175,false,nextNote)).start();
+			new Thread(new note(353,1,175,175,false)).start();
 			break;
 		case 3:
-			new Thread(new note(1,177,175,175,false,nextNote)).start();
+			new Thread(new note(1,177,175,175,false)).start();
 			break;
 		case 4:
-			new Thread(new note(177,177,175,175,false,nextNote)).start();
+			new Thread(new note(177,177,175,175,false)).start();
 			break;
 		case 5:
-			new Thread(new note(353,177,175,175,false,nextNote)).start();
+			new Thread(new note(353,177,175,175,false)).start();
 			break;
 		case 6:
-			new Thread(new note(1,353,175,175,false,nextNote)).start();
+			new Thread(new note(1,353,175,175,false)).start();
 			break;
 		case 7:
-			new Thread(new note(177,353,175,175,false,nextNote)).start();
+			new Thread(new note(177,353,175,175,false)).start();
 			break;
 		case 8:
-			new Thread(new note(353,353,175,175,false,nextNote)).start();
+			new Thread(new note(353,353,175,175,false)).start();
 			break;
 		case 9:
-			new Thread(new note(1,1,528,528,true,nextNote)).start();
+			new Thread(new note(1,1,528,528,true)).start();
 			break;
 		}
 	}

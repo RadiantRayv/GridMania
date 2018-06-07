@@ -1,10 +1,16 @@
+import javax.swing.SwingUtilities;
 
-public class game implements Runnable
+public class game
 {
 	private notesChart chart;
+	private notesChart chart2;
 	private long approachRate = 1000;
 	private long nextHitTime;
 	private notesAtTime current;
+	private notesAtTime current2;
+	private boolean noteNotDissapeared;
+	private boolean noteNotHit;
+	
 	private notesAtTime next;
 	private boolean[] temparr;
 	private boolean temparrIsEmpty;
@@ -21,78 +27,138 @@ public class game implements Runnable
 	private int perfect;
 	private int okay; 
 	private int totalNotesSoFar;
-	
-	private double totalHitsAccuracy;
 
-	game(notesChart chart, GUIGameplay g, Test maingui)
+	private double totalHitsAccuracy;
+	
+	private Thread t1;
+	private Thread t2;
+
+	game(notesChart ch, GUIGameplay g, Test maingui)
 	{
-		this.chart = chart;
+		chart = ch;
 		//		current = chart.getNext();
 		bpm = chart.getSong().getBpm();
 		offset = chart.getSong().getOffset();
 		gui = g;
 		timeOfNoteTiming = offset;
 		timeOfNoteRender = -501;
-		current = chart.getNext();
-		temparr = current.getNotes();
-		chart.getPrevious();
+//		current = chart.getNext();
+		current2 = chart.getNext(2);
+		
+		next = null;
+		
+		temparr = current2.getNotes();
 		screen = maingui;
 		running = true;
 		perfect = 0;
 		okay = 0;
 		totalNotesSoFar = 0;
-	}
-
-	public void run()
-	{
-		TimeStart = System.currentTimeMillis();
-
-		while(chart.hasNext() && running)
-		{
-			timeOfNoteRenderPrev = timeOfNoteRender;
-			current = chart.getNext();
-			if(chart.hasNext())
-			{
-				next = chart.getNext();
-				chart.getPrevious();
-			}
-			timeOfNoteRender = current.getPosition()*(15000.0/bpm) + offset;
-			//			gui.setCurrentNotes(current.getNotes(), timeOfNote + TimeStart);
-			while (System.currentTimeMillis() - TimeStart < timeOfNoteRender - 917)
-			{
-			}
-			for(int i = 0; i <= 9; i++)
-			{
-				if(current.getSingleNote(i))
-				{
-					gui.draw(i, next);
-				}
-			}	
-		}
-		while(System.currentTimeMillis() - TimeStart < timeOfNoteRender + 5000)
-		{
-		}
-		if(running)
-			screen.isDone(true);
-	}
-
-	public void nextNote(notesAtTime nextNote)
-	{
-		//this is only doing the do every other beat???
-//		if(timeOfNoteTiming <= timeOfNoteRenderPrev)
-//		{
-//			System.out.println(nextNote.getPosition());
-			timeOfNoteTiming = nextNote.getPosition()*(15000.0/bpm) + offset;
-			temparr = nextNote.getNotes();
-			
-//		}
+		
+		noteNotDissapeared = true;
+		noteNotHit = true;
+		
+		t1 = new Thread(new GUILoop());
+		t2 = new Thread(new TimingLoop());
 	}
 	
+	public void runGame()
+	{
+		TimeStart = System.currentTimeMillis();
+		t1.start();
+		t2.start();
+	}
+
+	private class GUILoop implements Runnable
+	{
+		public void run()
+		{
+
+			while(chart.hasNext(1) && running)
+			{
+				timeOfNoteRenderPrev = timeOfNoteRender;
+				current = chart.getNext(1);
+//				if(chart.hasNext())
+//				{
+//					next = chart.getNext();
+//					chart.getPrevious();
+//				}
+				timeOfNoteRender = current.getPosition()*(15000.0/bpm) + offset;
+				//			gui.setCurrentNotes(current.getNotes(), timeOfNote + TimeStart);
+				while (System.currentTimeMillis() - TimeStart < timeOfNoteRender - 917)
+				{
+				}
+				for(int i = 0; i <= 9; i++)
+				{
+					if(current.getSingleNote(i))
+					{
+						gui.draw(i, next);
+					}
+				}	
+			}
+			while(System.currentTimeMillis() - TimeStart < timeOfNoteRender + 5000)
+			{
+			}
+			if(running)
+				screen.isDone(true);
+		}
+	}
+
+	private class TimingLoop implements Runnable
+	{
+		private boolean noteNotHHH = true;
+		
+		private void hitnuts()
+		{
+			noteNotHHH = false;
+		}
+		
+		
+		public void run()
+		{
+
+			while(chart.hasNext(2) && running)
+			{
+				System.out.println("x");
+				while (noteNotDissapeared && noteNotHHH)
+				{
+				}
+				System.out.println("h");
+				noteNotHit = true;
+				noteNotDissapeared = true;
+				current2 = chart.getNext(2);
+				timeOfNoteTiming = current2.getPosition()*(15000.0/bpm) + offset;
+				temparr = current2.getNotes();
+			}
+			while(System.currentTimeMillis() - TimeStart < timeOfNoteRender + 5000)
+			{
+			}
+			if(running)
+				screen.isDone(true);
+		}
+	}
+	
+	public void noteDissapeared()
+	{
+		noteNotDissapeared = false;
+	}
+
+//	public void nextNote(notesAtTime nextNote)
+//	{
+//		//this is only doing the do every other beat???
+//		//		if(timeOfNoteTiming <= timeOfNoteRenderPrev)
+//		//		{
+//		//			System.out.println(nextNote.getPosition());
+//		timeOfNoteTiming = nextNote.getPosition()*(15000.0/bpm) + offset;
+//		temparr = nextNote.getNotes();
+//
+//		//		}
+//	}
+
 	public void stopRunning()
 	{
 		running = false;
 	}
-	
+
 	public double getTotalHitsAccuracy()
 	{
 		return totalHitsAccuracy;
@@ -127,31 +193,32 @@ public class game implements Runnable
 			}
 			if(temparrIsEmpty)
 			{
-				nextNote(next);
+//				nextNote(next);
+				noteNotHit = false;
 			}
 		}
 	}
- 
+
 	public void incrementTotalNotes()
 	{
 		totalNotesSoFar++;
 	}
-	
+
 	public int getTotalNotesSoFar()
 	{
 		return totalNotesSoFar;
 	}
-	
+
 	public int getPerfect()
 	{
 		return perfect;
 	}
-	
+
 	public int getOkay()
 	{
 		return okay;
 	}
-	
+
 	public int getMiss()
 	{
 		return (totalNotesSoFar - (perfect + okay));

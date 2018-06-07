@@ -332,8 +332,9 @@ public class Test implements ActionListener {
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 			startSong();
-			Thread t = new Thread(ggg);
-			t.start();
+			ggg.runGame();
+//			Thread t = new Thread(ggg);
+//			t.start();
 		}
 		if(evt.getSource() == bMedium)
 		{
@@ -344,8 +345,9 @@ public class Test implements ActionListener {
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 			startSong();
-			Thread t = new Thread(ggg);
-			t.start();
+			ggg.runGame();
+//			Thread t = new Thread(ggg);
+//			t.start();
 		}
 		if(evt.getSource() == bHard)
 		{
