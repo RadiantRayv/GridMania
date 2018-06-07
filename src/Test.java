@@ -25,11 +25,13 @@ public class Test implements ActionListener {
 	private game ggg;
 	private double accuracy;
 	
+	private Font font;
 	ClassLoader cldr;
 	Image bg;
 	
 	public Test()
 	{
+		
 		
 		cldr = this.getClass().getClassLoader();
 		bg = new ImageIcon(cldr.getResource("other graphics/bg.png")).getImage();
@@ -323,11 +325,14 @@ public class Test implements ActionListener {
 		if(evt.getSource() == bMedium)
 		{
 			stopSong();
-			lGame = new JLabel(bMedium.getText());
-			cardg.add(lGame);
+			ggg = new game(s.getMedium(), gamegui, this);
+			gamegui.addGame(ggg);
+			cardg.add(bBack3);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 			startSong();
+			Thread t = new Thread(ggg);
+			t.start();
 		}
 		if(evt.getSource() == bHard)
 		{
@@ -376,6 +381,7 @@ public class Test implements ActionListener {
 			c.fill = GridBagConstraints.HORIZONTAL;
 			s = new song("Rob Gasser - Supersonic");
 			s.loadEasy("Rob Gasser - Supersonic");
+			s.loadMedium("Rob Gasser - Supersonic");
 			info.setText(s.getInfo());
 			name.setText(s.getName());
 			if(player == null)
