@@ -380,8 +380,8 @@ public class Test implements ActionListener {
 			player = null;
 			c.fill = GridBagConstraints.HORIZONTAL;
 			s = new song("Rob Gasser - Supersonic");
-			s.loadEasy("Rob Gasser - Supersonic");
-			s.loadMedium("Rob Gasser - Supersonic");
+			s.loadEasy();
+			s.loadMedium();
 			info.setText(s.getInfo());
 			name.setText(s.getName());
 			if(player == null)
@@ -400,7 +400,7 @@ public class Test implements ActionListener {
 			player = null;
 			c.fill = GridBagConstraints.HORIZONTAL;
 			s = new song("TARI & Yix - Bliss");
-			s.loadEasy("TARI & Yix - Bliss");
+			s.loadEasy();
 			info.setText(s.getInfo());
 			name.setText(s.getName());
 			if(player == null)

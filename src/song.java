@@ -33,7 +33,7 @@ public class song
 		
 		diffs = new ArrayList<notesChart>();
 		
-		path = System.getProperty("user.dir") + filepath;
+		path = filepath;
 		
 //		File songFile = new File(path + "\\song.txt");
 		InputStream songFile = cldr.getResourceAsStream("Songs/" + filepath + "/song.txt");
@@ -72,9 +72,9 @@ public class song
 		diffs = new ArrayList<notesChart>();
 	}
 	
-	public void loadEasy(String filepath)
+	public void loadEasy()
 	{
-		diffs.add(0, new notesChart(filepath));
+		diffs.add(0, new notesChart(path + "/easy.txt"));
 		diffs.get(0).setSong(this);
 	}
 
@@ -88,9 +88,9 @@ public class song
 		return diffs.get(0);
 	}
 	
-	public void loadMedium(String filepath)
+	public void loadMedium()
 	{
-		diffs.add(1, new notesChart(filepath));
+		diffs.add(1, new notesChart(path + "/medium.txt"));
 		diffs.get(1).setSong(this);
 	}
 	
@@ -101,7 +101,7 @@ public class song
 	
 	public void loadHard(String filepath)
 	{
-		diffs.add(2, new notesChart(filepath));
+		diffs.add(2, new notesChart(path + "/medium.txt"));
 		diffs.get(2).setSong(this);
 	}
 	
