@@ -32,6 +32,8 @@ public class game
 	
 	private Thread t1;
 	private Thread t2;
+	private GUILoop gl;
+	private TimingLoop tl;
 
 	game(notesChart ch, GUIGameplay g, Test maingui)
 	{
@@ -57,8 +59,10 @@ public class game
 		noteNotDissapeared = true;
 		noteNotHit = true;
 		
-		t1 = new Thread(new GUILoop());
-		t2 = new Thread(new TimingLoop());
+		gl = new GUILoop();
+		t1 = new Thread(gl);
+		tl = new TimingLoop();
+		t2 = new Thread(tl);
 	}
 	
 	public void runGame()
@@ -102,30 +106,38 @@ public class game
 				screen.isDone(true);
 		}
 	}
-
+	
 	private class TimingLoop implements Runnable
 	{
 		private boolean noteNotHHH = true;
+		private boolean noteNotDDD = true;
 		
-		private void hitnuts()
+		public void UpdateNoteHit()
 		{
 			noteNotHHH = false;
 		}
 		
+		public void UpdateNoteDisp()
+		{
+			noteNotDDD = false;
+		}
 		
 		public void run()
 		{
 
 			while(chart.hasNext(2) && running)
 			{
-				System.out.println("x");
+//				System.out.println("x");
 				//not getting past this loop????
-				while (noteNotDissapeared && noteNotHHH)
+				while (noteNotDDD && noteNotHHH)
 				{
+				
 				}
 				System.out.println("h");
 				noteNotHit = true;
 				noteNotDissapeared = true;
+				noteNotHHH = true;
+				noteNotDDD = true;
 				current2 = chart.getNext(2);
 				timeOfNoteTiming = current2.getPosition()*(15000.0/bpm) + offset;
 				temparr = current2.getNotes();
@@ -136,11 +148,6 @@ public class game
 			if(running)
 				screen.isDone(true);
 		}
-	}
-	
-	public void noteDissapeared()
-	{
-		noteNotDissapeared = false;
 	}
 
 //	public void nextNote(notesAtTime nextNote)
@@ -167,6 +174,7 @@ public class game
 
 	public void detectHit(int n)
 	{
+		System.out.println("owo");
 		temparrIsEmpty = true;
 		hitTimeDiff = System.currentTimeMillis();
 		if(hitTimeDiff < 250 + timeOfNoteTiming + TimeStart && hitTimeDiff > -250 + timeOfNoteTiming + TimeStart)
@@ -195,7 +203,8 @@ public class game
 			if(temparrIsEmpty)
 			{
 //				nextNote(next);
-				noteNotHit = false;
+				tl.UpdateNoteHit();
+				System.out.println("E");
 			}
 		}
 	}
@@ -223,6 +232,11 @@ public class game
 	public int getMiss()
 	{
 		return (totalNotesSoFar - (perfect + okay));
+	}
+
+	public void noteDissapeared() 
+	{
+		tl.UpdateNoteDisp();
 	}
 
 	//public void updateNoteField()

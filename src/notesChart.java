@@ -56,6 +56,8 @@ public class notesChart implements Cloneable
 
 		while(fileScanner.hasNext())
 		{
+			int lastInt;
+			
 			for(int i = 0; i <= 9; i++)
 			{
 				if(fileScanner.nextInt() == 1)
@@ -63,10 +65,13 @@ public class notesChart implements Cloneable
 				else
 					tempArray[i] = false;
 			}
+			
+			lastInt = fileScanner.nextInt();
 
-			chart1.add(new notesAtTime(Arrays.copyOf(tempArray, 10), fileScanner.nextInt()));
+			chart1.add(new notesAtTime(Arrays.copyOf(tempArray, 10), lastInt));
+			chart2.add(new notesAtTime(Arrays.copyOf(tempArray, 10), lastInt));
 		}
-		chart2.addAll(chart1);
+
 
 		iter1 = chart1.listIterator();
 		iter2 = chart2.listIterator();
