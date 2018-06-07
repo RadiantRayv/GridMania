@@ -119,6 +119,7 @@ public class game
 			while(chart.hasNext(2) && running)
 			{
 				System.out.println("x");
+				//not getting past this loop????
 				while (noteNotDissapeared && noteNotHHH)
 				{
 				}
