@@ -57,8 +57,8 @@ public class Test implements ActionListener {
 		bBack2 = new JButton("Back");
 		bBack3 = new JButton("Back");
 		song1 = new JButton("Rob Gasser - Supersonic");
-		song2 = new JButton("other song (Not coded yet)");
-		song3 = new JButton("third song (Not coded either)");
+		song2 = new JButton("TARI & Yix - Bliss");
+		song3 = new JButton("Coming soon");
 		select = new JLabel("select a song", SwingConstants.CENTER);
 		numpad = new JLabel("Do you have a numpad?", SwingConstants.CENTER);
 		blank = new JLabel("");
@@ -76,7 +76,6 @@ public class Test implements ActionListener {
 		ok = new JLabel(); 
 		miss = new JLabel();
 		name = new JLabel();
-		s = new song("Rob Gasser - Supersonic");
 		accuracy = 0.0;
 	}
 
@@ -92,6 +91,7 @@ public class Test implements ActionListener {
 		bBack.addActionListener(this);
 		bBack2.addActionListener(this);
 		song1.addActionListener(this);
+		song2.addActionListener(this);
 		bBack3.addActionListener(this);
 		
 		bDo.setPreferredSize(new Dimension(250, 75));
@@ -330,6 +330,7 @@ public class Test implements ActionListener {
 		if(evt.getSource() == song1)
 		{
 			c.fill = GridBagConstraints.HORIZONTAL;
+			s = new song(song1.getText());
 			s.loadEasy("Rob Gasser - Supersonic");
 			info.setText(s.getInfo());
 			name.setText(s.getName());
@@ -338,6 +339,20 @@ public class Test implements ActionListener {
 			if(!player.getStatus().equals(MediaPlayer.Status.PLAYING))
 			{
 				startMid(45000.0);
+			}
+		}
+		if(evt.getSource() == song2)
+		{
+			c.fill = GridBagConstraints.HORIZONTAL;
+			s = new song(song2.getText());
+			s.loadEasy("TARI & Yix - Bliss");
+			info.setText(s.getInfo());
+			name.setText(s.getName());
+			if(player == null)
+				setSong(s);
+			if(!player.getStatus().equals(MediaPlayer.Status.PLAYING))
+			{
+				startMid(44900.0);
 			}
 		}
 	}
