@@ -78,14 +78,36 @@ public class song
 		diffs.get(0).setSong(this);
 	}
 
-	public void newEasy(int diff)
-	{
-		diffs.add(0, new notesChart(1, diff, bpm, offset));
-	}
+//	public void newEasy(int diff)
+//	{
+//		diffs.add(0, new notesChart(1, diff, bpm, offset));
+//	}
 	
 	public notesChart getEasy()
 	{
 		return diffs.get(0);
+	}
+	
+	public void loadMedium(String filepath)
+	{
+		diffs.add(1, new notesChart(filepath));
+		diffs.get(1).setSong(this);
+	}
+	
+	public notesChart getMedium()
+	{
+		return diffs.get(1);
+	}
+	
+	public void loadHard(String filepath)
+	{
+		diffs.add(2, new notesChart(filepath));
+		diffs.get(2).setSong(this);
+	}
+	
+	public notesChart getHard()
+	{
+		return diffs.get(2);
 	}
 	
 	public int getBpm()
