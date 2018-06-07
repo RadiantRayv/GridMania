@@ -188,7 +188,9 @@ public class Test implements ActionListener {
 		bBack3.setPreferredSize(new Dimension(500,100));
 		
 		fin.setLayout(new GridBagLayout());
-		c.insets = new Insets(15,15,15,15);
+		c.insets = new Insets(10,10,10,10);
+		c.anchor = GridBagConstraints.PAGE_START;
+		//c.anchor = GridBagConstraints.PAGE_START;
 		c.gridx = 0;
 		c.gridy = 0;
 		fin.add(score, c);
@@ -272,6 +274,7 @@ public class Test implements ActionListener {
 			stopSong();
 			ggg = new game(s.getEasy(), gamegui, this);
 			gamegui.addGame(ggg);
+			cardg.add(bBack3);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 			startSong();
@@ -348,8 +351,19 @@ public class Test implements ActionListener {
 		miss.setText("Miss: " + ggg.getMiss());
 		if(pass)
 		{
-			if(accuracy >= 90)
-				score.setText("A");
+			if(accuracy == 100)
+				score.setText("S+");
+			else if(accuracy >= 90)
+			{
+				
+				if(ggg.getMiss() == 0)
+				{
+					score.setText("S");
+						
+				}
+				else 
+					score.setText("A");
+			}
 			else if(accuracy >= 80)
 				score.setText("B");
 			else if(accuracy >= 70)
@@ -363,6 +377,9 @@ public class Test implements ActionListener {
 		{
 			score.setText("F");
 		}
+		c.gridy = 5;
+		c.gridwidth = 3;
+		fin.add(bBack3, c);
 		CardLayout cl = (CardLayout)(cards.getLayout());
 		cl.show(cards, FIN);
 	}
