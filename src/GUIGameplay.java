@@ -52,7 +52,9 @@ public class GUIGameplay
 	private JLabel bgGrid;
 	
 	private Queue<Double> renderTimes;
+	private Queue<notesAtTime> nextNotes;
 	private double currentRenderTime;
+	private notesAtTime nextNote;
 	//	private JLabel sq1;
 	//	private JLayeredPane two;
 	//	private JLayeredPane three;
@@ -124,6 +126,7 @@ public class GUIGameplay
 		acc = 100.0;
 		
 		renderTimes = new LinkedList<Double>();
+		nextNotes = new LinkedList<notesAtTime>();
 		
 		TimeStart = System.currentTimeMillis();
 	}
@@ -168,14 +171,14 @@ public class GUIGameplay
 		private notesAtTime nextNote;
 		private int maxSize;
 
-		note(int x1, int y1, int x2, int y2, boolean special, notesAtTime next)
+		note(int x1, int y1, int x2, int y2, boolean special)
 		{
 			xfirst = x1;
 			yfirst = y1;
 			xsecond = x2;
 			ysecond = y2;
 			isSpecial = special;
-			nextNote = next;
+//			nextNote = next;
 			if(special)
 				maxSize = 528;
 			else
@@ -191,7 +194,7 @@ public class GUIGameplay
 			while(size<maxSize)
 			{
 				timediff = (System.currentTimeMillis() - TimeStart);
-				if(timediff % 25 == 0)
+				if(timediff % 50 == 0)
 				{
 					sq.setHorizontalAlignment(JLabel.CENTER);
 					sq.setBounds(xfirst, yfirst, xsecond, ysecond);
@@ -202,7 +205,7 @@ public class GUIGameplay
 					});
 
 
-					int h = (int)(timediff/25)*6 + 5;
+					int h = (int)(timediff/50)*12 + 5;
 					ImageIcon scaled;
 					if(isSpecial)
 					{
@@ -231,50 +234,57 @@ public class GUIGameplay
 				timediff = (System.currentTimeMillis() - TimeStart);
 			}
 			sq.setIcon(blank);
-//			g.nextNote(nextNote, renderTimes.peek());
+			if(!nextNotes.isEmpty())
+			{
+				g.nextNote(getNextNoteInQueue(), currentRenderTime);
+			}
 			System.out.println(currentRenderTime);
 			g.incrementTotalNotes();
 			displayAccuracy(g.getTotalHitsAccuracy());
 		}
 	}
 
-	public void draw(int index, notesAtTime nextNote, double renderTime)
+	public void draw(int index, notesAtTime next, double renderTime)
 	{
 		renderTimes.add(renderTime);
-		currentRenderTime = renderTimes.peek();
-//		System.out.println(renderTimes.peek());
-		counter++;
+		nextNotes.add(next);
+		if(!renderTimes.isEmpty())
+			currentRenderTime = renderTimes.peek();
+		if(!nextNotes.isEmpty())
+			nextNote = nextNotes.peek();
+		//		System.out.println(renderTimes.peek());
+
 		switch(index)
 		{
 		case 0:
-			new Thread(new note(1,1,175,175,false,nextNote)).start();
+			new Thread(new note(1,1,175,175,false)).start();
 			break;
 		case 1:
-			new Thread(new note(177,1,175,175,false,nextNote)).start();
+			new Thread(new note(177,1,175,175,false)).start();
 			break;
 		case 2:
-			new Thread(new note(353,1,175,175,false,nextNote)).start();
+			new Thread(new note(353,1,175,175,false)).start();
 			break;
 		case 3:
-			new Thread(new note(1,177,175,175,false,nextNote)).start();
+			new Thread(new note(1,177,175,175,false)).start();
 			break;
 		case 4:
-			new Thread(new note(177,177,175,175,false,nextNote)).start();
+			new Thread(new note(177,177,175,175,false)).start();
 			break;
 		case 5:
-			new Thread(new note(353,177,175,175,false,nextNote)).start();
+			new Thread(new note(353,177,175,175,false)).start();
 			break;
 		case 6:
-			new Thread(new note(1,353,175,175,false,nextNote)).start();
+			new Thread(new note(1,353,175,175,false)).start();
 			break;
 		case 7:
-			new Thread(new note(177,353,175,175,false,nextNote)).start();
+			new Thread(new note(177,353,175,175,false)).start();
 			break;
 		case 8:
-			new Thread(new note(353,353,175,175,false,nextNote)).start();
+			new Thread(new note(353,353,175,175,false)).start();
 			break;
 		case 9:
-			new Thread(new note(1,1,528,528,true,nextNote)).start();
+			new Thread(new note(1,1,528,528,true)).start();
 			break;
 		}
 	}
@@ -282,8 +292,35 @@ public class GUIGameplay
 	public void nextTimingInQueue()
 	{
 		renderTimes.remove();
-		if(!mnyhrenderTimes.isEmpty())
-		currentRenderTime = renderTimes.peek();
+//		Iterator<Double> debug = renderTimes.iterator();
+//		while(debug.hasNext())
+//		{
+//			System.out.println(debug.next());
+//		}
+		
+//		if(!renderTimes.isEmpty())
+//		currentRenderTime = renderTimes.peek();
+	}
+	
+	public notesAtTime getNextNoteInQueue()
+	{
+		nextNotes.remove();
+//		notesAtTime next = 
+//		Iterator<Double> debug = renderTimes.iterator();
+//		while(debug.hasNext())
+//		{
+//			System.out.println(debug.next());
+//		}
+		
+//		if(!nextNotes.isEmpty())
+//			nextNote = nextNotes.peek();
+		
+		return nextNote;
+	}
+	
+	public boolean noteQueueIsEmpty()
+	{
+		return nextNotes.isEmpty();
 	}
 	
 	public void setCurrentNotes(boolean[] n, double time)
@@ -444,7 +481,7 @@ public class GUIGameplay
 		public void actionPerformed(ActionEvent e) 
 		{
 
-			g.detectHit(note, renderTimes.peek());
+			g.detectHit(note, currentRenderTime);
 					
 		}
 	}

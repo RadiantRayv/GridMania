@@ -81,7 +81,7 @@ public class game implements Runnable
 		//this is only doing the do every other beat???
 		if(timeOfNoteTiming <= lastRenderedNoteTime)
 		{
-			System.out.println("yeett");
+//			System.out.println("yeett");
 			timeOfNoteTiming = nextNote.getPosition()*(15000.0/bpm) + offset;
 			temparr = nextNote.getNotes();
 			gui.nextTimingInQueue();
@@ -125,9 +125,9 @@ public class game implements Runnable
 				if(temparr[i] == true)
 					temparrIsEmpty = false;
 			}
-			if(temparrIsEmpty)
+			if(temparrIsEmpty && !gui.noteQueueIsEmpty())
 			{
-				nextNote(next, timeRender);
+				nextNote(gui.getNextNoteInQueue(), timeRender);
 			}
 		}
 	}

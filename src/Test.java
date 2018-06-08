@@ -27,6 +27,8 @@ public class Test implements ActionListener {
 	private game ggg;
 	private double accuracy;
 	
+	Thread t;
+	
 	private Font font;
 	ClassLoader cldr;
 	Image bg;
@@ -333,7 +335,7 @@ public class Test implements ActionListener {
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 			startSong();
-			Thread t = new Thread(ggg);
+			t = new Thread(ggg);
 			t.start();
 		}
 		if(evt.getSource() == bMedium)
@@ -346,7 +348,7 @@ public class Test implements ActionListener {
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 			startSong();
-			Thread t = new Thread(ggg);
+			t = new Thread(ggg);
 			t.start();
 		}
 		if(evt.getSource() == bHard)
@@ -375,14 +377,16 @@ public class Test implements ActionListener {
 		}
 		if(evt.getSource() == bBack3)
 		{
+			ggg.stopRunning();
+			ggg = null;
+			t = null;
+			s = null;
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, SONGS);
 			if(player != null && player.getStatus().equals(MediaPlayer.Status.PLAYING))
 			{
 				stopSong();
 			}
-			ggg.stopRunning();
-			ggg = null;
 			info.setText(" ");
 			
 		}
