@@ -386,11 +386,14 @@ public class Test implements ActionListener {
 		if(evt.getSource() == bHard)
 		{
 			stopSong();
-			lGame = new JLabel(bHard.getText());
-			cardg.add(lGame);
+			ggg = new game(s.getHard(), gamegui, this);
+			gamegui.addGame(ggg);
+			cardg.add(bBack3);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
 			startSong();
+			Thread t = new Thread(ggg);
+			t.start();
 		}
 		if(evt.getSource() == bBack)
 		{
@@ -431,6 +434,7 @@ public class Test implements ActionListener {
 			s = new song("Rob Gasser - Supersonic");
 			s.loadEasy();
 			s.loadMedium();
+			s.loadHard();
 			info.setText(s.getInfo());
 			name.setText(s.getName());
 			if(player == null)
@@ -451,6 +455,7 @@ public class Test implements ActionListener {
 			s = new song("TARI & Yix - Bliss");
 			s.loadEasy();
 			s.loadMedium();
+			s.loadHard();
 			info.setText(s.getInfo());
 			name.setText(s.getName());
 			if(player == null)

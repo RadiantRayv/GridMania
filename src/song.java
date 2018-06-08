@@ -99,9 +99,9 @@ public class song
 		return diffs.get(1);
 	}
 	
-	public void loadHard(String filepath)
+	public void loadHard()
 	{
-		diffs.add(2, new notesChart(path + "/medium.txt"));
+		diffs.add(2, new notesChart(path + "/hard.txt"));
 		diffs.get(2).setSong(this);
 	}
 	
