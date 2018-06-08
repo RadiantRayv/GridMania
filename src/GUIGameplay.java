@@ -1,5 +1,7 @@
 import java.awt.*;          // access to Container
 import java.awt.event.*;    // access to WindowAdapter, WindowEvent
+import java.io.IOException;
+
 import javax.swing.*;
 
 import javafx.scene.media.*;
@@ -19,106 +21,74 @@ public class GUIGameplay
 	private ImageIcon perfect;
 	private ImageIcon okay;
 	private ImageIcon grid;
-	private int counter;         // counts seconds
-	private int sqX, sqY, sqX2, sqY2, sqX3, sqY3;
-	private int redX, redY;
-	private int redSize;
-	private int size, size2, size3;
-
-	//	private long TimeStart;
-	//	private long timediff;
-	//	private int h;
-
 
 	private song s;
 	private MediaPlayer player;
-	String hitsound;
-//	private MediaPlayer hits;
 
-	private notesChart chart;
-	private boolean[] currentNotes;
-	private double currentTime;
 	private double acc;
-	private int bpm;
 	
-	private long TimeStart;
-
 	private BackgroundPanel cont;
 	private JLayeredPane one;
 	
 	private JLabel bgGrid;
-	//	private JLabel sq1;
-	//	private JLayeredPane two;
-	//	private JLayeredPane three;
-	//	private JLayeredPane four;
-	//	private JLayeredPane five;
-	//	private JLayeredPane six;
-	//	private JLayeredPane seven;
-	//	private JLayeredPane eight;
-	//	private JLayeredPane nine;
-	//	private JLabel big;
+	private JLabel accuracy;
+	private JLabel health;
 
-	//in the method that adds a panel with a square and displays it to the jlayeredpane, store the created layer to a arraylist. Iterate over entire arraylist to resize everything at once in the paint method. After a square is hidden, delete it from the arraylist.
-
-	//BRO LOOK AT GRIDWORLD GUI AND SEE IF THAT HELPS AT ALLr
-
-	InputMap inm;
+	private InputMap inm;
+	
+	private Font font;
 
 	public GUIGameplay() 
 	{
 		ClassLoader cldr = this.getClass().getClassLoader();
 		cont = new BackgroundPanel(new ImageIcon(cldr.getResource("other graphics/bg.png")).getImage());
+		cont.setLayout(new BoxLayout(cont, BoxLayout.Y_AXIS));
 		cont.add(one = new JLayeredPane());
 		one.setBounds(0, 0, 529, 529);
 
 		inm = cont.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
-
-		//		cont.add(two);
-		//		cont.add(three);
-		//		cont.add(four);
-		//		cont.add(five);
-		//		cont.add(six);
-		//		cont.add(seven);
-		//		cont.add(eight);
-		//		cont.add(nine);
-
 
 		square = new ImageIcon(cldr.getResource("gameplay elements/bluesquare.png"));
 		blank = new ImageIcon(cldr.getResource("other graphics/blank.png"));
 		red = new ImageIcon(cldr.getResource("gameplay elements/redsquare.png"));
 		perfect = new ImageIcon(cldr.getResource("gameplay elements/perfect.png"));
 		okay = new ImageIcon(cldr.getResource("gameplay elements/okay.png"));
-		hitsound = cldr.getResource("hit.wav").toString();
 		
 		grid = new ImageIcon(cldr.getResource("gameplay elements/grid.png"));
 		bgGrid = new JLabel(grid);
-		bgGrid.setBounds(0, 0, 529, 529);
+		bgGrid.setBounds(35, 35, 529, 529);
 		one.add(bgGrid, 0);
+		
+		try {
+			font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/Spaceport1.ttf"));
+		} catch (FontFormatException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		acc = 100.0;
+		accuracy = new JLabel("Accuracy = 100.00%" , SwingConstants.CENTER);
+		accuracy.setPreferredSize(new Dimension(300, 20));
+		accuracy.setFont(font.deriveFont(Font.BOLD, 20f));
+		accuracy.setForeground(Color.CYAN);
+		accuracy.setBounds(0, 0, 300, 40);
+		one.add(accuracy);
+		
+		health = new JLabel("HP = 8/16" , SwingConstants.CENTER);
+		health.setPreferredSize(new Dimension(300, 20));
+		health.setFont(font.deriveFont(Font.BOLD, 20f));
+		health.setForeground(Color.MAGENTA);
+		health.setBounds(300, 0, 300, 40);
+		one.add(health);
 
 
 		//
 		//		add(cont);
 
-		sqX = 87;
-		sqY = 87;
-		sqX2 = 238;
-		sqY2 = 162;
-		sqX3 = 163;
-		sqY3 = 237;
-		redX = 162;
-		redY = 163;
-		//		setSize(675, 675);
-		//		setVisible(true);
-		size = 0;
-		size2 = 0;
-		size3 = 0;
-		redSize = 10;
 
-		counter = 0;
-		acc = 100.0;
 		
 		
-		TimeStart = System.currentTimeMillis();
 	}
 
 	public BackgroundPanel getCont()
@@ -134,18 +104,34 @@ public class GUIGameplay
 	public void setSong(song ss)
 	{
 		s = ss;
-		bpm = s.getBpm();
-	}
-
-	public void startGame(int diff)
-	{
-		chart = s.getEasy();
 	}
 
 	public void startSong()
 	{
 		player = new MediaPlayer(s.getSong());
 		player.play();
+	}
+	
+	public void displayAccuracy(double hits)
+	{
+		acc = (hits/g.getTotalNotesSoFar())*100;
+		accuracy.setText("Accuracy = " +accFormat.format(acc) + "%");
+//		System.out.println(accFormat.format(acc) + "%");
+	}
+	
+	public String getAccString()
+	{
+		return accFormat.format(acc) + "%";
+	}
+	
+	public double getAcc()
+	{
+		return acc;
+	}
+	
+	public void displayHealth()
+	{
+		health.setText("Health = " + g.getHP() + "/16");
 	}
 
 	private class note implements Runnable
@@ -182,7 +168,7 @@ public class GUIGameplay
 			while(size<maxSize)
 			{
 				timediff = (System.currentTimeMillis() - TimeStart);
-				if(timediff % 25 == 0)
+				if(timediff % 50 == 0)
 				{
 					sq.setHorizontalAlignment(JLabel.CENTER);
 					sq.setBounds(xfirst, yfirst, xsecond, ysecond);
@@ -193,7 +179,7 @@ public class GUIGameplay
 					});
 
 
-					int h = (int)(timediff/25)*6 + 5;
+					int h = (int)(timediff/50)*12 + 5;
 					ImageIcon scaled;
 					if(isSpecial)
 					{
@@ -225,6 +211,8 @@ public class GUIGameplay
 			g.nextNote(nextNote);
 			g.incrementTotalNotes();
 			displayAccuracy(g.getTotalHitsAccuracy());
+			g.decreaseHP();
+			displayHealth();
 		}
 	}
 
@@ -233,43 +221,38 @@ public class GUIGameplay
 		switch(index)
 		{
 		case 0:
-			new Thread(new note(1,1,175,175,false,nextNote)).start();
+			new Thread(new note(36,36,175,175,false,nextNote)).start();
 			break;
 		case 1:
-			new Thread(new note(177,1,175,175,false,nextNote)).start();
+			new Thread(new note(212,36,175,175,false,nextNote)).start();
 			break;
 		case 2:
-			new Thread(new note(353,1,175,175,false,nextNote)).start();
+			new Thread(new note(388,36,175,175,false,nextNote)).start();
 			break;
 		case 3:
-			new Thread(new note(1,177,175,175,false,nextNote)).start();
+			new Thread(new note(36,212,175,175,false,nextNote)).start();
 			break;
 		case 4:
-			new Thread(new note(177,177,175,175,false,nextNote)).start();
+			new Thread(new note(212,212,175,175,false,nextNote)).start();
 			break;
 		case 5:
-			new Thread(new note(353,177,175,175,false,nextNote)).start();
+			new Thread(new note(388,212,175,175,false,nextNote)).start();
 			break;
 		case 6:
-			new Thread(new note(1,353,175,175,false,nextNote)).start();
+			new Thread(new note(36,388,175,175,false,nextNote)).start();
 			break;
 		case 7:
-			new Thread(new note(177,353,175,175,false,nextNote)).start();
+			new Thread(new note(212,388,175,175,false,nextNote)).start();
 			break;
 		case 8:
-			new Thread(new note(353,353,175,175,false,nextNote)).start();
+			new Thread(new note(388,388,175,175,false,nextNote)).start();
 			break;
 		case 9:
-			new Thread(new note(1,1,528,528,true,nextNote)).start();
+			new Thread(new note(36,36,528,528,true,nextNote)).start();
 			break;
 		}
 	}
 	
-	public void setCurrentNotes(boolean[] n, double time)
-	{
-		currentNotes = n;
-		currentTime = time;
-	}
 	
 	private class judgement implements Runnable
 	{
@@ -278,7 +261,6 @@ public class GUIGameplay
 		private int yfirst;
 		private int xsecond;
 		private int ysecond;
-		private boolean isSpecial;
 		private int judge;
 
 		judgement(int x1, int y1, int x2, int y2, boolean special, int j)
@@ -287,7 +269,6 @@ public class GUIGameplay
 			yfirst = y1;
 			xsecond = x2;
 			ysecond = y2;
-			isSpecial = special;
 			judge = j;
 		}
 
@@ -353,17 +334,6 @@ public class GUIGameplay
 			new Thread(new judgement(177,177,175,175,true,judge)).start();
 			break;
 		}
-	}
-	
-	public void displayAccuracy(double hits)
-	{
-		acc = (hits/g.getTotalNotesSoFar())*100;
-//		System.out.println(accFormat.format(acc) + "%");
-	}
-	
-	public double getAcc()
-	{
-		return acc;
 	}
 
 	public void setKeysNo()
