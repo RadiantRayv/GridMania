@@ -131,7 +131,8 @@ public class game
 				//not getting past this loop????
 				while (noteNotDDD && noteNotHHH)
 				{
-				
+					UpdateNoteDisp();
+					UpdateNoteHit();
 				}
 				System.out.println("h");
 				noteNotHit = true;
@@ -203,7 +204,7 @@ public class game
 			if(temparrIsEmpty)
 			{
 //				nextNote(next);
-				tl.UpdateNoteHit();
+				noteNotHit = false;
 				System.out.println("E");
 			}
 		}

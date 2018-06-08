@@ -223,7 +223,7 @@ public class GUIGameplay
 			}
 			sq.setIcon(blank);
 //			g.nextNote(nextNote);
-			g.noteDissapeared();
+//			g.noteDissapeared();
 			g.incrementTotalNotes();
 			displayAccuracy(g.getTotalHitsAccuracy());
 		}
