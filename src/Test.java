@@ -328,6 +328,7 @@ public class Test implements ActionListener {
 			stopSong();
 			ggg = new game(s.getEasy(), gamegui, this);
 			gamegui.addGame(ggg);
+			gamegui.setSong(s);
 			cardg.add(bBack3);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);
@@ -340,6 +341,7 @@ public class Test implements ActionListener {
 			stopSong();
 			ggg = new game(s.getMedium(), gamegui, this);
 			gamegui.addGame(ggg);
+			gamegui.setSong(s);
 			cardg.add(bBack3);
 			CardLayout cl = (CardLayout)(cards.getLayout());
 			cl.show(cards, GAME);

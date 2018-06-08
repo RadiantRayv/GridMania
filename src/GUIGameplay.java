@@ -6,6 +6,8 @@ import javafx.scene.media.*;
 
 import java.text.DecimalFormat;
 import java.net.URL;
+import java.util.*;
+import java.util.Queue;
 
 public class GUIGameplay
 { 
@@ -38,6 +40,7 @@ public class GUIGameplay
 	private notesChart chart;
 	private boolean[] currentNotes;
 	private double currentTime;
+//	private double timeRender;
 	private double acc;
 	private int bpm;
 	
@@ -47,6 +50,9 @@ public class GUIGameplay
 	private JLayeredPane one;
 	
 	private JLabel bgGrid;
+	
+	private Queue<Double> renderTimes;
+	private double currentRenderTime;
 	//	private JLabel sq1;
 	//	private JLayeredPane two;
 	//	private JLayeredPane three;
@@ -117,6 +123,7 @@ public class GUIGameplay
 		counter = 0;
 		acc = 100.0;
 		
+		renderTimes = new LinkedList<Double>();
 		
 		TimeStart = System.currentTimeMillis();
 	}
@@ -135,6 +142,8 @@ public class GUIGameplay
 	{
 		s = ss;
 		bpm = s.getBpm();
+		currentRenderTime = s.getOffset();
+		System.out.println(currentRenderTime);
 	}
 
 	public void startGame(int diff)
@@ -222,14 +231,19 @@ public class GUIGameplay
 				timediff = (System.currentTimeMillis() - TimeStart);
 			}
 			sq.setIcon(blank);
-			g.nextNote(nextNote);
+//			g.nextNote(nextNote, renderTimes.peek());
+			System.out.println(currentRenderTime);
 			g.incrementTotalNotes();
 			displayAccuracy(g.getTotalHitsAccuracy());
 		}
 	}
 
-	public void draw(int index, notesAtTime nextNote)
+	public void draw(int index, notesAtTime nextNote, double renderTime)
 	{
+		renderTimes.add(renderTime);
+		currentRenderTime = renderTimes.peek();
+//		System.out.println(renderTimes.peek());
+		counter++;
 		switch(index)
 		{
 		case 0:
@@ -263,6 +277,13 @@ public class GUIGameplay
 			new Thread(new note(1,1,528,528,true,nextNote)).start();
 			break;
 		}
+	}
+	
+	public void nextTimingInQueue()
+	{
+		renderTimes.remove();
+		if(!mnyhrenderTimes.isEmpty())
+		currentRenderTime = renderTimes.peek();
 	}
 	
 	public void setCurrentNotes(boolean[] n, double time)
@@ -422,26 +443,9 @@ public class GUIGameplay
 
 		public void actionPerformed(ActionEvent e) 
 		{
-//			Thread t = new Thread(new Runnable() {
-//				public void run() {
-//					MediaPlayer hits = new MediaPlayer(new Media(hitsound));
-//					counter++;
-//					System.out.println(counter);
-//					hits.play();
-//					long hitTimeDiff = System.currentTimeMillis();
-//					if(hitTimeDiff < 500 + currentTime && hitTimeDiff > -500 + currentTime)
-//					{
-//
-//						System.out.println("hit");
-//						currentTime = -500;
-//					}
+
+			g.detectHit(note, renderTimes.peek());
 					
-			g.detectHit(note);
-					
-//				}
-//			});
-//
-//			t.start();
 		}
 	}
 
