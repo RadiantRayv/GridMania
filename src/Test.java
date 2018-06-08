@@ -21,35 +21,78 @@ public class Test implements ActionListener {
 	final static String CRED = "Card with credits";
 	final static String FIN = "Card with score";
 	private JButton bDo, bNot, bEasy, bMedium, bHard, bPlay, bHowToPlay, bCredits, bBack, bBack2, bBack3, song1, song2, song3;
-	private JLabel select, numpad, blank, logo, songInfo, info, diff, lGame, howto, credits, credits2, credits3, score, acc, perfect, ok, miss, name;
+	private JLabel select, numpad, recommend, blank, logo, songInfo, info, diff, lGame, howto, credits, credits2, credits3, score, acc, perfect, ok, miss, name;
 	private song s;
 	private MediaPlayer player;
 	private game ggg;
 	private double accuracy;
-	
+
 	private Font font;
 	ClassLoader cldr;
 	Image bg;
-	
-//	GraphicsEnvironment ge;
-	
+
+	//	GraphicsEnvironment ge;
+
 	public Test()
 	{
-		
-		
+
+
 		cldr = this.getClass().getClassLoader();
 		bg = new ImageIcon(cldr.getResource("other graphics/bg.png")).getImage();
-		
+
+		//		try {
+		//			font = Font.createFont(Font.TRUETYPE_FONT, cldr.getResourceAsStream("Spaceport1.ttf"));
+		//			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		//			ge.registerFont(font);
+		//		} catch (FontFormatException e) {
+		//			e.printStackTrace();
+		//		} catch (IOException e) {
+		//			e.printStackTrace();
+		//		}
+
 		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, cldr.getResourceAsStream("Spaceport1.ttf"));
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			ge.registerFont(font);
-		} catch (FontFormatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-				
+            Font font = Font.createFont(Font.TRUETYPE_FONT, getClass().getResourceAsStream("/Spaceport1.ttf"));
+            numpad = new JLabel("DO YOu hAvE A numpAD?", SwingConstants.CENTER);
+            recommend = new JLabel("(NumpAD highlY rECOmmEnDED)", SwingConstants.CENTER);
+            score = new JLabel();
+    		acc = new JLabel();
+    		perfect = new JLabel();
+    		ok = new JLabel(); 
+    		miss = new JLabel();
+    		name = new JLabel();
+    		songInfo = new JLabel("SOng InfO:", SwingConstants.CENTER);
+    		info = new JLabel(" ", SwingConstants.CENTER);
+    		diff = new JLabel("ChOOsE A DiffiCultY", SwingConstants.CENTER);
+    		select = new JLabel("sElEct A sOng", SwingConstants.CENTER);
+            numpad.setFont(font.deriveFont(Font.BOLD, 20f));
+            recommend.setFont(font.deriveFont(Font.BOLD, 12f));
+            score.setFont(font.deriveFont(Font.BOLD, 100f));
+            acc.setFont(font.deriveFont(Font.BOLD, 16f));
+            perfect.setFont(font.deriveFont(Font.BOLD, 16f));
+            ok.setFont(font.deriveFont(Font.BOLD, 16f));
+            miss.setFont(font.deriveFont(Font.BOLD, 16f));
+            name.setFont(font.deriveFont(Font.BOLD, 16f));
+            songInfo.setFont(font.deriveFont(Font.BOLD, 16f));
+            info.setFont(font.deriveFont(Font.BOLD, 16f));
+            diff.setFont(font.deriveFont(Font.BOLD, 16f));
+            select.setFont(font.deriveFont(Font.BOLD, 16f));
+            numpad.setForeground(Color.CYAN);
+            recommend.setForeground(Color.magenta);
+            acc.setForeground(Color.CYAN);
+            perfect.setForeground(Color.green);
+            ok.setForeground(Color.magenta);
+            miss.setForeground(Color.red);
+            name.setForeground(Color.CYAN);
+            songInfo.setForeground(Color.CYAN);
+            info.setForeground(Color.magenta);
+            diff.setForeground(Color.magenta);
+            select.setForeground(Color.CYAN);
+        } catch (FontFormatException | IOException ex) {
+            ex.printStackTrace();
+        }
+
+
+
 		cards = new JPanel(new CardLayout());
 		card1 = new BackgroundPanel(bg); 
 		menu = new BackgroundPanel(bg);
@@ -62,71 +105,62 @@ public class Test implements ActionListener {
 		c = new GridBagConstraints();
 		bDo = new JButton("I DO have a numpad");
 		bNot = new JButton("I DO NOT have a numpad");
-		
+
 		bEasy = new JButton(new ImageIcon(cldr.getResource("buttons/song select/easy.png")));
 		bEasy.setFocusPainted(false);
-		
+
 		bMedium = new JButton(new ImageIcon(cldr.getResource("buttons/song select/med.png")));
 		bMedium.setFocusPainted(false);
-		
+
 		bHard = new JButton(new ImageIcon(cldr.getResource("buttons/song select/hard.png")));
 		bHard.setFocusPainted(false);
-		
+
 		bPlay = new JButton(new ImageIcon(cldr.getResource("buttons/main menu/play.png")));
 		bPlay.setFocusPainted(false);
-		
+
 		bHowToPlay = new JButton(new ImageIcon(cldr.getResource("buttons/main menu/howto.png")));
 		bHowToPlay.setFocusPainted(false);
-		
+
 		bCredits = new JButton(new ImageIcon(cldr.getResource("buttons/main menu/credits.png")));
 		bCredits.setFocusPainted(false);
-		
+
 		bBack = new JButton(new ImageIcon(cldr.getResource("buttons/squareBack.png")));
 		bBack.setFocusPainted(false);
-		
+
 		bBack2 = new JButton(new ImageIcon(cldr.getResource("buttons/main menu/back.png")));
 		bBack2.setFocusPainted(false);
-		
+
 		bBack3 = new JButton("Back");
-		
+
 		song1 = new JButton(new ImageIcon(cldr.getResource("buttons/song select/supersonic.png")));
 		song1.setFocusPainted(false);
-		
+
 		song2 = new JButton(new ImageIcon(cldr.getResource("buttons/song select/bliss.png")));
 		song2.setFocusPainted(false);
-		
+
 		song3 = new JButton(new ImageIcon(cldr.getResource("buttons/song select/comingsoon.png")));
 		song3.setFocusPainted(false);
+
+		//		song1 = new JButton("super");
+		//		song1.setFocusPainted(false);
+		//		
+		//		song2 = new JButton("owo");
+		//		song2.setFocusPainted(false);
+
+		//		song3 = new JButton("B");
+		//		song3.setFocusPainted(false);
+
 		
-//		song1 = new JButton("super");
-//		song1.setFocusPainted(false);
-//		
-//		song2 = new JButton("owo");
-//		song2.setFocusPainted(false);
-		
-//		song3 = new JButton("B");
-//		song3.setFocusPainted(false);
-		
-		select = new JLabel("select a song", SwingConstants.CENTER);
-		numpad = new JLabel("Do you have a numpad?", SwingConstants.CENTER);
 		blank = new JLabel("");
 		logo = new JLabel(new ImageIcon(cldr.getResource("other graphics/logo.png")), SwingConstants.CENTER);
-		songInfo = new JLabel("Song Info:", SwingConstants.CENTER);
-		info = new JLabel(" ", SwingConstants.CENTER);
-		diff = new JLabel("Choose a difficulty", SwingConstants.CENTER);
 		howto = new JLabel("Get gud");
 		credits = new JLabel("Game created by: Rayden Wang and Euan Cousar. ");
 		credits2 = new JLabel("External Resources used: ");
 		credits3 = new JLabel ("https://docs.oracle.com/javase/tutorial/index.html, https://youtu.be/TdEo002K2GQ");
-		score = new JLabel();
-		acc = new JLabel();
-		perfect = new JLabel();
-		ok = new JLabel(); 
-		miss = new JLabel();
-		name = new JLabel();
+		
 		accuracy = 0.0;
-		
-		
+
+
 	}
 
 	public void addComponentToPane(Container pane) {
@@ -143,10 +177,10 @@ public class Test implements ActionListener {
 		song1.addActionListener(this);
 		song2.addActionListener(this);
 		bBack3.addActionListener(this);
-		
+
 		bDo.setPreferredSize(new Dimension(250, 75));
 		bNot.setPreferredSize(new Dimension(250, 75));
-		
+
 		//Create the "cards".
 		card1.setLayout(new GridBagLayout());
 		c.insets = new Insets(20,20,20,20);
@@ -157,17 +191,19 @@ public class Test implements ActionListener {
 		c.gridwidth = 3;
 		card1.add(numpad, c); 
 		c.gridy = 1;
-		card1.add(bDo, c);
+		card1.add(recommend, c);
 		c.gridy = 2;
-		card1.add(bNot, c);
+		card1.add(bDo, c);
 		c.gridy = 3;
+		card1.add(bNot, c);
+		c.gridy = 4;
 		card1.add(blank, c);
 
 		bPlay.setPreferredSize(new Dimension(200, 50));
 		bHowToPlay.setPreferredSize(new Dimension(200, 50));
 		bCredits.setPreferredSize(new Dimension(200, 50));
 		bBack2.setPreferredSize(new Dimension(200, 50));
-		
+
 		menu.setLayout(new GridBagLayout());
 		c.insets = new Insets(10,10,10,10);
 		c.gridy = 0;
@@ -189,11 +225,11 @@ public class Test implements ActionListener {
 		bMedium.setPreferredSize(new Dimension(130, 75));
 		bHard.setPreferredSize(new Dimension(130, 75));
 		bBack.setPreferredSize(new Dimension(75, 75));
-		
+
 		song1.setPreferredSize(new Dimension(560, 106));
 		song2.setPreferredSize(new Dimension(560, 106));
 		song3.setPreferredSize(new Dimension(560, 106));
-		
+
 		card2.setLayout(new GridBagLayout());
 		c.insets = new Insets(15,15,15,15);
 		c.gridy = 0;
@@ -231,16 +267,16 @@ public class Test implements ActionListener {
 		card2.add(bMedium, c);
 		c.gridx = 4;
 		card2.add(bHard, c);       
- 
+
 		how.add(howto);
 
 		cred.add(credits);
 		cred.add(credits2);
 		cred.add(credits3);
-		
-		bBack3.setMaximumSize(new Dimension(550, 100));
-		bBack3.setPreferredSize(new Dimension(500,100));
-		
+
+		bBack3.setMaximumSize(new Dimension(550, 75));
+		bBack3.setPreferredSize(new Dimension(500,75));
+
 		fin.setLayout(new GridBagLayout());
 		c.insets = new Insets(10,10,10,10);
 		c.anchor = GridBagConstraints.PAGE_START;
@@ -263,9 +299,9 @@ public class Test implements ActionListener {
 		c.gridy = 5;
 		c.gridwidth = 3;
 		fin.add(bBack3, c);
-		
-		bBack3.setMaximumSize(new Dimension(550, 100));
-		bBack3.setPreferredSize(new Dimension(500,100));
+
+		bBack3.setMaximumSize(new Dimension(550, 75));
+		bBack3.setPreferredSize(new Dimension(500,75));	
 		cardg.setLayout(new BoxLayout(cardg, BoxLayout.Y_AXIS));
 		bBack3.setAlignmentX(Component.CENTER_ALIGNMENT);
 		cardg.add(bBack3);
@@ -382,7 +418,7 @@ public class Test implements ActionListener {
 			ggg.stopRunning();
 			ggg = null;
 			info.setText(" ");
-			
+
 		}
 		if(evt.getSource() == song1)
 		{
@@ -429,33 +465,52 @@ public class Test implements ActionListener {
 	public void isDone(boolean pass)
 	{
 		accuracy = gamegui.getAcc();
-		acc.setText("Accuracy: " + accuracy);
-		perfect.setText("Perfect: " + ggg.getPerfect());
-		ok.setText("Okay: " + ggg.getOkay());
+		acc.setText("ACCurACY: " + accuracy);
+		perfect.setText("PErfECt: " + ggg.getPerfect());
+		ok.setText("OkAy: " + ggg.getOkay());
 		miss.setText("Miss: " + ggg.getMiss());
 		if(pass)
 		{
 			if(accuracy == 100)
-				score.setText("S+");
+			{
+				score.setText("SS");
+				score.setForeground(Color.white);
+			}
 			else if(accuracy >= 90)
 			{
-				
+
 				if(ggg.getMiss() == 0)
 				{
 					score.setText("S");
-						
+					score.setForeground(Color.yellow);
 				}
 				else 
+				{
 					score.setText("A");
+					score.setForeground(Color.GREEN);
+				}
 			}
 			else if(accuracy >= 80)
+			{
 				score.setText("B");
+				score.setForeground(Color.BLUE);
+			}
 			else if(accuracy >= 70)
+			{
 				score.setText("C");
+				score.setForeground(Color.MAGENTA);
+			}
+				
 			else if(accuracy >= 60)
+			{
 				score.setText("D");
+				score.setForeground(Color.ORANGE);
+			}
 			else
+			{
 				score.setText("F");
+				score.setForeground(Color.red);
+			}
 		}
 		else 
 		{
@@ -467,7 +522,7 @@ public class Test implements ActionListener {
 		CardLayout cl = (CardLayout)(cards.getLayout());
 		cl.show(cards, FIN);
 	}
-	
+
 	public void setSong(song ss)
 	{
 		s = ss;
@@ -487,7 +542,7 @@ public class Test implements ActionListener {
 
 	public void startMid(double time)
 	{
-		
+
 		player.setStartTime(Duration.millis(time));
 		player.play();
 	}
