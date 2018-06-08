@@ -354,15 +354,15 @@ public class GUIGameplay
 	public void setKeysYes()
 	{
 		inm.clear();
-		inm.put(KeyStroke.getKeyStroke("NUMPAD1"), "tap1");
-		inm.put(KeyStroke.getKeyStroke("NUMPAD2"), "tap2");
-		inm.put(KeyStroke.getKeyStroke("NUMPAD3"), "tap3");
+		inm.put(KeyStroke.getKeyStroke("NUMPAD7"), "tap1");
+		inm.put(KeyStroke.getKeyStroke("NUMPAD8"), "tap2");
+		inm.put(KeyStroke.getKeyStroke("NUMPAD9"), "tap3");
 		inm.put(KeyStroke.getKeyStroke("NUMPAD4"), "tap4");
 		inm.put(KeyStroke.getKeyStroke("NUMPAD5"), "tap5");
 		inm.put(KeyStroke.getKeyStroke("NUMPAD6"), "tap6");
-		inm.put(KeyStroke.getKeyStroke("NUMPAD7"), "tap7");
-		inm.put(KeyStroke.getKeyStroke("NUMPAD8"), "tap8");
-		inm.put(KeyStroke.getKeyStroke("NUMPAD9"), "tap9");
+		inm.put(KeyStroke.getKeyStroke("NUMPAD1"), "tap7");
+		inm.put(KeyStroke.getKeyStroke("NUMPAD2"), "tap8");
+		inm.put(KeyStroke.getKeyStroke("NUMPAD3"), "tap9");
 		inm.put(KeyStroke.getKeyStroke("NUMPAD0"), "taps");
 	}
 	
