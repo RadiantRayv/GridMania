@@ -414,6 +414,7 @@ public class Test implements ActionListener {
 			c.fill = GridBagConstraints.HORIZONTAL;
 			s = new song("TARI & Yix - Bliss");
 			s.loadEasy();
+			s.loadMedium();
 			info.setText(s.getInfo());
 			name.setText(s.getName());
 			if(player == null)

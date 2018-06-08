@@ -217,7 +217,7 @@ public class GUIGameplay
 
 				}
 			}
-			while(timediff < 1251)
+			while(timediff < 1150)
 			{
 				timediff = (System.currentTimeMillis() - TimeStart);
 			}

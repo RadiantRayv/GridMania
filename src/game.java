@@ -58,7 +58,7 @@ public class game implements Runnable
 			}
 			timeOfNoteRender = current.getPosition()*(15000.0/bpm) + offset;
 			//			gui.setCurrentNotes(current.getNotes(), timeOfNote + TimeStart);
-			while (System.currentTimeMillis() - TimeStart < timeOfNoteRender - 917)
+			while (System.currentTimeMillis() - TimeStart < timeOfNoteRender - 1000)
 			{
 			}
 			for(int i = 0; i <= 9; i++)
@@ -84,6 +84,7 @@ public class game implements Runnable
 //			System.out.println(nextNote.getPosition());
 			timeOfNoteTiming = nextNote.getPosition()*(15000.0/bpm) + offset;
 			temparr = nextNote.getNotes();
+			System.out.println(timeOfNoteTiming);
 			
 //		}
 	}
@@ -102,12 +103,12 @@ public class game implements Runnable
 	{
 		temparrIsEmpty = true;
 		hitTimeDiff = System.currentTimeMillis();
-		if(hitTimeDiff < 250 + timeOfNoteTiming + TimeStart && hitTimeDiff > -250 + timeOfNoteTiming + TimeStart)
+		if(hitTimeDiff < 150 + timeOfNoteTiming + TimeStart && hitTimeDiff > -150 + timeOfNoteTiming + TimeStart)
 		{
 			if(temparr[n] == true)
 			{
 				temparr[n] = false;
-				if(hitTimeDiff < 150 + timeOfNoteTiming + TimeStart && hitTimeDiff > -150 + timeOfNoteTiming + TimeStart)
+				if(hitTimeDiff < 120 + timeOfNoteTiming + TimeStart && hitTimeDiff > -120 + timeOfNoteTiming + TimeStart)
 				{
 					gui.drawJudgement(n, 0);
 					totalHitsAccuracy += 1;
