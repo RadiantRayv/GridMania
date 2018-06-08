@@ -358,7 +358,7 @@ public class GUIGameplay
 	public void displayAccuracy(double hits)
 	{
 		acc = (hits/g.getTotalNotesSoFar())*100;
-		System.out.println(accFormat.format(acc) + "%");
+//		System.out.println(accFormat.format(acc) + "%");
 	}
 	
 	public double getAcc()

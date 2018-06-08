@@ -22,6 +22,8 @@ public class game implements Runnable
 	private int okay; 
 	private int totalNotesSoFar;
 	
+	private int count;
+	
 	private double totalHitsAccuracy;
 
 	game(notesChart chart, GUIGameplay g, Test maingui)
@@ -41,6 +43,8 @@ public class game implements Runnable
 		perfect = 0;
 		okay = 0;
 		totalNotesSoFar = 0;
+		
+		count = 0;
 	}
 
 	public void run()
@@ -84,7 +88,8 @@ public class game implements Runnable
 //			System.out.println(nextNote.getPosition());
 			timeOfNoteTiming = nextNote.getPosition()*(15000.0/bpm) + offset;
 			temparr = nextNote.getNotes();
-			System.out.println(timeOfNoteTiming);
+			count++;
+			System.out.println(count);
 			
 //		}
 	}
