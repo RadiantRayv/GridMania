@@ -304,34 +304,34 @@ public class GUIGameplay
 		switch(index)
 		{
 		case 0:
-			new Thread(new judgement(1,1,175,175,false,judge)).start();
+			new Thread(new judgement(36,36,175,175,false,judge)).start();
 			break;
 		case 1:
-			new Thread(new judgement(177,1,175,175,false,judge)).start();
+			new Thread(new judgement(212,36,175,175,false,judge)).start();
 			break;
 		case 2:
-			new Thread(new judgement(353,1,175,175,false,judge)).start();
+			new Thread(new judgement(388,36,175,175,false,judge)).start();
 			break;
 		case 3:
-			new Thread(new judgement(1,177,175,175,false,judge)).start();
+			new Thread(new judgement(36,212,175,175,false,judge)).start();
 			break;
 		case 4:
-			new Thread(new judgement(177,177,175,175,false,judge)).start();
+			new Thread(new judgement(212,212,175,175,false,judge)).start();
 			break;
 		case 5:
-			new Thread(new judgement(353,177,175,175,false,judge)).start();
+			new Thread(new judgement(388,212,175,175,false,judge)).start();
 			break;
 		case 6:
-			new Thread(new judgement(1,353,175,175,false,judge)).start();
+			new Thread(new judgement(36,388,175,175,false,judge)).start();
 			break;
 		case 7:
-			new Thread(new judgement(177,353,175,175,false,judge)).start();
+			new Thread(new judgement(212,388,175,175,false,judge)).start();
 			break;
 		case 8:
-			new Thread(new judgement(353,353,175,175,false,judge)).start();
+			new Thread(new judgement(388,388,175,175,false,judge)).start();
 			break;
 		case 9:
-			new Thread(new judgement(177,177,175,175,true,judge)).start();
+			new Thread(new judgement(212,212,175,175,true,judge)).start();
 			break;
 		}
 	}

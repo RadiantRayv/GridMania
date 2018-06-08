@@ -530,6 +530,7 @@ public class GUI implements ActionListener {
 		else 
 		{
 			score.setText("F");
+			score.setForeground(Color.red);
 		}
 		c.gridy = 5;
 		c.gridwidth = 3;

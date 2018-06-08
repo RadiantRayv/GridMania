@@ -18,13 +18,13 @@ public class game implements Runnable
 	private int perfect;
 	private int okay; 
 	private int totalNotesSoFar;
-	
+
 	private int count;
-	
+
 	private int health;
-	
+
 	private double totalHitsAccuracy;
-	
+
 	private boolean isAlive;
 
 	game(notesChart chart, GUIGameplay g, GUI maingui)
@@ -82,27 +82,27 @@ public class game implements Runnable
 
 	public void nextNote(notesAtTime nextNote)
 	{
-//		if(timeOfNoteTiming <= timeOfNoteRenderPrev)
-//		{
-//			System.out.println(nextNote.getPosition());
-			timeOfNoteTiming = nextNote.getPosition()*(15000.0/bpm) + offset;
-			temparr = nextNote.getNotes();
-			count++;
-			System.out.println(count);
-			
-//		}
+		//		if(timeOfNoteTiming <= timeOfNoteRenderPrev)
+		//		{
+		//			System.out.println(nextNote.getPosition());
+		timeOfNoteTiming = nextNote.getPosition()*(15000.0/bpm) + offset;
+		temparr = nextNote.getNotes();
+		count++;
+		System.out.println(count);
+
+		//		}
 	}
-	
+
 	public void stopRunning()
 	{
 		running = false;
 	}
-	
+
 	public double getTotalHitsAccuracy()
 	{
 		return totalHitsAccuracy;
 	}
-	
+
 	public void decreaseHP()
 	{
 		if(isAlive)
@@ -115,7 +115,7 @@ public class game implements Runnable
 			}
 		}
 	}
-	
+
 	public int getHP()
 	{
 		return health;
@@ -135,18 +135,26 @@ public class game implements Runnable
 					gui.drawJudgement(n, 0);
 					totalHitsAccuracy += 1;
 					perfect++;
-					health +=3;
-					if(health > 18 && isAlive)
-						health = 18;
+					if(isAlive)
+					{
+						if(health<18)
+							health +=3;
+						if(health > 18)
+							health = 18;
+					}
 				}
 				else
 				{
 					gui.drawJudgement(n, 1);
 					totalHitsAccuracy += 0.6;
 					okay++;
-					health +=2;
-					if(health > 18 && isAlive)
-						health = 18;
+					if(isAlive)
+					{
+						if(health<18)
+							health +=2;
+						if(health > 18)
+							health = 18;
+					}
 				}
 			}
 			for(int i = 0; i <= 9; i++)
@@ -160,27 +168,27 @@ public class game implements Runnable
 			}
 		}
 	}
- 
+
 	public void incrementTotalNotes()
 	{
 		totalNotesSoFar++;
 	}
-	
+
 	public int getTotalNotesSoFar()
 	{
 		return totalNotesSoFar;
 	}
-	
+
 	public int getPerfect()
 	{
 		return perfect;
 	}
-	
+
 	public int getOkay()
 	{
 		return okay;
 	}
-	
+
 	public int getMiss()
 	{
 		return (totalNotesSoFar - (perfect + okay));
