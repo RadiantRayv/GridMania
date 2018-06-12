@@ -2,8 +2,6 @@
 public class game implements Runnable
 {
 	private notesChart chart;
-	private long approachRate = 1000;
-	private long nextHitTime;
 	private notesAtTime current;
 	private notesAtTime next;
 	private boolean[] temparr;
@@ -13,20 +11,23 @@ public class game implements Runnable
 	private long TimeStart;
 	private GUIGameplay gui;
 	private double timeOfNoteRender;
-	private double timeOfNoteRenderPrev;
 	private double timeOfNoteTiming;
 	private long hitTimeDiff;
-	private Test screen;
+	private GUI screen;
 	private boolean running;
 	private int perfect;
 	private int okay; 
 	private int totalNotesSoFar;
-	
+
 	private int count;
-	
+
+	private int health;
+
 	private double totalHitsAccuracy;
 
-	game(notesChart chart, GUIGameplay g, Test maingui)
+	private boolean isAlive;
+
+	game(notesChart chart, GUIGameplay g, GUI maingui)
 	{
 		this.chart = chart;
 		//		current = chart.getNext();
@@ -43,8 +44,9 @@ public class game implements Runnable
 		perfect = 0;
 		okay = 0;
 		totalNotesSoFar = 0;
-		
+		health = 8;
 		count = 0;
+		isAlive = true;
 	}
 
 	public void run()
@@ -53,7 +55,6 @@ public class game implements Runnable
 
 		while(chart.hasNext() && running)
 		{
-			timeOfNoteRenderPrev = timeOfNoteRender;
 			current = chart.getNext();
 			if(chart.hasNext())
 			{
@@ -61,7 +62,6 @@ public class game implements Runnable
 				chart.getPrevious();
 			}
 			timeOfNoteRender = current.getPosition()*(15000.0/bpm) + offset;
-			//			gui.setCurrentNotes(current.getNotes(), timeOfNote + TimeStart);
 			while (System.currentTimeMillis() - TimeStart < timeOfNoteRender - 1000)
 			{
 			}
@@ -73,35 +73,52 @@ public class game implements Runnable
 				}
 			}	
 		}
-		while(System.currentTimeMillis() - TimeStart < timeOfNoteRender + 5000)
+		while(System.currentTimeMillis() - TimeStart < timeOfNoteRender + 3000)
 		{
 		}
 		if(running)
-			screen.isDone(true);
+			screen.isDone(isAlive);
 	}
 
 	public void nextNote(notesAtTime nextNote)
 	{
-		//this is only doing the do every other beat???
-//		if(timeOfNoteTiming <= timeOfNoteRenderPrev)
-//		{
-//			System.out.println(nextNote.getPosition());
-			timeOfNoteTiming = nextNote.getPosition()*(15000.0/bpm) + offset;
-			temparr = nextNote.getNotes();
-			count++;
-			System.out.println(count);
-			
-//		}
+		//		if(timeOfNoteTiming <= timeOfNoteRenderPrev)
+		//		{
+		//			System.out.println(nextNote.getPosition());
+		timeOfNoteTiming = nextNote.getPosition()*(15000.0/bpm) + offset;
+		temparr = nextNote.getNotes();
+		count++;
+		System.out.println(count);
+
+		//		}
 	}
-	
+
 	public void stopRunning()
 	{
 		running = false;
 	}
-	
+
 	public double getTotalHitsAccuracy()
 	{
 		return totalHitsAccuracy;
+	}
+
+	public void decreaseHP()
+	{
+		if(isAlive)
+		{
+			health -= 2;
+			if(health <= 0)
+			{
+				isAlive = false;
+				health = 0;
+			}
+		}
+	}
+
+	public int getHP()
+	{
+		return health;
 	}
 
 	public void detectHit(int n)
@@ -118,12 +135,26 @@ public class game implements Runnable
 					gui.drawJudgement(n, 0);
 					totalHitsAccuracy += 1;
 					perfect++;
+					if(isAlive)
+					{
+						if(health<18)
+							health +=3;
+						if(health > 18)
+							health = 18;
+					}
 				}
 				else
 				{
 					gui.drawJudgement(n, 1);
 					totalHitsAccuracy += 0.6;
 					okay++;
+					if(isAlive)
+					{
+						if(health<18)
+							health +=2;
+						if(health > 18)
+							health = 18;
+					}
 				}
 			}
 			for(int i = 0; i <= 9; i++)
@@ -137,105 +168,29 @@ public class game implements Runnable
 			}
 		}
 	}
- 
+
 	public void incrementTotalNotes()
 	{
 		totalNotesSoFar++;
 	}
-	
+
 	public int getTotalNotesSoFar()
 	{
 		return totalNotesSoFar;
 	}
-	
+
 	public int getPerfect()
 	{
 		return perfect;
 	}
-	
+
 	public int getOkay()
 	{
 		return okay;
 	}
-	
+
 	public int getMiss()
 	{
 		return (totalNotesSoFar - (perfect + okay));
 	}
-
-	//public void updateNoteField()
-	//{
-
-
-	//		gui.draw(1);
-	//		
-	//		long TimeStart = System.currentTimeMillis();
-	//		long timediff = 0;
-	//		while(timediff<500)
-	//		{
-	//			timediff = (System.currentTimeMillis() - TimeStart);
-	//		}
-	//		
-	//		gui.draw(2);
-	//		
-	//		TimeStart = System.currentTimeMillis();
-	//		timediff = 0;
-	//		while(timediff<500)
-	//		{
-	//			timediff = (System.currentTimeMillis() - TimeStart);
-	//		}
-	//		
-	//		gui.draw(3);
-	//		
-	//		TimeStart = System.currentTimeMillis();
-	//		timediff = 0;
-	//		while(timediff<500)
-	//		{
-	//			timediff = (System.currentTimeMillis() - TimeStart);
-	//		}
-
-	//		int notePrevious = current.getPosition();
-	//		current = chart.getNext();
-	//		int noteNow = current.getPosition();
-	//		nextHitTime = System.currentTimeMillis() + approachRate + (bpm * (noteNow - notePrevious));
-	//nextHitTime = System.currentTimeMillis() + timeToNext;
-	//}
-
-	//	public String pressNote1()
-	//	{
-	//		if(current.getSingleNote(0))
-	//		{
-	//			long timeNow = System.currentTimeMillis();
-	//
-	//			int time = (int) (timeNow - nextHitTime);
-	//
-	//			if (time < -50)
-	//				return "early";
-	//			else if (time > 50)
-	//				return "late";
-	//			else
-	//				return "nice";
-	//		}
-	//		else 
-	//			return "";
-	//	}
-	//	
-	//	public String pressNote2()
-	//	{
-	//		if(current.getSingleNote(1))
-	//		{
-	//			long timeNow = System.currentTimeMillis();
-	//
-	//			int time = (int) (timeNow - nextHitTime);
-	//
-	//			if (time < -50)
-	//				return "early";
-	//			else if (time > 50)
-	//				return "late";
-	//			else
-	//				return "nice";
-	//		}
-	//		else 
-	//			return "";
-	//	}
 }

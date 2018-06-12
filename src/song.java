@@ -42,34 +42,16 @@ public class song
 		
 		String songURI = cldr.getResource("Songs/" + filepath + "/audio.mp3").toString();
 		
-	
-//		try 
-//		{
 			Scanner fileScanner = new Scanner(songFile);
-			
 			
 			name = fileScanner.nextLine();
 			bpm = fileScanner.nextInt();
 			length = fileScanner.nextInt();
 			offset = fileScanner.nextInt();
-			lengthString = String.valueOf(length/60) + ":" + String.valueOf(length%60);
+			lengthString = String.valueOf(length/60) + "m " + String.valueOf(length%60) + "s";
 			song = new Media(songURI);
 			
 			System.out.println(name + " " + bpm + "bpm " + lengthString);
-//		} 
-//		catch (FileNotFoundException e) 
-//		{
-//			System.out.print(e.getMessage());
-//		}
-		
-	}
-
-	song(String songname, int b, int off, String filepath)
-	{
-		bpm = b;
-		name = songname;
-		offset = off;
-		diffs = new ArrayList<notesChart>();
 	}
 	
 	public void loadEasy()
@@ -77,11 +59,6 @@ public class song
 		diffs.add(0, new notesChart(path + "/easy.txt"));
 		diffs.get(0).setSong(this);
 	}
-
-//	public void newEasy(int diff)
-//	{
-//		diffs.add(0, new notesChart(1, diff, bpm, offset));
-//	}
 	
 	public notesChart getEasy()
 	{
@@ -127,7 +104,7 @@ public class song
 	
 	public String getInfo() 
 	{
-		return name + " " + bpm + "bpm " + lengthString;
+		return "tempo - " + bpm + "bpm, lEngth - " + lengthString;
 	}
 	
 	public int getOffset()
