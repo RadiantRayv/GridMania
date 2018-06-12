@@ -1,5 +1,7 @@
 import java.awt.*;          // access to Container
 import java.awt.event.*;    // access to WindowAdapter, WindowEvent
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.IOException;
 
 import javax.swing.*;
@@ -162,6 +164,25 @@ public class GUIGameplay
 			else
 				maxSize = 175;
 		}
+		
+		private Image resizeToBig(Image originalImage, int biggerWidth, int biggerHeight) 
+		{
+		    int type = BufferedImage.TYPE_INT_ARGB;
+
+
+		    BufferedImage resizedImage = new BufferedImage(biggerWidth, biggerHeight, type);
+		    Graphics2D g = resizedImage.createGraphics();
+
+		    g.setComposite(AlphaComposite.Src);
+		    g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
+		    g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		    g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+
+		    g.drawImage(originalImage, 0, 0, biggerWidth, biggerHeight, null);
+		    g.dispose();
+
+		    return resizedImage;
+		}
 
 		public void run() 
 		{
@@ -169,6 +190,7 @@ public class GUIGameplay
 			long timediff = 0;
 			int size = 2;
 			JLabel sq  = new JLabel();
+			sq.setDoubleBuffered(true);
 			ImageIcon scaled = new ImageIcon();
 			while(size<maxSize)
 			{
@@ -189,14 +211,14 @@ public class GUIGameplay
 					if(isSpecial)
 					{
 						size = (int) (h * (175.0/255)) * 3;
-						scaled = new ImageIcon(red.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
-//						scaled.setImage(red.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
+//						scaled = new ImageIcon(red.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
+						scaled.setImage(resizeToBig(red.getImage(), size, size));
 					}
 					else
 					{
 						size = (int) (h * (175.0/255));
-						scaled = new ImageIcon(square.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
-//						scaled.setImage(square.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
+//						scaled = new ImageIcon(square.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
+						scaled.setImage(resizeToBig(square.getImage(), size, size));
 					}
 					sq.setIcon(scaled);
 
