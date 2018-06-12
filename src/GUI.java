@@ -177,6 +177,7 @@ public class GUI implements ActionListener {
 		bBack2.addActionListener(this);
 		song1.addActionListener(this);
 		song2.addActionListener(this);
+		song3.addActionListener(this);
 		bBack3.addActionListener(this);
 
 		bDo.setPreferredSize(new Dimension(250, 75));
@@ -465,6 +466,27 @@ public class GUI implements ActionListener {
 			if(!player.getStatus().equals(MediaPlayer.Status.PLAYING))
 			{
 				startMid(44900.0);
+			}
+		}
+		if(evt.getSource() == song3)
+		{
+			if(player != null && player.getStatus().equals(MediaPlayer.Status.PLAYING))
+			{
+				stopSong();
+			}
+			player = null;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			s = new song("Laszlo - Here We Are");
+			s.loadEasy();
+			s.loadMedium();
+			s.loadHard();
+			info.setText(s.getInfo());
+			name.setText(s.getName());
+			if(player == null)
+				setSong(s);
+			if(!player.getStatus().equals(MediaPlayer.Status.PLAYING))
+			{
+				startMid(21888.0);
 			}
 		}
 	}

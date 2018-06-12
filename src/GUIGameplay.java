@@ -7,6 +7,8 @@ import javax.swing.*;
 import javafx.scene.media.*;
 
 import java.text.DecimalFormat;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ExecutorService;
 import java.net.URL;
 
 public class GUIGameplay
@@ -37,6 +39,8 @@ public class GUIGameplay
 	private InputMap inm;
 	
 	private Font font;
+	
+	private ExecutorService threadPool = Executors.newFixedThreadPool(16);
 
 	public GUIGameplay() 
 	{
@@ -165,6 +169,7 @@ public class GUIGameplay
 			long timediff = 0;
 			int size = 2;
 			JLabel sq  = new JLabel();
+			ImageIcon scaled = new ImageIcon();
 			while(size<maxSize)
 			{
 				timediff = (System.currentTimeMillis() - TimeStart);
@@ -180,16 +185,18 @@ public class GUIGameplay
 
 
 					int h = (int)(timediff/50)*12 + 5;
-					ImageIcon scaled;
+					
 					if(isSpecial)
 					{
 						size = (int) (h * (175.0/255)) * 3;
 						scaled = new ImageIcon(red.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
+//						scaled.setImage(red.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
 					}
 					else
 					{
 						size = (int) (h * (175.0/255));
 						scaled = new ImageIcon(square.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
+//						scaled.setImage(square.getImage().getScaledInstance(size, size, java.awt.Image.SCALE_FAST));
 					}
 					sq.setIcon(scaled);
 
@@ -221,34 +228,44 @@ public class GUIGameplay
 		switch(index)
 		{
 		case 0:
-			new Thread(new note(36,36,175,175,false,nextNote)).start();
+			threadPool.execute(new note(36,36,175,175,false,nextNote));
+//			new Thread(new note(36,36,175,175,false,nextNote)).start();
 			break;
 		case 1:
-			new Thread(new note(212,36,175,175,false,nextNote)).start();
+			threadPool.execute(new note(212,36,175,175,false,nextNote));
+//			new Thread(new note(212,36,175,175,false,nextNote)).start();
 			break;
 		case 2:
-			new Thread(new note(388,36,175,175,false,nextNote)).start();
+			threadPool.execute(new note(388,36,175,175,false,nextNote));
+//			new Thread(new note(388,36,175,175,false,nextNote)).start();
 			break;
 		case 3:
-			new Thread(new note(36,212,175,175,false,nextNote)).start();
+			threadPool.execute(new note(36,212,175,175,false,nextNote));
+//			new Thread(new note(36,212,175,175,false,nextNote)).start();
 			break;
 		case 4:
-			new Thread(new note(212,212,175,175,false,nextNote)).start();
+			threadPool.execute(new note(212,212,175,175,false,nextNote));
+//			new Thread(new note(212,212,175,175,false,nextNote)).start();
 			break;
 		case 5:
-			new Thread(new note(388,212,175,175,false,nextNote)).start();
+			threadPool.execute(new note(388,212,175,175,false,nextNote));
+//			new Thread(new note(388,212,175,175,false,nextNote)).start();
 			break;
 		case 6:
-			new Thread(new note(36,388,175,175,false,nextNote)).start();
+			threadPool.execute(new note(36,388,175,175,false,nextNote));
+//			new Thread(new note(36,388,175,175,false,nextNote)).start();
 			break;
 		case 7:
-			new Thread(new note(212,388,175,175,false,nextNote)).start();
+			threadPool.execute(new note(212,388,175,175,false,nextNote));
+//			new Thread(new note(212,388,175,175,false,nextNote)).start();
 			break;
 		case 8:
-			new Thread(new note(388,388,175,175,false,nextNote)).start();
+			threadPool.execute(new note(388,388,175,175,false,nextNote));
+//			new Thread(new note(388,388,175,175,false,nextNote)).start();
 			break;
 		case 9:
-			new Thread(new note(36,36,528,528,true,nextNote)).start();
+			threadPool.execute(new note(36,36,528,528,true,nextNote));
+//			new Thread(new note(36,36,528,528,true,nextNote)).start();
 			break;
 		}
 	}
@@ -304,34 +321,44 @@ public class GUIGameplay
 		switch(index)
 		{
 		case 0:
-			new Thread(new judgement(36,36,175,175,false,judge)).start();
+			threadPool.execute(new judgement(36,36,175,175,false,judge));
+//			new Thread(new judgement(36,36,175,175,false,judge)).start();
 			break;
 		case 1:
-			new Thread(new judgement(212,36,175,175,false,judge)).start();
+			threadPool.execute(new judgement(212,36,175,175,false,judge));
+//			new Thread(new judgement(212,36,175,175,false,judge)).start();
 			break;
 		case 2:
-			new Thread(new judgement(388,36,175,175,false,judge)).start();
+			threadPool.execute(new judgement(388,36,175,175,false,judge));
+//			new Thread(new judgement(388,36,175,175,false,judge)).start();
 			break;
 		case 3:
-			new Thread(new judgement(36,212,175,175,false,judge)).start();
+			threadPool.execute(new judgement(36,212,175,175,false,judge));
+//			new Thread(new judgement(36,212,175,175,false,judge)).start();
 			break;
 		case 4:
-			new Thread(new judgement(212,212,175,175,false,judge)).start();
+			threadPool.execute(new judgement(212,212,175,175,false,judge));
+//			new Thread(new judgement(212,212,175,175,false,judge)).start();
 			break;
 		case 5:
-			new Thread(new judgement(388,212,175,175,false,judge)).start();
+			threadPool.execute(new judgement(388,212,175,175,false,judge));
+//			new Thread(new judgement(388,212,175,175,false,judge)).start();
 			break;
 		case 6:
-			new Thread(new judgement(36,388,175,175,false,judge)).start();
+			threadPool.execute(new judgement(36,388,175,175,false,judge));
+//			new Thread(new judgement(36,388,175,175,false,judge)).start();
 			break;
 		case 7:
-			new Thread(new judgement(212,388,175,175,false,judge)).start();
+			threadPool.execute(new judgement(212,388,175,175,false,judge));
+//			new Thread(new judgement(212,388,175,175,false,judge)).start();
 			break;
 		case 8:
-			new Thread(new judgement(388,388,175,175,false,judge)).start();
+			threadPool.execute(new judgement(388,388,175,175,false,judge));
+//			new Thread(new judgement(388,388,175,175,false,judge)).start();
 			break;
 		case 9:
-			new Thread(new judgement(212,212,175,175,true,judge)).start();
+			threadPool.execute(new judgement(212,212,175,175,true,judge));
+//			new Thread(new judgement(212,212,175,175,true,judge)).start();
 			break;
 		}
 	}
