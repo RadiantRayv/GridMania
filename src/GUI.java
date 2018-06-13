@@ -486,7 +486,7 @@ public class GUI implements ActionListener {
 				setSong(s);
 			if(!player.getStatus().equals(MediaPlayer.Status.PLAYING))
 			{
-				startMid(21888.0);
+				startMid(22640.0);
 			}
 		}
 	}
