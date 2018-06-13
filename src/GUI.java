@@ -143,7 +143,7 @@ public class GUI implements ActionListener {
 		song2 = new JButton(new ImageIcon(cldr.getResource("buttons/song select/bliss.png")));
 		song2.setFocusPainted(false);
 
-		song3 = new JButton(new ImageIcon(cldr.getResource("buttons/song select/comingsoon.png")));
+		song3 = new JButton(new ImageIcon(cldr.getResource("buttons/song select/here.png")));
 		song3.setFocusPainted(false);
 
 		
